@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jworks.forge.dbmeta.mapper.ProjectDbConnectionMapper">
+
+    <!-- 컬럼 명시(SELECT * 금지). 대문자스네이크 → 카멜 자동매핑. -->
+    <sql id="connectionColumns">
+        PROJECT_ID, DB_HOST, DB_PORT, DB_NAME, DB_SCHEMA, DB_USERNAME, DB_PASSWORD_ENC
+    </sql>
+
+    <select id="selectByProject" resultType="com.jworks.forge.dbmeta.domain.ProjectDbConnection">
+        SELECT <include refid="connectionColumns"/>
+          FROM TB_FRG_PROJECT_DB
+         WHERE PROJECT_ID = #{projectId}
+    </select>
+
+    <insert id="upsert" parameterType="com.jworks.forge.dbmeta.domain.ProjectDbConnection">
+        INSERT INTO TB_FRG_PROJECT_DB (
+            PROJECT_ID, DB_HOST, DB_PORT, DB_NAME, DB_SCHEMA, DB_USERNAME, DB_PASSWORD_ENC
+        ) VALUES (
+            #{projectId}, #{dbHost}, #{dbPort}, #{dbName}, #{dbSchema}, #{dbUsername}, #{dbPasswordEnc}
+        )
+        ON CONFLICT (PROJECT_ID) DO UPDATE SET
+            DB_HOST         = EXCLUDED.DB_HOST,
+            DB_PORT         = EXCLUDED.DB_PORT,
+            DB_NAME         = EXCLUDED.DB_NAME,
+            DB_SCHEMA       = EXCLUDED.DB_SCHEMA,
+            DB_USERNAME     = EXCLUDED.DB_USERNAME,
+            DB_PASSWORD_ENC = EXCLUDED.DB_PASSWORD_ENC,
+            MOD_DTM         = now()
+    </insert>
+
+    <delete id="deleteByProject">
+        DELETE FROM TB_FRG_PROJECT_DB
+         WHERE PROJECT_ID = #{projectId}
+    </delete>
+</mapper>

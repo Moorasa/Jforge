@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jworks.forge.screen.mapper.ForgeScreenMapper">
+
+    <!-- 목록용 컬럼(경량): DEFINITION_JSON 본문 제외. 대문자스네이크 → 카멜 자동매핑. -->
+    <sql id="screenListColumns">
+        SCREEN_ID, PROJECT_ID, SCREEN_NAME, STEM, ARCHETYPE_CODE, ROLE_CODE,
+        STATUS_CODE, REG_DTM, MOD_DTM
+    </sql>
+
+    <!-- 단건용 컬럼: DEFINITION_JSON(JSONB)을 ::text 로 원문 문자열로 뽑는다(재해석/가공 없이 그대로 전달). -->
+    <sql id="screenColumns">
+        SCREEN_ID, PROJECT_ID, SCREEN_NAME, STEM, ARCHETYPE_CODE, ROLE_CODE,
+        DEFINITION_JSON::text AS DEFINITION_JSON,
+        STATUS_CODE, REG_DTM, MOD_DTM
+    </sql>
+
+    <select id="selectListByProject" resultType="com.jworks.forge.screen.domain.ForgeScreen">
+        SELECT <include refid="screenListColumns"/>
+          FROM TB_FRG_SCREEN
+         WHERE PROJECT_ID = #{projectId}
+           AND STATUS_CODE &lt;&gt; 'DELETED'
+         ORDER BY SCREEN_ID DESC
+    </select>
+
+    <select id="selectById" resultType="com.jworks.forge.screen.domain.ForgeScreen">
+        SELECT <include refid="screenColumns"/>
+          FROM TB_FRG_SCREEN
+         WHERE SCREEN_ID = #{screenId}
+           AND STATUS_CODE &lt;&gt; 'DELETED'
+    </select>
+
+    <insert id="insert" parameterType="com.jworks.forge.screen.domain.ForgeScreen"
+            useGeneratedKeys="true" keyProperty="screenId" keyColumn="screen_id">
+        INSERT INTO TB_FRG_SCREEN (
+            PROJECT_ID, SCREEN_NAME, STEM, ARCHETYPE_CODE, ROLE_CODE,
+            DEFINITION_JSON, STATUS_CODE
+        ) VALUES (
+            #{projectId}, #{screenName}, #{stem}, #{archetypeCode}, #{roleCode},
+            #{definitionJson}::jsonb, #{statusCode}
+        )
+    </insert>
+
+    <update id="updateMeta" parameterType="com.jworks.forge.screen.domain.ForgeScreen">
+        UPDATE TB_FRG_SCREEN
+           SET SCREEN_NAME    = #{screenName},
+               ARCHETYPE_CODE = #{archetypeCode},
+               ROLE_CODE      = #{roleCode},
+               STATUS_CODE    = #{statusCode},
+               MOD_DTM        = now()
+         WHERE SCREEN_ID = #{screenId}
+           AND STATUS_CODE &lt;&gt; 'DELETED'
+    </update>
+
+    <!-- DEFINITION_JSON 본문 갱신(P3-5b/P3-6b). ::jsonb 캐스팅 + #{} 바인딩만(${} 금지). -->
+    <update id="updateDefinition">
+        UPDATE TB_FRG_SCREEN
+           SET DEFINITION_JSON = #{definitionJson}::jsonb,
+               MOD_DTM = now()
+         WHERE SCREEN_ID = #{screenId}
+           AND STATUS_CODE &lt;&gt; 'DELETED'
+    </update>
+
+    <update id="softDelete">
+        UPDATE TB_FRG_SCREEN
+           SET STATUS_CODE = 'DELETED',
+               MOD_DTM = now()
+         WHERE SCREEN_ID = #{screenId}
+           AND STATUS_CODE &lt;&gt; 'DELETED'
+    </update>
+
+</mapper>

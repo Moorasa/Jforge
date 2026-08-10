@@ -1,0 +1,62 @@
+/* 대시보드 도그푸딩 화면 (P7-1). 토큰은 forge-theme.css. */
+
+/* 히어로: 다크 그라데이션 카드 — 셸과 콘텐츠를 잇는 브랜드 존 */
+.frg-home-hero {
+    display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap;
+    padding: 26px 28px; margin-bottom: 16px;
+    background: linear-gradient(120deg, var(--frg-chrome-bg) 0%, #1d2740 70%, #253258 100%);
+    border: 1px solid var(--frg-chrome-border);
+    border-radius: var(--frg-radius);
+    color: var(--frg-chrome-text);
+}
+.frg-hero-copy h2 { margin: 0 0 8px; font-size: 20px; }
+.frg-hero-copy p { margin: 0; font-size: 13px; color: var(--frg-chrome-text-dim); max-width: 520px; line-height: 1.6; }
+
+.frg-hero-stats { display: flex; align-items: center; gap: 22px; }
+.frg-stat { display: flex; flex-direction: column; align-items: center; gap: 2px; min-width: 64px; }
+.frg-stat-num { font-size: 26px; font-weight: 700; color: #fff; }
+.frg-stat-label { font-size: 11px; color: var(--frg-chrome-text-dim); letter-spacing: .08em; }
+.frg-hero-cta { height: 38px; padding: 0 20px; }
+
+/* 시작 가이드 3단계(P7-5) */
+.frg-howto { margin-bottom: 16px; }
+.frg-howto-steps {
+    list-style: none; margin: 0; padding: 0;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;
+}
+.frg-howto-step { display: flex; gap: 12px; align-items: flex-start; }
+.frg-howto-num {
+    flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700; color: #fff; background: var(--frg-accent);
+}
+.frg-howto-body { display: flex; flex-direction: column; gap: 5px; align-items: flex-start; }
+.frg-howto-body strong { font-size: 13px; color: var(--frg-text); }
+.frg-howto-body p { margin: 0; font-size: 12px; color: var(--frg-text-dim); line-height: 1.6; }
+@media (max-width: 960px) {
+    .frg-howto-steps { grid-template-columns: 1fr; }
+}
+
+/* 프로젝트 카드 그리드 */
+.frg-home-projects {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 14px;
+}
+.frg-proj-card {
+    display: flex; flex-direction: column; gap: 12px;
+    padding: 16px; border: 1px solid var(--frg-surface-border); border-radius: var(--frg-radius);
+    background: var(--frg-surface);
+    transition: border-color .12s, box-shadow .12s;
+}
+.frg-proj-card:hover { border-color: var(--frg-accent); box-shadow: var(--frg-shadow); }
+.frg-proj-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.frg-proj-name { margin: 0; font-size: 15px; color: var(--frg-text); }
+.frg-proj-count {
+    font-size: 11px; font-weight: 700; color: var(--frg-accent);
+    background: var(--frg-accent-soft); border-radius: 10px; padding: 2px 9px; flex-shrink: 0;
+}
+.frg-proj-meta { margin: 0; display: grid; grid-template-columns: 72px 1fr; gap: 4px 10px; }
+.frg-proj-meta dt { font-size: 11px; color: var(--frg-text-dim); align-self: center; }
+.frg-proj-meta dd { margin: 0; font-size: 12px; color: var(--frg-text); word-break: break-all; }
+.frg-proj-actions { display: flex; gap: 8px; margin-top: auto; }
+
+.frg-home-empty { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 22px; }

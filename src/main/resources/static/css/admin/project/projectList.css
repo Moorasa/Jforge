@@ -1,0 +1,26 @@
+/* 프로젝트 관리 도그푸딩 화면 (P1-3, P7-1 테마 개편). 토큰은 forge-theme.css. */
+
+.frg-form { display: flex; flex-direction: column; gap: 14px; }
+.frg-form-grid {
+    display: grid; grid-template-columns: minmax(200px, 1fr) minmax(280px, 2fr) minmax(200px, 1fr);
+    gap: 12px; align-items: start;
+}
+.frg-fld { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+.frg-hint { font-size: 12px; min-height: 16px; }
+.frg-hint.ok { color: var(--frg-ok); }
+.frg-hint.warn { color: var(--frg-warn); }
+.frg-actions { display: flex; align-items: center; gap: 12px; }
+.frg-msg { font-size: 13px; }
+.frg-msg.ok { color: var(--frg-ok); }
+.frg-msg.warn { color: var(--frg-danger); }
+
+.frg-table td.frg-cell-path { font-family: var(--frg-mono); font-size: 12px; word-break: break-all; }
+
+/* DB 연결 모달 — 폭 560px 안에 들어가야 하므로 등록 폼의 3열 고정 그리드를 덮어쓴다. */
+.frg-modal .frg-form-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.frg-modal-foot #frg-db-msg { margin-right: auto; }
+
+@media (max-width: 960px) {
+    .frg-form-grid { grid-template-columns: 1fr; }
+    .frg-modal .frg-form-grid { grid-template-columns: 1fr; }
+}

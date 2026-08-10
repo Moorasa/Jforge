@@ -1,0 +1,61 @@
+body > #alert {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(38, 38, 38, 0.5);
+}
+body > #alert > .encase {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+}
+body > #alert .msg-box {
+	border: 1px solid #313942;
+	border-radius: 4px;
+	box-shadow: 0px 8px 40px rgba(10, 22, 51, 0.5);/* shadow 3 */
+	background: #FFFFFF;
+	min-width: 21.875rem;/* 420px */
+	max-width: min(50rem, 50vw);
+	text-align: center;
+}
+body > #alert.block .msg-box {
+	position: absolute;
+	left: 50%;
+	translate: -50% 0;
+}
+body > #alert .msg-box .title-bar {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	padding: 1.0417rem 0.8333rem;/* 20px 16px */
+}
+body > #alert .msg-box .title-bar .title {
+}
+body > #alert .msg-box .title-bar img {
+	cursor: pointer; 
+}
+body > #alert .msg-box p {
+	margin: 1.25rem;/* 24px */
+	padding: 0.625rem;/* 12px */
+	max-width: 30rem;
+	white-space: pre-line;
+	text-align: center;
+}
+body > #alert .msg-box .button {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	margin: 1.25rem;/* 24px */
+	padding: 0.88rem;/* 17px */
+	border-radius: 4px;
+	font-weight: bold;
+	cursor: pointer; 
+}
+

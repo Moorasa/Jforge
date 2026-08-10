@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jworks.forge.project.mapper.ForgeProjectMapper">
+
+    <!-- 컬럼 명시(SELECT * 금지). 대문자스네이크 → 카멜 자동매핑. -->
+    <sql id="projectColumns">
+        PROJECT_ID, PROJECT_NAME, TARGET_ROOT_PATH, PACKAGE_BASE,
+        JSP_BASE_PATH, JS_BASE_PATH, CSS_BASE_PATH, DB_TYPE_CODE,
+        RUNTIME_VER, USE_YN, REG_DTM, MOD_DTM
+    </sql>
+
+    <select id="selectActiveList" resultType="com.jworks.forge.project.domain.ForgeProject">
+        SELECT <include refid="projectColumns"/>
+          FROM TB_FRG_PROJECT
+         WHERE USE_YN = 'Y'
+         ORDER BY PROJECT_ID DESC
+    </select>
+
+    <select id="selectActiveById" resultType="com.jworks.forge.project.domain.ForgeProject">
+        SELECT <include refid="projectColumns"/>
+          FROM TB_FRG_PROJECT
+         WHERE PROJECT_ID = #{projectId}
+           AND USE_YN = 'Y'
+    </select>
+
+    <insert id="insert" parameterType="com.jworks.forge.project.domain.ForgeProject"
+            useGeneratedKeys="true" keyProperty="projectId" keyColumn="project_id">
+        INSERT INTO TB_FRG_PROJECT (
+            PROJECT_NAME, TARGET_ROOT_PATH, PACKAGE_BASE,
+            JSP_BASE_PATH, JS_BASE_PATH, CSS_BASE_PATH,
+            DB_TYPE_CODE, RUNTIME_VER, USE_YN
+        ) VALUES (
+            #{projectName}, #{targetRootPath}, #{packageBase},
+            #{jspBasePath}, #{jsBasePath}, #{cssBasePath},
+            #{dbTypeCode}, #{runtimeVer}, 'Y'
+        )
+    </insert>
+
+    <update id="update" parameterType="com.jworks.forge.project.domain.ForgeProject">
+        UPDATE TB_FRG_PROJECT
+           SET PROJECT_NAME     = #{projectName},
+               TARGET_ROOT_PATH = #{targetRootPath},
+               PACKAGE_BASE     = #{packageBase},
+               JSP_BASE_PATH    = #{jspBasePath},
+               JS_BASE_PATH     = #{jsBasePath},
+               CSS_BASE_PATH    = #{cssBasePath},
+               DB_TYPE_CODE     = #{dbTypeCode},
+               RUNTIME_VER      = #{runtimeVer},
+               MOD_DTM          = now()
+         WHERE PROJECT_ID = #{projectId}
+           AND USE_YN = 'Y'
+    </update>
+
+    <update id="softDelete">
+        UPDATE TB_FRG_PROJECT
+           SET USE_YN = 'N',
+               MOD_DTM = now()
+         WHERE PROJECT_ID = #{projectId}
+           AND USE_YN = 'Y'
+    </update>
+
+</mapper>

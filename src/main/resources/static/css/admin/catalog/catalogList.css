@@ -1,0 +1,25 @@
+/* 모듈 카탈로그 / 속성폼 프리뷰 도그푸딩 화면 (P2-5, P7-1 테마 개편). 토큰은 forge-theme.css. */
+
+/* 좌(목록) : 우(폼) 2단 레이아웃 */
+.frg-catalog { display: grid; grid-template-columns: 340px 1fr; gap: 16px; align-items: start; }
+.frg-catalog .frg-section { margin: 0; }
+
+/* 좌측 카탈로그 목록 */
+.frg-catalog-items { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 7px; }
+.frg-catalog-item {
+    display: grid; grid-template-columns: 1fr auto; grid-template-rows: auto auto;
+    gap: 3px 8px; padding: 11px 13px;
+    border: 1px solid var(--frg-surface-border); border-radius: var(--frg-radius-sm);
+    cursor: pointer; background: var(--frg-surface);
+    transition: border-color .12s, background .12s, box-shadow .12s;
+}
+.frg-catalog-item:hover { border-color: var(--frg-accent); box-shadow: var(--frg-shadow); }
+.frg-catalog-item:focus { outline: 2px solid var(--frg-accent); outline-offset: 1px; }
+.frg-catalog-item.is-active { border-color: var(--frg-accent); background: var(--frg-accent-soft); }
+.frg-item-name { font-size: 14px; font-weight: 600; color: var(--frg-text); }
+.frg-item-badge { grid-row: 1; justify-self: end; align-self: center; }
+.frg-item-code { grid-column: 1 / -1; font-size: 11px; color: var(--frg-text-dim); font-family: var(--frg-mono); }
+
+@media (max-width: 960px) {
+    .frg-catalog { grid-template-columns: 1fr; }
+}

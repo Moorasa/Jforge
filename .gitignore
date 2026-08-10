@@ -1,0 +1,17 @@
+target/
+*.war
+*.class
+
+# IDE
+.settings/
+.project
+.classpath
+.factorypath
+bin/
+.idea/
+*.iml
+
+# logs / os
+*.log
+.DS_Store
+Thumbs.db

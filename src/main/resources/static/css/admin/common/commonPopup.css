@@ -1,0 +1,419 @@
+section.overlay-popup {
+	width: 100%;
+	height: 100%;
+	position: relative;
+}
+/* ============================== */
+/* 팝업 오버레이 및 팝업 본체 */
+/* ============================== */
+/* 기본은 flex이며 스크롤이 발생한 경우 */
+/* 팝업의 위치를 조정할 필요가 있어 block 으로 위치 지정 */
+section.overlay-popup.block .overlay-container {
+	display: block;
+}
+section.overlay-popup .box {
+	width: 29.1667rem;/* 560px */
+/* 	height: fit-content; */
+/* 	max-height: 86vh; */
+}
+section.overlay-popup.block .box {
+	position: absolute;
+	left: 50%;
+	translate: -50% 0;
+}
+section.overlay-popup .box .layout-column {
+	width: 100%;
+	height: 100%;
+}
+
+/* ============================== */
+/* 팝업 헤더 */
+/* ============================== */
+section.overlay-popup .layout-header {
+	margin: 0;
+	padding: 0;
+	background: #313942;
+	height: 2.8646rem;/* 55px */
+}
+body.dual-layout section.overlay-popup .layout-header {
+	height: 2.5rem;/* 48px */
+}
+section.overlay-popup .layout-header .layout-row {
+	height: 100%;
+}
+section.overlay-popup .layout-header .layout-left {
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+}
+section.overlay-popup .layout-header span {
+	padding: 0.8333rem;/* 16px */
+	color: #ffffff;
+	font-weight: bold;
+}
+section.overlay-popup .layout-header .close {
+	width: 1.25rem; /* 24px */
+	height: 1.25rem; /* 24px */
+	padding: 0.8073rem;/* 15.5px */
+	cursor: pointer;
+}
+body.dual-layout section.overlay-popup .layout-header .close {
+	width: 0.8333rem; /* 16px */
+	height: 0.8333rem; /* 16px */
+	padding: 0.8333rem;/* 16px */
+}
+
+
+/* ============================== */
+/* 팝업 본문 */
+/* ============================== */
+section.overlay-popup .layout-body {
+	width: -webkit-fill-available;
+	/* 최대 팝업 높이 - header 높이 - footer 높이 */
+	max-height: calc(86vh - 2.8646rem - 1.1979rem - 3.125rem - 1.1979rem); 
+	margin: 0;
+	padding: 0;
+	overflow: auto;
+}
+body.dual-layout section.overlay-popup .layout-body {
+	/* 최대 팝업 높이 - header 높이 - footer 높이 */
+	max-height: calc(86vh - 2.5rem - 0.8333rem - 2.5rem - 0.8333rem); 
+}
+section.overlay-popup .layout-body .title {
+	padding: 1.1979rem 0;/* 23px */
+}
+body.dual-layout section.overlay-popup .layout-body .title {
+	padding: 0.8333rem 0;/* 16px */
+}
+section.overlay-popup .layout-body .detail {
+	background-color: #E8F0F6;
+	width: -webkit-fill-available;
+	max-height: calc(80vh - 7.8109rem); 
+	padding: 1.1979rem;
+	line-height: 1.4583;
+	overflow-y: auto;
+	overflow-x: hidden;
+	overflow-wrap: break-word;
+}
+section.overlay-popup .layout-body > ul {
+	width: -webkit-fill-available;
+	padding: 1.25rem;/* 24px */
+	border: 1px solid #1865A1;/* Primary/Primary_2/500 */
+	border-radius: 4px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-between;
+	gap: 2.5rem;/* 48px */
+}
+body.dual-layout section.overlay-popup .layout-body > ul {
+	padding: 0.8333rem;/* 16px */
+	gap: 1.25rem;/* 24px */
+}
+section.overlay-popup .layout-body > ul li {
+	width: -webkit-fill-available;
+}
+/* 입력창 wrapper 및 clear button */
+section.overlay-popup .layout-body .input-wrapper {
+	position: relative;
+	width: 100%;
+}
+section.overlay-popup .layout-body .input-wrapper .clear-btn {
+	display: none;
+	position: absolute;
+	top: 50%;
+	right: 0.833rem;
+	transform: translateY(-50%);
+	cursor: pointer;
+}
+section.overlay-popup .layout-body .input-wrapper input:not(:placeholder-shown)+.clear-btn {
+	display: flex;
+}
+/* TODO 아래 내용은 공통 내용이 아닌 개별로 들어가야 함 */
+section.overlay-popup .layout-body li.name,
+section.overlay-popup .layout-body li.code,
+section.overlay-popup .layout-body li.memo {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	justify-content: center;
+	gap: 0.8333rem;/* 16px */
+}
+section.overlay-popup .layout-body li.member,
+section.overlay-popup .layout-body li.role {
+	display: none;
+/* 	TODO 바로 작업 */
+/* 	display: flex; */
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+}	
+section.overlay-popup .layout-body li.memo textarea {
+	width: -webkit-fill-available;
+	min-height: 5.4167rem;
+}
+/* TODO 여기까지 */
+
+
+
+/* 오브젝트 지정 (target) 및 태그 관련 CSS */
+section.overlay-popup .layout-body .target-body {
+	width: 100%;
+	border: 1px solid #313942;
+	border-radius: 4px;
+	padding: 0.8333rem;
+	background-color: #fff;
+	box-sizing: border-box;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	column-gap: 0.2083rem;
+	row-gap: 0.625rem;
+}
+body.dual-layout section.overlay-popup .layout-body .target-body {
+	font-size: 0.625rem;
+	padding: 0.3125rem 0.4167rem;
+	min-height: 1.4583rem;
+	row-gap: 0.3125rem;
+}
+section.overlay-popup .layout-body .target-placeholder {
+	color: #999999;
+	margin: 0;
+}
+section.overlay-popup .layout-body .target-item {
+	display: inline-flex;
+	align-items: center;
+	background-color: #E8F0F6;
+	color: #0E3D61;
+	padding: 0.4167rem;
+	border-radius: 4px;
+	gap: 0.8333rem;
+	line-height: 1;
+}
+body.dual-layout section.overlay-popup .layout-body .target-body .target-item {
+	font-size: 0.625rem;
+	padding: 0.3125rem 0.4167rem;
+	gap: 0.4167rem;
+}
+section.overlay-popup .layout-body .target-item .remove {
+	background: none;
+	border: none;
+	padding: 0;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+section.overlay-popup .layout-body .target-item .remove img {
+	width: 0.625rem;
+	height: 0.625rem;
+}
+
+/* datePicker */
+section.overlay-popup .layout-body .validity-header .check-wrap {
+	display: flex;
+	align-items: center;
+	cursor: pointer;
+}
+section.overlay-popup .layout-body .validity-header .check-wrap label {
+	cursor: pointer;
+	margin: 0 0.4167rem 0 0;
+}
+section.overlay-popup .layout-body .validity-body .date-group.disabled {
+	opacity: 0.6;
+	pointer-events: none;
+	background-color: #F2F2F2;
+}
+section.overlay-popup .layout-body .validity-body .date-group.disabled input {
+	background-color: transparent;
+}
+
+section.overlay-popup .layout-body .validity-body {
+	display: flex;
+	align-items: center;
+	border: none;
+	background-color: transparent;
+	padding: 0;
+	height: auto;
+}
+section.overlay-popup .layout-body .validity-body .date-group {
+	display: flex;
+	align-items: center;
+	width: 100%;
+	border: 1px solid #313942;
+	border-radius: 4px;
+	background-color: #FFFFFF;
+	padding-left: 0.8333rem;
+	position: relative;
+}
+section.overlay-popup .layout-body .validity-body .tilde {
+	margin: 0 0.4167rem;
+	color: #313942;
+}
+section.overlay-popup .layout-body .validity-body input[type="date"] {
+	border: none;
+	cursor: pointer;
+	text-align: center;
+	margin-left: 0.6250rem;
+}
+section.overlay-popup .layout-body .validity-body input[type="date"]:focus {
+	outline: none;
+}
+section.overlay-popup .layout-body .validity-body input[type="date"]::-webkit-calendar-picker-indicator {
+	display: none;
+}
+section.overlay-popup .layout-body .validity-body .calendar {
+	width: 0.8333rem;
+	height: 0.8333rem;
+	cursor: pointer;
+}
+
+/* 속성 관련 CSS */
+section.overlay-popup .layout-body .attribute-header,
+section.overlay-popup .layout-body .target-header,
+section.overlay-popup .layout-body .validity-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 1.25rem;
+}
+body.dual-layout section.overlay-popup .layout-body .attribute-header,
+body.dual-layout section.overlay-popup .layout-body .target-header,
+body.dual-layout section.overlay-popup .layout-body .validity-header {
+	margin-bottom: 4px;
+}
+section.overlay-popup .layout-body .attribute-buttons,
+section.overlay-popup .layout-body .buttons {
+	display: flex;
+	gap: 0.8333rem;
+}
+body.dual-layout section.overlay-popup .layout-body .attribute-buttons,
+body.dual-layout section.overlay-popup .layout-body .buttons {
+	gap: 4px;
+}
+section.overlay-popup .layout-body .attribute-body {
+	display: flex;
+	flex-direction: column;
+	gap: 0.4167rem;
+	padding: 0.8333rem;
+	background-color: #F2F2F2;
+	min-height: 12.2396rem;
+/* 	min-height: 15.4167rem; */
+}
+section.overlay-popup .layout-body .attribute-body .attribute-row {
+	display: flex;
+	align-items: center;
+	gap: 0.4167rem;
+}
+section.overlay-popup .layout-body .attribute-body .attribute-row .blind {
+	display: none;
+}
+section.overlay-popup .layout-body .attribute-body .attribute-row .input-wrapper .input-inner-buttons {
+    position: absolute;
+    top: 50%;
+    right: 0.8333rem; /* 기존 16px 위치 */
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem; /* 버튼 사이 간격 */
+}
+section.overlay-popup .layout-body .attribute-body .attribute-row .default-toggle-btn {
+    padding: 0.2rem 0.6rem;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    cursor: pointer;
+    border: none;
+    background-color: #E2E2E2; /* 기본 회색 (비활성) */
+    color: #999999;
+    transition: all 0.2s;
+}
+body.dual-layout section.overlay-popup .layout-body .attribute-body .attribute-row .default-toggle-btn {
+    padding: 0.1rem 0.3rem;
+	font-size: 0.4167rem;/* 8px */
+}
+section.overlay-popup .layout-body .attribute-body .attribute-row .default-toggle-btn.active {
+    background-color: #E8F0F6; /* 하늘색 배경 */
+    color: #1865A1; /* 파란색 글자 */
+    font-weight: bold;
+}
+
+section.overlay-popup .layout-body .attribute-body .attribute-row .input-inner-buttons .clear-btn{
+    position: absolute;
+    right: 3.433rem;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+}
+
+section.overlay-popup .attribute-dropdown {
+	position: absolute;
+	background: #FFFFFF;
+	border: 1px solid #313942;
+	border-radius: 4px;
+	box-shadow: 0px 0px 24px 0px rgba(10, 22, 51, 0.8);
+	max-height: 200px;
+	overflow-y: auto;
+	margin: 0;
+	list-style: none;
+	box-sizing: border-box;
+}
+section.overlay-popup .attribute-dropdown li {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 0.8333rem;
+	cursor: pointer;
+	transition: background-color 0.2s;
+}
+body.dual-layout section.overlay-popup .attribute-dropdown li {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 0.4167rem;
+	cursor: pointer;
+	transition: background-color 0.2s;
+}
+section.overlay-popup .attribute-dropdown li:hover {
+	background-color: #E8F0F6;
+}
+section.overlay-popup .attribute-dropdown li.system-item {
+	color: #0056b3;
+}
+section.overlay-popup .attribute-dropdown li span {
+	flex-shrink: 0;
+	margin-left: 1rem;
+}
+section.overlay-popup .attribute-dropdown li .required {
+	color: #e74c3c;
+	font-size: 0.85em;
+	margin-left: 1rem;
+}
+section.overlay-popup .attribute-dropdown li .default-value {
+	color: #2980b9;
+	font-size: 0.85em;
+	margin-left: 1rem;
+}
+/* ============================== */
+/* 팝업 하단 */
+/* ============================== */
+section.overlay-popup .layout-footer {
+	width: -webkit-fill-available;
+	margin: 0;
+	padding: 0;
+}
+section.overlay-popup .layout-footer .buttons {
+	width: -webkit-fill-available;
+	padding: 1.1979rem;/* 23px */
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	gap: 0.8333rem;/* 16px */
+}
+body.dual-layout section.overlay-popup .layout-footer .buttons {
+	padding: 0.8333rem;/* 16px */
+}
+section.overlay-popup .layout-footer .buttons button {
+	flex: 1;
+}

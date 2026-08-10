@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jworks.forge.system.mapper.HealthMapper">
+
+    <!-- 커넥션 스모크. SELECT * 금지 규약과 무관한 상수 조회. -->
+    <select id="selectOne" resultType="int">
+        SELECT 1
+    </select>
+
+</mapper>

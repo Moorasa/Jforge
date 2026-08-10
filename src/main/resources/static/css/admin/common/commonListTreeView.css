@@ -1,0 +1,388 @@
+section#tree-view {
+	display: none;
+	width: -webkit-fill-available;
+	background: #FFFFFF;
+}
+
+section#tree-view>.encase {
+	padding: 1.1979rem; /* 24px */
+}
+body.dual-layout section#tree-view>.encase {
+	padding: 0.8333rem;/* 16px */
+}
+
+section#tree-view.on {
+	display: block;
+}
+
+section#tree-view .layout-column {
+	display: flex;
+	flex-direction: column;
+	position: relative;
+	width: calc(100% - 2px);
+	height: calc(100vh - 2px);
+}
+
+section#tree-view .layout-header,
+section#tree-view .layout-footer {
+	flex-shrink: 0;
+}
+
+section#tree-view .layout-header {
+	margin: 0;
+	padding: 0;
+	align-items: center;
+}
+
+section#tree-view .layout-header .layout-left {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	gap: 0.8333rem; /* 16px */
+}
+
+body.dual-layout section#tree-view .layout-header .layout-left {
+	gap: 4px;
+}
+
+section#tree-view .layout-header .layout-left .total {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+}
+
+section#tree-view .layout-header .layout-left .view-type {
+	position: relative;
+}
+
+section#tree-view .layout-header .layout-left .view-type img {
+	width: 1.875rem;
+	height: 1.875rem;
+	cursor: pointer;
+}
+
+section#tree-view .layout-header .layout-left .filter {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	gap: 0.8333rem; /* 16px */
+}
+
+section#tree-view .layout-header .layout-left select {
+	height: 1.875rem;
+	padding: 0 1rem;
+	cursor: pointer;
+}
+body.dual-layout section#tree-view .layout-header .layout-left select {
+	padding: 0 8px;
+	height: 1.4583rem;/* 28px */
+}
+
+section#tree-view .layout-header .layout-right {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+}
+
+section#tree-view .layout-header section.total .count {
+	position: relative;
+	top: 0.05rem;
+}
+
+section#tree-view .layout-header section.button {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	gap: 0.8rem;
+}
+body.dual-layout section#tree-view .layout-header section.button {
+	gap: 4px;
+}
+
+section#tree-view .layout-header section.button button {
+	white-space: nowrap;
+}
+section#tree-view .layout-header .view-type .view-type-trigger-wrap,
+section#tree-view .layout-header section.button .button-dropdown-wrap {
+	position: relative;
+}
+section#tree-view .layout-header .view-type .view-type-trigger,
+section#tree-view .layout-header section.button .button-dropdown-trigger {
+	padding: 0;
+	margin: 0;
+	border: none;
+	background: transparent;
+	width: 1.7708rem;
+	height: 1.7708rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+}
+section#tree-view .layout-header .view-type .view-type-trigger img,
+section#tree-view .layout-header section.button .button-dropdown-trigger img {
+	width: 1.7708rem;
+	height: 1.7708rem;
+}
+body.dual-layout section#tree-view .layout-header .view-type .view-type-trigger,
+body.dual-layout section#tree-view .layout-header section.button .button-dropdown-trigger {
+	width: 1.4583rem;
+	height: 1.4583rem;
+}
+body.dual-layout section#tree-view .layout-header .view-type .view-type-trigger img,
+body.dual-layout section#tree-view .layout-header section.button .button-dropdown-trigger img {
+	width: 1.4583rem;
+	height: 1.4583rem;
+}
+section#tree-view .header-dropdown {
+	position: absolute;
+	display: none;
+	flex-direction: row;
+	align-items: center;
+	gap: 0.3333rem;
+	padding: 0.3333rem;
+	background: #FFFFFF;
+	border: 1px solid #D9D9D9;
+	border-radius: 4px;
+	box-shadow: 0px 0px 12px 0px #0A1633CC;
+}
+section#tree-view .header-dropdown.on {
+	display: flex;
+}
+section#tree-view .header-dropdown .view-type-item,
+section#tree-view .header-dropdown .button-dropdown-item {
+	padding: 0;
+	margin: 0;
+	border: none;
+	background: transparent;
+	width: 1.7708rem;
+	height: 1.7708rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 4px;
+	cursor: pointer;
+}
+section#tree-view .header-dropdown .view-type-item img,
+section#tree-view .header-dropdown .button-dropdown-item img {
+	width: 1.7708rem;
+	height: 1.7708rem;
+}
+section#tree-view .header-dropdown .view-type-item:disabled,
+section#tree-view .header-dropdown .view-type-item.selected {
+	cursor: default;
+}
+section#tree-view .header-dropdown .view-type-item:disabled img,
+section#tree-view .header-dropdown .view-type-item.selected img {
+	opacity: 0.45;
+	filter: grayscale(1);
+}
+section#tree-view .header-dropdown .view-type-item:not(:disabled):not(.selected) img:hover,
+section#tree-view .header-dropdown .button-dropdown-item img:hover {
+	box-shadow: 0px 0px 12px 0px #0A1633CC;
+	border-radius: 4px;
+}
+body.dual-layout section#tree-view .header-dropdown {
+	gap: 0.4167rem;
+	padding: 0.4167rem;
+}
+body.dual-layout section#tree-view .header-dropdown .view-type-item,
+body.dual-layout section#tree-view .header-dropdown .button-dropdown-item,
+body.dual-layout section#tree-view .header-dropdown .view-type-item img,
+body.dual-layout section#tree-view .header-dropdown .button-dropdown-item img {
+	width: 1.4583rem;
+	height: 1.4583rem;
+}
+
+section#tree-view .layout-header section.search {
+	margin-left: 0.8rem;
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-end;
+	align-items: center;
+}
+body.dual-layout section#tree-view .layout-header section.search {
+	margin-left: 4px;
+}
+section#tree-view .layout-header section.search input {
+	/* 	margin-left: 0.4rem; */
+	/* 	min-width: 1.2rem; */
+}
+
+section#tree-view .layout-header section.search .input {
+	width: 10rem;
+	height: calc(1.875rem - 2px);
+	padding: 0 0.5rem;
+	border: 1px solid #313942;
+	background: #FFFFFF;
+	border-radius: 4px 0 0 4px;
+	font-weight: 400;
+	font-size: 0.8333rem; /* 16px */
+	line-height: calc(1.875rem - 2px);
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: center;
+	overflow: hidden;
+	white-space: nowrap;
+}
+body.dual-layout section#tree-view .layout-header section.search .input {
+	height: calc(1.4583rem - 0px);
+	font-size: 0.625rem;/* 12px */
+	line-height: calc(1.4583rem - 0px);/* height와 동일하게 설정하여 커서위치 조정 */
+}
+
+section#tree-view .layout-header section.search .input:empty::before {
+	content: attr(data-placeholder);
+	color: gray;
+}
+
+section#tree-view .layout-header section.search .search-icon {
+	width: 1.7708rem;
+	height: 1.7708rem;
+	background: #313942;
+	border-radius: 0 4px 4px 0;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+}
+body.dual-layout section#tree-view .layout-header section.search .search-icon {
+	width: 1.4583rem;
+	height: 1.4583rem;
+}
+section#tree-view .layout-body {
+	flex-grow: 1;
+	overflow: auto;
+/* 	width: -webkit-fill-available; */
+	padding: 1.25rem;
+	border: 1px solid #0A0B0D;
+	border-radius: 4px;
+	margin-top: 1.25rem;
+/* 	width: 100%; */
+/* 	max-width: 100%; */
+}
+body.dual-layout section#tree-view .layout-body {
+	margin-top: 0.8333rem;/* 16px */
+	padding: 0.8333rem;/* 16px */
+}
+	
+section#tree-view .layout-body input {
+	padding: 0;
+	margin: 0;
+	cursor: pointer;
+}
+
+section#tree-view .layout-body input[type="checkbox"]:indeterminate {
+	background-color: #D9D9D9;
+	opacity: 0.6;
+}
+
+section#tree-view .layout-body .tree-static-root .tree-toggle {
+	display: inline-block;
+    width: 1.0417rem; /* 20px */
+    height: 1.0417rem; /* 20px */
+	vertical-align: middle;
+	cursor: pointer;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-image: url('/images/admin/icon-tree-collapse.png');
+}
+
+section#tree-view .layout-body .tree-static-root.expand .tree-toggle {
+	background-image: url('/images/admin/icon-tree-expand.png');
+}
+
+section#tree-view .layout-body .tree-list .tree-toggle {
+	display: inline-block;
+    width: 1.0417rem; /* 20px */
+    height: 1.0417rem; /* 20px */
+	vertical-align: middle;
+	cursor: pointer;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-image: url('/images/admin/icon-tree-collapse.png');
+}
+
+section#tree-view .layout-body .tree-list .tree-node-label.expand .tree-toggle {
+	background-image: url('/images/admin/icon-tree-expand.png');
+}
+
+section#tree-view .layout-body .tree-list .tree-toggle-spacer {
+	display: inline-block;
+    width: 1.0417rem; /* 20px */
+    height: 1.0417rem; /* 20px */
+	vertical-align: middle;
+}
+
+section#tree-view .layout-body .tree-list {
+/* 	padding-left: 2.5rem; (1.0417rem + 0.2083rem) * 2 */
+	width: max-content;
+	min-width: 100%;
+}
+
+section#tree-view .layout-body .tree-list .tree-node-label,
+section#tree-view .layout-body .tree-static-root {
+	padding: 0.20833rem 0;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: flex-start;
+	gap: 0.20833rem;
+	cursor: pointer;
+	
+	box-sizing: border-box;
+	transition: background-color 0.2s;
+	
+/* 	flex-wrap: nowrap; */
+/* 	width: max-content; */
+/* 	min-width: 100%; */
+}
+
+section#tree-view .layout-body .tree-list .tree-node-label.selected,
+section#tree-view .layout-body .tree-static-root.selected {
+	background-color: #D1E0EC;
+	border-radius: 4px;
+}
+
+section#tree-view .layout-body .tree-list .tree-node-label.tree-search-match {
+	background-color: #FFF4CC;
+	border-radius: 4px;
+}
+
+section#tree-view .layout-body .tree-list .tree-node-label:not(.selected):not(.tree-search-match):hover,
+section#tree-view .layout-body .tree-static-root:not(.selected):hover {
+	background-color: #E8F0F6;
+	border-radius: 4px;
+}
+section#tree-view .layout-body .tree-list .tree-node-label.tree-node-disabled {
+	color: #8A8F94;
+	cursor: default;
+}
+section#tree-view .layout-body .tree-list .tree-node-label.tree-node-disabled:not(.selected):not(.tree-search-match):hover {
+	background-color: transparent;
+}
+section#tree-view .layout-body .tree-list .tree-node-label.tree-node-disabled .tree-checkbox {
+	cursor: not-allowed;
+}
+
+section#tree-view .layout-body .tree-static-root .name, 
+section#tree-view .layout-body .tree-list .tree-node .name {
+	position: relative;
+	top: 0.06rem;
+}
+
+section#tree-view .layout-body .tree-list .tree-subtree {
+/* 	padding-left: 2.5rem; (1.0417rem + 0.2083rem) * 2 */
+}
+
+section#tree-view .layout-footer {
+	margin-top: 1.2rem;
+	padding: 0;
+}

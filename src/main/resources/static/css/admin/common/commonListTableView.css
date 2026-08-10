@@ -1,0 +1,496 @@
+/* table view ================================================== */
+section#table-view {
+	display: none;
+	width: 100%;
+	background: #FFFFFF;
+	border: 0;
+	border-radius: 4px;
+}
+section#table-view > .encase {
+	/* Primary/Primary_1/500 */
+/* 	border: 1px solid #313942; */
+/* 	border-radius: 4px; */
+	padding: 1.1979rem;/* 23px */
+}
+body.dual-layout section#table-view > .encase {
+	padding: 0.8333rem;/* 16px */
+}
+section#table-view.on {
+	display: block;
+}
+section#table-view .layout-header {
+	margin: 0;
+	padding: 0;
+	align-items: center;
+}
+section#table-view .layout-header .layout-left {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	gap: 0.8333rem;/* 16px */
+}
+body.dual-layout section#table-view .layout-header .layout-left {
+	gap: 4px;
+}
+section#table-view .layout-header .layout-left .total {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+}
+section#table-view .layout-header .layout-left section.total .count {
+	position: relative;
+	top: 0.05rem;
+}
+section#table-view .layout-header .layout-left .view-type {
+	position: relative;
+}
+section#table-view .layout-header .layout-left .view-type img {
+	width: 1.875rem;
+	height: 1.875rem;
+	cursor: pointer;
+}
+section#table-view .layout-header .layout-left .filter {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	gap: 0.8333rem;/* 16px */
+}
+section#table-view .layout-header .layout-left select {
+	height: 1.875rem;/* 36px */
+	padding: 0 1rem;
+	cursor: pointer;
+}
+body.dual-layout section#table-view .layout-header .layout-left select {
+	padding: 0 8px;
+	height: 1.4583rem;/* 28px */
+}
+section#table-view .layout-header .layout-right {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+}
+section#table-view .layout-header section.button {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	gap: 0.8rem;
+}
+body.dual-layout section#table-view .layout-header section.button {
+	gap: 4px;
+}
+section#table-view .layout-header section.button button {
+	white-space: nowrap;
+}
+section#table-view .layout-header .view-type .view-type-trigger-wrap,
+section#table-view .layout-header section.button .button-dropdown-wrap {
+	position: relative;
+}
+section#table-view .layout-header .view-type .view-type-trigger,
+section#table-view .layout-header section.button .button-dropdown-trigger {
+	padding: 0;
+	margin: 0;
+	border: none;
+	background: transparent;
+	width: 1.7708rem;
+	height: 1.7708rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+}
+section#table-view .layout-header .view-type .view-type-trigger img,
+section#table-view .layout-header section.button .button-dropdown-trigger img {
+	width: 1.7708rem;
+	height: 1.7708rem;
+}
+body.dual-layout section#table-view .layout-header .view-type .view-type-trigger,
+body.dual-layout section#table-view .layout-header section.button .button-dropdown-trigger {
+	width: 1.4583rem;
+	height: 1.4583rem;
+}
+body.dual-layout section#table-view .layout-header .view-type .view-type-trigger img,
+body.dual-layout section#table-view .layout-header section.button .button-dropdown-trigger img {
+	width: 1.4583rem;
+	height: 1.4583rem;
+}
+section#table-view .layout-column {
+	position: relative;
+}
+section#table-view .header-dropdown {
+	position: absolute;
+	display: none;
+	flex-direction: row;
+	align-items: center;
+	gap: 0.3333rem;
+	padding: 0.3333rem;
+	background: #FFFFFF;
+	border: 1px solid #D9D9D9;
+	border-radius: 4px;
+	box-shadow: 0px 0px 12px 0px #0A1633CC;
+}
+section#table-view .header-dropdown.on {
+	display: flex;
+}
+section#table-view .header-dropdown .view-type-item,
+section#table-view .header-dropdown .button-dropdown-item {
+	padding: 0;
+	margin: 0;
+	border: none;
+	background: transparent;
+	width: 1.7708rem;
+	height: 1.7708rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 4px;
+	cursor: pointer;
+}
+section#table-view .header-dropdown .view-type-item img,
+section#table-view .header-dropdown .button-dropdown-item img {
+	width: 1.7708rem;
+	height: 1.7708rem;
+}
+section#table-view .header-dropdown .view-type-item:disabled,
+section#table-view .header-dropdown .view-type-item.selected {
+	cursor: default;
+}
+section#table-view .header-dropdown .view-type-item:disabled img,
+section#table-view .header-dropdown .view-type-item.selected img {
+	opacity: 0.45;
+	filter: grayscale(1);
+}
+section#table-view .header-dropdown .view-type-item:not(:disabled):not(.selected) img:hover,
+section#table-view .header-dropdown .button-dropdown-item img:hover {
+	box-shadow: 0px 0px 12px 0px #0A1633CC;
+	border-radius: 4px;
+}
+body.dual-layout section#table-view .header-dropdown {
+	gap: 0.4167rem;
+	padding: 0.4167rem;
+}
+body.dual-layout section#table-view .header-dropdown .view-type-item,
+body.dual-layout section#table-view .header-dropdown .button-dropdown-item,
+body.dual-layout section#table-view .header-dropdown .view-type-item img,
+body.dual-layout section#table-view .header-dropdown .button-dropdown-item img {
+	width: 1.4583rem;
+	height: 1.4583rem;
+}
+/*TODO: 엑셀 업로드/다운로드 아이콘 변경 후 CSS 정리해야함*/
+section#table-view .layout-header section.button .excel-download,
+section#table-view .layout-header section.button .excel-upload,
+section#table-view .layout-header section.button .csv-upload  {
+	padding: 0;
+	margin: 0;
+	border: none;
+	width: 1.7708rem;
+	height: 1.7708rem;
+}
+body.dual-layout section#table-view .layout-header section.button .excel-download,
+body.dual-layout section#table-view .layout-header section.button .excel-upload,
+body.dual-layout section#table-view .layout-header section.button .csv-upload  {
+	padding: 0;
+	margin: 0;
+	border: none;
+	width: 1.4583rem;
+	height: 1.4583rem;
+}
+section#table-view .layout-header section.button .excel-download img,
+section#table-view .layout-header section.button .excel-upload img ,
+section#table-view .layout-header section.button .csv-upload img {
+	width: 1.7708rem;
+	height: 1.7708rem;
+	cursor: pointer;
+}
+body.dual-layout section#table-view .layout-header section.button .excel-download img,
+body.dual-layout section#table-view .layout-header section.button .excel-upload img ,
+body.dual-layout section#table-view .layout-header section.button .csv-upload img {
+	width: 1.4583rem;/* 28px */
+	height: 1.4583rem;/* 28px */
+}
+
+section#table-view .layout-header section.search {
+	margin-left: 0.8rem;
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-end;
+	align-items: center;
+}
+body.dual-layout section#table-view .layout-header section.search {
+	margin-left: 4px;
+}
+	
+section#table-view .layout-header section.search input {
+/* 	margin-left: 0.4rem; */
+/* 	min-width: 1.2rem; */
+}
+section#table-view .layout-header section.search .input {
+	width: 10rem;
+	height: calc(1.875rem - 2px);
+	padding: 0 0.5rem;
+	border: 1px solid #313942;
+	background: #FFFFFF;
+	border-radius: 4px 0 0 4px;
+	font-weight: 400;
+	font-size: 0.8333rem;/* 16px */
+	line-height: calc(1.875rem - 2px);/* height와 동일하게 설정하여 커서위치 조정 */
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: center;
+	overflow: hidden;
+	white-space: nowrap;
+}
+body.dual-layout section#table-view .layout-header section.search .input {
+	height: calc(1.4583rem - 0px);
+	font-size: 0.625rem;/* 12px */
+	line-height: calc(1.4583rem - 0px);/* height와 동일하게 설정하여 커서위치 조정 */
+}
+	
+section#table-view .layout-header section.search .input:empty::before {
+	content: attr(data-placeholder);
+	color: gray;
+}
+section#table-view .layout-header section.search .search-icon {
+	width: 1.7708rem;
+	height: 1.7708rem;
+	background: #313942;
+	border-radius: 0 4px 4px 0;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+}
+body.dual-layout section#table-view .layout-header section.search .search-icon {
+	width: 1.4583rem;
+	height: 1.4583rem;
+}
+section#table-view .layout-body {
+	width: 100%;
+	margin-top: 1.2rem;
+	padding: 0;
+}
+body.dual-layout section#table-view .layout-body {
+	margin-top: 0.4167rem;/* 8px */
+	height: calc(100vh - 0.8333rem - 1.4583rem - 0.4167rem - 0.4167rem - 1.4583rem - 0.8333rem);
+	overflow: auto;
+	border-top: 1px solid #14171A;
+	border-bottom: 1px solid #14171A;
+}
+section#table-view .layout-body table {
+	width: 100%;
+	border-top: 1px solid #14171A;/* Primary/Primary_1/800 */
+	border-bottom: 1px solid #14171A;/* Primary/Primary_1/800 */
+	border-left: 0;
+	border-right: 0;
+	border-collapse: collapse;
+}
+body.dual-layout section#table-view .layout-body table {
+	border-top: 0;
+	border-bottom: 0;
+}
+section#table-view .layout-body table thead {
+	background: #313942;
+	color: #FFFFFF;
+	border: 0;
+	position: sticky;
+	top: 0;
+}
+section#table-view .layout-body table thead tr {
+	border: 0;
+}
+section#table-view .layout-body table thead td {
+	border: 0;
+	text-align: center;
+	padding: 0 0.8333rem;/* 16px */
+	height: 2.6042rem;/* 50px */
+	white-space: nowrap;
+}
+body.dual-layout section#table-view .layout-body table thead td {
+	padding: 0 4px;
+	height: 2.0833rem;/* 40px */
+	white-space: normal;
+}
+section#table-view .layout-body table.no_pagination thead td {
+	background: #1865A1;/* Primary/Primary_2/500 */
+}
+section#table-view .layout-body table thead td:not(:first-child) {
+	border-left: 1px solid #D9D9D9;
+}
+section#table-view .layout-body table thead td > div {
+	font-family: 'NanumBarunGothic';
+	font-style: normal;
+	font-weight: 600;
+	font-size: 0.8333rem;/* 16px */
+	line-height: 0.8333rem;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+}
+body.dual-layout section#table-view .layout-body table thead td > div {
+	font-size: 0.625rem;/* 12px */
+	line-height: 0.625rem;/* 12px */
+}
+section#table-view .layout-body table thead td span {
+	padding: 0 0.5rem;
+}
+section#table-view .layout-body table thead td .sort-icon {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+}
+section#table-view .layout-body table thead td .sort-icon img {
+	padding: 0.1rem;
+}
+body.dual-layout section#table-view .layout-body table thead td .sort-icon img {
+	width: 7px;
+	height: 6px;
+}
+section#table-view .layout-body table tbody {
+	background: #FFFFFF;
+	color: #000000;
+	border: 0;
+}
+section#table-view .layout-body table tbody tr {
+	border: 0;
+}
+section#table-view .layout-body table tbody tr:hover {
+	background-color: #E9F3FA;/* Sub/Sub_2/50 */
+}
+section#table-view .layout-body table tbody tr.mapped-disabled {
+	color: #8A8F94;
+}
+section#table-view .layout-body table tbody tr.mapped-disabled:hover {
+	background-color: #F4F5F6;
+}
+section#table-view .layout-body table tbody tr.mapped-disabled input {
+	cursor: not-allowed;
+}
+section#table-view .layout-body table tbody tr.selected {
+	color: #FFF;
+	background-color: #1968A6;/* Sub/Sub_2/600 */
+}
+section#table-view .layout-body table tbody td {
+	border: 1px solid #D9D9D9;
+	text-align: center;
+	padding: 0 0.8333rem;/* 16px */
+	height: 3.0208rem;/* 58px */
+	font-family: 'NanumBarunGothic';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 0.8333rem;/* 16px */
+	line-height: 0.8333rem;
+}
+body.dual-layout section#table-view .layout-body table tbody td {
+	height: 2.0833rem;/* 40px */
+}
+body.dual-layout section#table-view .layout-body table tbody td {
+	font-size: 0.625rem;/* 12px */
+	line-height: 0.625rem;/* 12px */
+}
+section#table-view .layout-body table.no_pagination tbody td {
+	background: #E8F0F6;/* Primary/Primary_2/50 */
+}
+section#table-view .layout-body table tbody td:first-child {
+	border-left: 0;
+}
+section#table-view .layout-body table tbody td:last-child {
+	border-right: 0;
+}
+section#table-view .layout-body table tbody tr:last-child td {
+	border-bottom: 1px solid #14171A;/* Primary/Primary_1/800 */
+}
+body.dual-layout section#table-view .layout-body table tbody tr:last-child td {
+	border-bottom: 1px solid #D9D9D9;
+}
+section#table-view .layout-body table tbody td button {
+	display: inline-block;
+	white-space: nowrap;
+	text-align: center;
+}
+section#table-view .layout-body table tbody td button img {
+	width: 1.25rem;/* 24px */
+	height: 1.25rem;/* 24px */
+}
+body.dual-layout section#table-view .layout-body table tbody td button img {
+	width: 1.0417rem;/* 20px */
+	height: 1.0417rem;/* 20px */
+}
+section#table-view .layout-body table tbody td .edit,
+section#table-view .layout-body table tbody td .edit-off {
+	border: 0;
+	margin: 0;
+	padding: 0;
+	background-color: transparent;
+	cursor: pointer;
+}
+section#table-view .layout-body table tbody td .edit-off {
+	cursor: not-allowed;
+}
+section#table-view .layout-footer {
+	margin-top: 1.2rem;
+	padding: 0;
+}
+body.dual-layout section#table-view .layout-footer {
+	margin-top: 0.4167rem;/* 8px */
+}
+
+
+/* tbody td attribute 관련 ================================================= */
+section#table-view .layout-body .attribute-chip-container {
+	display: flex;
+	align-items: center;
+	gap: 0.4167rem;
+	height: 100%;
+}
+section#table-view .layout-body .attribute-chip-container .chip {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	background-color: #D6D7D9;
+	border-radius: 1rem;
+	box-sizing: border-box;
+	padding: 0 0.2083rem;
+	max-width: 100%;
+	gap: 0.4167rem;
+	height: 1.8229rem;
+}
+section#table-view .layout-body .attribute-chip-container .chip span {
+	display: inline-block;
+	background-color: #FFFFFF;
+	color: #000000;
+	padding: 0 0.4167rem;
+	border-radius: 0.8rem;
+	height: 1.4062rem;
+	line-height: 1.4062rem;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+}
+section#table-view .layout-body .attribute-chip-container .more-indicator {
+	cursor: help;
+}
+body.dual-layout section#table-view .layout-body .attribute-chip-container {
+	gap: 0.25rem;
+}
+body.dual-layout section#table-view .layout-body .attribute-chip-container .chip {
+	height: 1.375rem;
+	padding: 0 0.2rem;
+	border-radius: 0.7rem;
+	gap: 0.25rem;
+}
+body.dual-layout section#table-view .layout-body .attribute-chip-container .chip span {
+	height: 1rem;
+	line-height: 1rem;
+	padding: 0 0.3rem;
+	border-radius: 0.5rem;
+	font-size: 0.625rem;
+}

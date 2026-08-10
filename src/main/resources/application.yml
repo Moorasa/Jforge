@@ -1,0 +1,31 @@
+spring:
+  application:
+    name: j-forge
+  mvc:
+    view:
+      prefix: /WEB-INF/views/
+      suffix: .jsp
+  datasource:
+    # 대상: postgres DB 안의 jforge 스키마 (currentSchema로 검색경로 고정)
+    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=jforge
+    username: postgres
+    password: "1234"
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      # DB 미도달 시에도 앱이 부팅되게(dev 편의). 운영에서는 재검토/프로파일 분리.
+      initialization-fail-timeout: -1
+      connection-timeout: 5000
+      minimum-idle: 0
+      maximum-pool-size: 5
+
+mybatis:
+  mapper-locations: classpath*:mapper/**/*.xml
+  type-aliases-package: com.jworks.forge
+  configuration:
+    map-underscore-to-camel-case: true   # DB 대문자스네이크 ↔ 자바 카멜
+
+server:
+  # 8080은 로컬 IAM/MagicIAM이 점유 중이라 충돌 회피 위해 18080 사용
+  port: 18080
+  servlet:
+    context-path: /forge

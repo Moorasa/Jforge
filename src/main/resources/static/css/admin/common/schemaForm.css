@@ -1,0 +1,76 @@
+/* PROP_SCHEMA_JSON 속성폼 공용 스타일 (schemaFormRenderer.js 산출물 전용, P7-1 토큰 개편).
+   카탈로그 화면(P2-5, 라이트)과 스튜디오 속성패널(P3-4, 다크 .frg-dark 스코프)이 함께 로드한다.
+   색/배경은 forge-theme.css 의 --frg-field-* 토큰으로만 참조 → 라이트/다크 자동 분기.
+   ★ 페이지 폭(좁은 pane)에서도 넘치지 않도록 폼/그리드는 100% 폭 기준. */
+
+.frg-schema-slot { min-height: 160px; }
+.frg-schema-title {
+    font-size: 14px; font-weight: 700; color: var(--frg-field-text, #2d3748);
+    margin: 0 0 12px; padding-bottom: 8px;
+    border-bottom: 1px solid var(--frg-field-line, #edf2f7);
+}
+.frg-schema-form { display: flex; flex-direction: column; gap: 13px; max-width: 100%; }
+
+.frg-fld { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+.frg-fld-label { font-size: 12px; font-weight: 600; color: var(--frg-field-label, #333); }
+
+/* required 별표 시각 구분 */
+.frg-required { color: #e05c5c; font-weight: 700; margin-left: 4px; }
+
+/* boolean 체크박스 필드 */
+.frg-fld-boolean { flex-direction: row; }
+.frg-check-label {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 13px; color: var(--frg-field-text, #333); cursor: pointer;
+}
+.frg-check { width: 15px; height: 15px; accent-color: var(--frg-accent, #3d7ef0); }
+
+/* columns 반복행 그리드 — 좁은 pane 에서 넘치지 않게 100% 폭 + 셀 box-sizing */
+.frg-grid-actions { display: flex; justify-content: flex-end; margin-bottom: 6px; }
+.frg-grid-add { min-height: 28px; padding: 0 9px; font-size: 11px; }
+.frg-grid { width: 100%; border-collapse: collapse; table-layout: fixed; }
+.frg-grid th, .frg-grid td {
+    border: 1px solid var(--frg-field-line, #edf2f7);
+    padding: 5px 6px; text-align: left; word-break: break-word;
+    color: var(--frg-field-text, #333);
+}
+.frg-grid th {
+    background: var(--frg-field-head-bg, #f7fafc);
+    font-size: 10px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase;
+    color: var(--frg-field-label, #555);
+}
+.frg-grid-actions-head, .frg-grid-row-actions { width: 90px; text-align: center !important; white-space: nowrap; }
+.frg-grid-row-actions { padding: 3px !important; }
+.frg-grid-row-btn {
+    width: 19px; height: 23px; padding: 0; margin: 0 1px;
+    border: 1px solid var(--frg-field-border, #cbd5e0); border-radius: 4px;
+    background: var(--frg-field-bg, #fff); color: var(--frg-field-text, #333); cursor: pointer;
+}
+.frg-grid-row-btn:hover { border-color: var(--frg-accent, #3d7ef0); color: var(--frg-accent, #3d7ef0); }
+.frg-grid-row-btn-remove:hover { border-color: #e05c5c; color: #e05c5c; }
+.frg-grid .frg-cell {
+    width: 100%; box-sizing: border-box; padding: 5px 7px; font-size: 12px;
+    background: var(--frg-field-bg, #fff); color: var(--frg-field-text, #333);
+    border: 1px solid var(--frg-field-border, #cbd5e0); border-radius: 4px;
+}
+.frg-grid .frg-cell:focus { outline: none; border-color: var(--frg-accent, #3d7ef0); }
+.frg-grid .frg-empty { text-align: center; color: var(--frg-field-label, #a0aec0); font-size: 12px; }
+
+/* chips */
+.frg-chips {
+    display: flex; flex-wrap: wrap; gap: 6px; align-items: center;
+    border: 1px solid var(--frg-field-border, #cbd5e0); border-radius: 6px; padding: 6px;
+    background: var(--frg-field-bg, #fff);
+}
+.frg-chip {
+    font-size: 12px; background: var(--frg-field-head-bg, #edf2f7);
+    color: var(--frg-field-text, #2d3748); border: 1px solid transparent; border-radius: 12px; padding: 2px 10px;
+    cursor: pointer;
+}
+.frg-chip:hover { border-color: var(--frg-accent, #3d7ef0); }
+.frg-chip-input {
+    flex: 1; min-width: 120px; border: 0; padding: 4px;
+    background: transparent; color: var(--frg-field-text, #2d3748);
+    font-family: inherit; font-size: 12px;
+}
+.frg-chip-input:focus { outline: none; }

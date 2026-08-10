@@ -1,0 +1,99 @@
+section#form-view {
+	width: 100%;
+}
+
+section#form-view>.encase {
+	padding: 1.25rem;
+}
+body.dual-layout section#form-view>.encase {
+	padding: 0.8333rem;/* 16px */
+}
+
+article.setting-container {
+	display: flex;
+	flex-direction: column;
+	gap: 1.25rem;
+}
+body.dual-layout article.setting-container {
+	gap: 0.4167rem;/* 8px */
+}
+	
+section#form-view .header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: -webkit-fill-available;
+}
+
+section#form-view .header .buttons {
+	display: flex;
+	gap: 0.8333rem;
+}
+
+section#form-view .body {
+	background: #f2f2f2;
+	padding: 1.25rem;
+	width: -webkit-fill-available;
+}
+body.dual-layout section#form-view .body {
+	padding: 0.8333rem;/* 16px */
+}
+	
+section#form-view .body ul {
+	display: flex;
+	flex-direction: column;
+	gap: 0.4167rem;
+}
+body.dual-layout section#form-view .body ul {
+	gap: 0.4167rem;/* 8px */
+}
+
+section#form-view .body .policy-item {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: center;
+	min-height: 2.7083rem;
+	width: 100%;
+}
+body.dual-layout section#form-view .body .policy-item {
+	min-height: 2.0833rem;/* 40px */
+}
+	
+section#form-view .body .setting-label {
+	width: 12.5000rem;
+}
+
+section#form-view .body .setting-controls {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 3.1250rem;
+	flex: 1;
+}
+
+section#form-view .body .setting-controls select, 
+section#form-view .body .setting-controls input[type="text"] {
+	width: 100%;
+	box-sizing: border-box;
+}
+
+section#form-view .body .setting-controls label {
+	display: flex;
+	align-items: center;
+	gap: 0.25rem;
+	cursor: pointer;
+}
+
+section#form-view .has-help {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.7292rem;
+}
+
+section#form-view .help-icon {
+/* 	width: 1rem; */
+/* 	height: 1rem; */
+	cursor: pointer;
+	flex-shrink: 0;
+}

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jworks.forge.gen.hist.GenHistMapper">
+
+    <!-- 조회용 컬럼: FILE_LIST_JSON(JSONB)을 ::text 로 원문 문자열로 뽑는다(재해석/가공 없이 그대로 전달). -->
+    <sql id="genHistColumns">
+        GEN_HIST_ID, SCREEN_ID, GEN_AT,
+        FILE_LIST_JSON::text AS FILE_LIST_JSON,
+        RESULT_CODE
+    </sql>
+
+    <!-- INSERT: SCREEN_ID/FILE_LIST_JSON(::jsonb)/RESULT_CODE 만. GEN_AT은 DB DEFAULT(now()). -->
+    <insert id="insert" parameterType="com.jworks.forge.gen.hist.GenHist"
+            useGeneratedKeys="true" keyProperty="genHistId" keyColumn="gen_hist_id">
+        INSERT INTO TB_FRG_GEN_HIST (
+            SCREEN_ID, FILE_LIST_JSON, RESULT_CODE
+        ) VALUES (
+            #{screenId}, #{fileListJson}::jsonb, #{resultCode}
+        )
+    </insert>
+
+    <select id="selectByScreen" resultType="com.jworks.forge.gen.hist.GenHist">
+        SELECT <include refid="genHistColumns"/>
+          FROM TB_FRG_GEN_HIST
+         WHERE SCREEN_ID = #{screenId}
+         ORDER BY GEN_AT DESC, GEN_HIST_ID DESC
+    </select>
+
+</mapper>

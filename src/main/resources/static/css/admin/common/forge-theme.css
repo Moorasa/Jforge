@@ -1,0 +1,267 @@
+/* ===============================================================================================
+Name : forge-theme.css
+Description : J-FORGE 빌더 전용 디자인 시스템 (P7-1).
+             컨셉 = "다크 크롬 + 라이트 캔버스" 개발 도구 룩. 셸(헤더·팔레트·속성패널)은 다크,
+             작업 결과물이 보이는 콘텐츠/캔버스는 라이트 — 생성물이 실물처럼 도드라진다.
+
+★ 범위 경계 ★
+ 이 파일은 빌더 자신의 도그푸딩 화면(home/project/catalog/studio) 전용이다.
+ - 생성물(타겟 프로젝트)에는 절대 포함하지 않는다: RuntimeSyncer 복사 목록·templates/gen·
+   번들 매니페스트(admin/common/header.jsp)에 추가 금지.
+ - 프리뷰 iframe(studio/preview) 문서에도 링크하지 않는다(생성물 룩 보존).
+ - 셀렉터는 전부 .frg-* / body.frg-app 스코프 — 번들 런타임 CSS(init.css 등)와 충돌 없음.
+=============================================================================================== */
+
+/* ── 디자인 토큰 ─────────────────────────────────────────────────────────── */
+:root {
+    /* 크롬(다크) */
+    --frg-chrome-bg: #161b24;        /* 최심부: 상단 헤더 */
+    --frg-chrome-bg-2: #1e2530;      /* 패널 */
+    --frg-chrome-bg-3: #273040;      /* 패널 내 인셋/호버 */
+    --frg-chrome-border: #323d4e;
+    --frg-chrome-text: #e2e8f2;
+    --frg-chrome-text-dim: #8e9bb0;
+
+    /* 캔버스(라이트) */
+    --frg-canvas-bg: #edf0f5;
+    --frg-surface: #ffffff;
+    --frg-surface-border: #dde3eb;
+    --frg-text: #222933;
+    --frg-text-dim: #6d7787;
+
+    /* 포인트/상태 */
+    --frg-accent: #3d7ef0;
+    --frg-accent-strong: #2c63c8;
+    --frg-accent-soft: #e8f0fe;
+    --frg-gen: #1f9d63;              /* 생성(파일쓰기) 전용 강조 */
+    --frg-gen-strong: #177c4e;
+    --frg-danger: #d64545;
+    --frg-danger-soft: #fdecec;
+    --frg-warn: #cf8418;
+    --frg-ok: #1f9d63;
+
+    /* 타이포 */
+    --frg-font: 'NanumBarunGothic', 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
+    --frg-mono: Consolas, 'SF Mono', 'Courier New', monospace;
+
+    /* 형태 */
+    --frg-radius: 8px;
+    --frg-radius-sm: 5px;
+    --frg-shadow: 0 1px 2px rgba(15, 23, 42, .05), 0 1px 3px rgba(15, 23, 42, .08);
+    --frg-shadow-lg: 0 12px 32px rgba(15, 23, 42, .22);
+
+    /* 폼 필드(라이트 기본값 — .frg-dark 스코프가 다크 값으로 재정의) */
+    --frg-field-bg: #ffffff;
+    --frg-field-border: #c9d2de;
+    --frg-field-text: #222933;
+    --frg-field-label: #46505e;
+    --frg-field-line: #e7ecf2;
+    --frg-field-head-bg: #f4f6fa;
+}
+
+/* 다크 패널 내부 폼 필드 값 재정의(스튜디오 속성패널 등) */
+.frg-dark {
+    --frg-field-bg: #141922;
+    --frg-field-border: #3a4557;
+    --frg-field-text: #e2e8f2;
+    --frg-field-label: #aeb9cc;
+    --frg-field-line: #2c3646;
+    --frg-field-head-bg: #232c39;
+}
+
+/* ── 앱 베이스 ──────────────────────────────────────────────────────────── */
+/* 런타임 공통 init.css의 1vw 루트 배율이 빌더 본문만 확대하지 않도록 격리한다. */
+html:has(body.frg-app) {
+    font-size: 16px;
+}
+body.frg-app {
+    background: var(--frg-canvas-bg);
+    color: var(--frg-text);
+    font-family: var(--frg-font);
+    font-size: 13px;
+    letter-spacing: -0.01em;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+body.frg-app > main {
+    align-self: stretch;
+    min-width: 0;
+}
+
+/* ── 상단 셸 헤더(다크 크롬) ────────────────────────────────────────────── */
+.frg-shell-header {
+    display: flex; align-items: center; gap: 28px;
+    height: 52px; flex: 0 0 52px; box-sizing: border-box; padding: 0 20px;
+    background: var(--frg-chrome-bg);
+    border-bottom: 1px solid var(--frg-chrome-border);
+    position: sticky; top: 0; z-index: 40;
+}
+.frg-brand {
+    display: flex; align-items: baseline; gap: 8px;
+    margin: 0; font-size: 17px; font-weight: 700; letter-spacing: .02em;
+    color: var(--frg-chrome-text); text-decoration: none;
+}
+.frg-brand::before {
+    content: ""; align-self: center; width: 18px; height: 18px; border-radius: 5px;
+    background: linear-gradient(135deg, var(--frg-accent) 0%, #7c5cff 100%);
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, .08) inset;
+}
+.frg-brand-sub {
+    font-size: 11px; font-weight: 400; color: var(--frg-chrome-text-dim); letter-spacing: .06em;
+}
+.frg-menu { display: flex; align-items: center; gap: 4px; }
+.frg-menu a {
+    display: inline-flex; align-items: center; height: 32px; padding: 0 14px;
+    border-radius: 6px; font-size: 13px; font-weight: 600;
+    color: var(--frg-chrome-text-dim); text-decoration: none;
+    transition: color .12s, background .12s;
+}
+.frg-menu a:hover { color: var(--frg-chrome-text); background: var(--frg-chrome-bg-3); }
+.frg-menu a.is-active { color: #fff; background: var(--frg-accent); }
+
+/* ── 브레드크럼 / 콘텐츠 ────────────────────────────────────────────────── */
+.frg-breadcrumb {
+    padding: 12px 24px 0; font-size: 12px; color: var(--frg-text-dim);
+}
+.frg-content {
+    flex: 1 1 auto; width: 100%; max-width: none; min-width: 0; box-sizing: border-box;
+    padding: 16px 20px 24px; margin: 0;
+    align-items: stretch;
+}
+
+/* 섹션 = 라이트 카드 */
+.frg-section {
+    background: var(--frg-surface);
+    border: 1px solid var(--frg-surface-border);
+    border-radius: var(--frg-radius);
+    box-shadow: var(--frg-shadow);
+    padding: 18px 20px;
+}
+.frg-section + .frg-section { margin-top: 16px; }
+.frg-section > h2 {
+    display: flex; align-items: center; gap: 8px;
+    margin: 0 0 14px; font-size: 15px; color: var(--frg-text);
+}
+.frg-section > h2::before {
+    content: ""; width: 4px; height: 15px; border-radius: 2px; background: var(--frg-accent);
+}
+.frg-desc { font-size: 12px; color: var(--frg-text-dim); margin: 0 0 12px; }
+
+/* ── 버튼 ──────────────────────────────────────────────────────────────── */
+.frg-btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+    height: 32px; padding: 0 14px;
+    border: 1px solid transparent; border-radius: 6px;
+    font-family: var(--frg-font); font-size: 13px; font-weight: 600;
+    cursor: pointer; transition: background .12s, border-color .12s, color .12s;
+}
+.frg-btn:disabled { opacity: .45; cursor: not-allowed; }
+.frg-btn-primary { background: var(--frg-accent); color: #fff; }
+.frg-btn-primary:hover:not(:disabled) { background: var(--frg-accent-strong); }
+.frg-btn-secondary { background: transparent; color: var(--frg-text); border-color: var(--frg-field-border); }
+.frg-btn-secondary:hover:not(:disabled) { border-color: var(--frg-accent); color: var(--frg-accent); }
+.frg-btn-danger { background: transparent; color: var(--frg-danger); border-color: transparent; }
+.frg-btn-danger:hover:not(:disabled) { background: var(--frg-danger-soft); }
+/* 생성 = 파일쓰기(저장과 시각 구분) */
+.frg-btn-generate { background: var(--frg-gen); color: #fff; }
+.frg-btn-generate:hover:not(:disabled) { background: var(--frg-gen-strong); }
+.frg-btn-sm { height: 26px; padding: 0 10px; font-size: 12px; }
+
+/* 다크 패널 위 secondary(스튜디오 상단바 등) */
+.frg-dark .frg-btn-secondary { color: var(--frg-chrome-text); border-color: var(--frg-chrome-border); }
+.frg-dark .frg-btn-secondary:hover:not(:disabled) { border-color: var(--frg-accent); color: #fff; }
+
+/* ── 폼 필드(라이트/다크 공용 — 토큰으로 분기) ─────────────────────────── */
+.frg-input, .frg-select {
+    height: 32px; padding: 0 10px; box-sizing: border-box;
+    background: var(--frg-field-bg); color: var(--frg-field-text);
+    border: 1px solid var(--frg-field-border); border-radius: 6px;
+    font-family: var(--frg-font); font-size: 13px;
+    transition: border-color .12s, box-shadow .12s;
+}
+textarea.frg-input { height: auto; padding: 8px 10px; }
+.frg-input:focus, .frg-select:focus {
+    outline: none; border-color: var(--frg-accent);
+    box-shadow: 0 0 0 3px rgba(61, 126, 240, .18);
+}
+.frg-input::placeholder { color: var(--frg-field-label); opacity: .6; }
+.frg-label { font-size: 12px; font-weight: 600; color: var(--frg-field-label); }
+.frg-mono { font-family: var(--frg-mono); font-size: 12px; }
+
+/* ── 테이블 ────────────────────────────────────────────────────────────── */
+.frg-table { width: 100%; border-collapse: collapse; }
+.frg-table th {
+    padding: 8px 10px; text-align: left;
+    font-size: 11px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase;
+    color: var(--frg-text-dim); background: var(--frg-field-head-bg);
+    border-bottom: 1px solid var(--frg-surface-border);
+}
+.frg-table td {
+    padding: 9px 10px; font-size: 13px; border-bottom: 1px solid var(--frg-field-line);
+}
+.frg-table tbody tr:hover td { background: #f7f9fc; }
+
+/* ── 뱃지(모듈 카테고리 색 구분) ────────────────────────────────────────── */
+.frg-badge, .frg-item-badge {
+    display: inline-flex; align-items: center;
+    font-size: 10px; font-weight: 700; letter-spacing: .04em;
+    border-radius: 10px; padding: 2px 8px; flex-shrink: 0;
+    background: #e8ecf2; color: #5a6575; border: 0;
+}
+[data-cat="VIEW"]   { background: #e3edfd; color: #2c63c8; }
+[data-cat="FILTER"] { background: #efe8fd; color: #6d3fd1; }
+[data-cat="ACTION"] { background: #fdefe0; color: #b26a10; }
+[data-cat="DETAIL"] { background: #e0f5ec; color: #177c4e; }
+[data-cat="LAYOUT"] { background: #e8ecf2; color: #5a6575; }
+
+/* 다크 스코프의 뱃지 — 동일 hue, 다크 배경용 채도 */
+.frg-dark [data-cat="VIEW"]   { background: rgba(61, 126, 240, .18); color: #7fa9f5; }
+.frg-dark [data-cat="FILTER"] { background: rgba(124, 92, 255, .18); color: #a793f7; }
+.frg-dark [data-cat="ACTION"] { background: rgba(217, 138, 31, .16); color: #e2a75a; }
+.frg-dark [data-cat="DETAIL"] { background: rgba(31, 157, 99, .16);  color: #57c495; }
+.frg-dark [data-cat="LAYOUT"] { background: rgba(142, 155, 176, .16); color: #a9b4c7; }
+
+/* ── 빈 상태/메시지 ─────────────────────────────────────────────────────── */
+.frg-empty { color: var(--frg-text-dim); text-align: center; padding: 22px 12px; font-size: 13px; }
+.frg-dark .frg-empty { color: var(--frg-chrome-text-dim); }
+.frg-msg-ok { color: var(--frg-ok); }
+.frg-msg-err { color: var(--frg-danger); }
+.frg-msg-warn { color: var(--frg-warn); }
+
+/* ── 모달(경량 — 생성 dry-run/모듈 선택 등 빌더 전용) ──────────────────── */
+.frg-modal-backdrop {
+    position: fixed; inset: 0; z-index: 90;
+    background: rgba(10, 14, 20, .55);
+    display: flex; align-items: center; justify-content: center;
+}
+/* display 선언이 UA 의 [hidden]{display:none} 을 이기므로 명시적으로 되돌린다.
+   (마크업에 backdrop 을 두고 hidden 속성으로 여닫는 화면 — 예: 프로젝트 목록의 DB 연결 모달) */
+.frg-modal-backdrop[hidden] { display: none; }
+.frg-modal {
+    width: min(560px, calc(100vw - 48px)); max-height: min(72vh, 640px);
+    display: flex; flex-direction: column;
+    background: var(--frg-surface); color: var(--frg-text);
+    border-radius: 10px; box-shadow: var(--frg-shadow-lg); overflow: hidden;
+}
+.frg-modal-head {
+    display: flex; align-items: center; justify-content: space-between; gap: 10px;
+    padding: 13px 18px; border-bottom: 1px solid var(--frg-surface-border);
+    font-size: 14px; font-weight: 700;
+}
+.frg-modal-body { padding: 14px 18px; overflow: auto; }
+.frg-modal-foot {
+    display: flex; justify-content: flex-end; gap: 8px;
+    padding: 12px 18px; border-top: 1px solid var(--frg-surface-border);
+}
+.frg-modal-close {
+    border: 0; background: transparent; cursor: pointer;
+    font-size: 16px; line-height: 1; color: var(--frg-text-dim); padding: 2px 6px;
+}
+.frg-modal-close:hover { color: var(--frg-text); }
+
+/* ── 다크 패널 스크롤바(웹킷) ───────────────────────────────────────────── */
+.frg-dark ::-webkit-scrollbar { width: 10px; height: 10px; }
+.frg-dark ::-webkit-scrollbar-thumb { background: var(--frg-chrome-bg-3); border-radius: 5px; }
+.frg-dark ::-webkit-scrollbar-thumb:hover { background: var(--frg-chrome-border); }
+.frg-dark ::-webkit-scrollbar-track { background: transparent; }

@@ -37,11 +37,27 @@ window.JWorks_JSCommonListTreeView = window.JWorks_JSCommonListTreeView || {};
 		}
 
 		$container = options.$container;
-		apiInfo = options.apiInfo;
-		features = options.features || {};
-		callbacks = options.callbacks || {};
-		dataMapping = options.dataMapping || {};
-		searchOptions = options.search || {};
+		// init 은 두 번 불린다(commonList.showView + 생성물 listTreeViewJs). 넘어오지 않은
+		// 도메인 배선으로 덮어쓰지 않는다 — 상세는 commonListTableView.init 주석 참조.
+		if (options.apiInfo) {
+			apiInfo = options.apiInfo;
+		}
+		if (options.features) {
+			features = options.features;
+		}
+		if (options.callbacks) {
+			callbacks = options.callbacks;
+		}
+		if (options.dataMapping) {
+			dataMapping = options.dataMapping;
+		}
+		if (options.search) {
+			searchOptions = options.search;
+		}
+		features = features || {};
+		callbacks = callbacks || {};
+		dataMapping = dataMapping || {};
+		searchOptions = searchOptions || {};
 		searchIndex = [];
 		lastSearch = null;
 		lastMatchCount = 0;
@@ -133,6 +149,11 @@ window.JWorks_JSCommonListTreeView = window.JWorks_JSCommonListTreeView || {};
 	}
 
 	treeView.getList = function() {
+		// 배선 전이면 조회할 대상이 없다(상세는 commonListTableView.getList 주석 참조).
+		if (!apiInfo || !apiInfo.url) {
+			return;
+		}
+
 		const data = {
 			...{
 				//				category: $filter.val(),

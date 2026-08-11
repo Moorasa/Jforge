@@ -209,9 +209,15 @@ window.JWorks_JSCommonList = window.JWorks_JSCommonList || {};
 			}, window.location.origin);
 		}
 		
-		// delay가 아닐 때만 getList() 호출
+		// delay가 아닐 때만 getList() 호출.
+		// **다음 매크로태스크로 미룬다.** showView() 가 부르는 view.init() 에는 apiInfo 가 없다
+		// (도메인 배선은 생성물 listXxxViewJs 의 별도 ready 핸들러가 채운다). 예전에는 여기서
+		// 동기로 getList() 를 불러 배선 전에 조회가 나갔고, 생성된 **모든 목록 화면**이
+		// getCurrentSearchData() 의 apiInfo.defaultSort 에서 TypeError 로 죽었다.
 		if (!_state.delayInitialLoad) {
-			view.getList();
+			setTimeout(function() {
+				view.getList();
+			}, 0);
 		} else {
 			console.log("[JWorks] delayInitialLoad가 true이므로 초기 렌더링을 대기합니다.");
 		}

@@ -1,9 +1,10 @@
-<#-- CARD_VIEW — 캔버스 인라인 파셜(§17.4). module/cardView.ftl 과 동형이되 id 를 쓰지 않는다
-     (같은 모듈을 N개 놓을 수 있으므로 문서 내 id 중복을 만들지 않는다).
+<#-- CARD_VIEW — 캔버스 인라인 파셜(§17.4). module/cardView.ftl 과 동형.
+     §17.13 id 는 **캔버스에 하나뿐일 때만** 찍는다 — #card-view 규칙 73개가 전부 id 선택자라
+     클래스만으로는 MagicIAM 스타일이 하나도 걸리지 않는다. 2개 이상이면 id 중복이므로 생략.
      🔒 자유문자열은 htmlText/htmlAttr, class 토큰은 cssToken 만. -->
 <#assign fcCardClass = cssToken((props["cardStyleClass"])!"")>
 <#assign fcSelectMode = (props["selectMode"])!"none">
-            <section class="card-view<#if fcCardClass?length gt 0> ${fcCardClass}</#if>"
+            <section<#if (canvasSoleType["CARD_VIEW"])!false> id="card-view"</#if> class="card-view<#if fcCardClass?length gt 0> ${fcCardClass}</#if>"
                 data-select-mode="${htmlAttr(fcSelectMode)}"
                 data-title-field="${htmlAttr((props["titleField"])!"")}"
                 data-subtitle-field="${htmlAttr((props["subtitleField"])!"")}"

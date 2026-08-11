@@ -4,7 +4,9 @@
 <#assign fcColumns = (props["columns"])![]>
 <#assign fcSelectMode = (props["selectMode"])!"none">
 <#assign fcPagingYn = (props["pagingYn"])!false>
-            <section class="table-view" data-select-mode="${htmlAttr(fcSelectMode)}">
+            <#-- §17.13 캔버스에 TABLE_VIEW 가 하나뿐이면 MagicIAM 공통 CSS 가 요구하는 id 를 함께 찍는다
+                 (#table-view 규칙 118개는 전부 id 선택자다). 2개 이상이면 id 중복이 되므로 클래스만. -->
+            <section<#if (canvasSoleType["TABLE_VIEW"])!false> id="table-view"</#if> class="table-view" data-select-mode="${htmlAttr(fcSelectMode)}">
                 <div class="layout-body">
                     <table>
                         <colgroup>

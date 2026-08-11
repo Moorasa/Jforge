@@ -6,7 +6,7 @@
     <script defer src="${ctx}/js/admin/freeBoard/freeBoard.js"></script>
     <div class="frg-fc-sheet">
         <div class="frg-fc-item frg-fc-1">
-            <section class="table-view" data-select-mode="none">
+            <section id="table-view" class="table-view" data-select-mode="none">
                 <div class="layout-body">
                     <table>
                         <colgroup>
@@ -26,7 +26,7 @@
             </section>
         </div>
         <div class="frg-fc-item frg-fc-2">
-            <section class="form-view">
+            <section id="form-view" class="form-view">
                 <div class="layout-body">
                     <form class="frg-fc-form" onsubmit="return false;">
                         <div class="form-field" data-name="boardNm">

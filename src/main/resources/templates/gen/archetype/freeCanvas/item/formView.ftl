@@ -1,6 +1,7 @@
 <#-- FORM_VIEW — 캔버스 인라인 파셜(§17.4). input type 은 화이트리스트 통과값만. -->
 <#assign fcFields = (props["fields"])![]>
-            <section class="form-view">
+            <#-- §17.13 하나뿐일 때만 id(#form-view 규칙 24개). -->
+            <section<#if (canvasSoleType["FORM_VIEW"])!false> id="form-view"</#if> class="form-view">
                 <div class="layout-body">
                     <form class="frg-fc-form" onsubmit="return false;">
                     <#list fcFields as field>

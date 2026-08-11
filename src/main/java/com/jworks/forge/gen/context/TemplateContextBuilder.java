@@ -1,6 +1,7 @@
 package com.jworks.forge.gen.context;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -189,6 +190,7 @@ public class TemplateContextBuilder {
         List<Map<String, Object>> canvasItems = slots.get("canvasArea");
         if (canvasItems != null) {
             model.put("canvasTree", buildCanvasTree(canvasItems));
+            model.put("canvasSoleType", buildCanvasSoleType(canvasItems));
         }
         // ※ listArea 뷰 본문 include 접미사(listAreaViewSuffix, 계약 §8.1)는 여기서 파생하지 않는다.
         //   include 파일명은 파이프라인 산출 아티팩트 파일명과 반드시 일치해야 하므로, 그 정본인
@@ -211,6 +213,39 @@ public class TemplateContextBuilder {
         putIfNumber(canvas, node, "widthPx");
         putIfNumber(canvas, node, "heightPx");
         return canvas;
+    }
+
+    /**
+     * §17.13 캔버스에 <b>정확히 한 개만</b> 놓인 모듈 타입 집합(moduleTypeCode → true).
+     *
+     * <p><b>왜 필요한가</b>: MagicIAM 공통 CSS는 뷰를 <b>ID</b>로 잡는다 —
+     * {@code #table-view} 118개, {@code #basic-info} 92개, {@code #tree-view} 86개,
+     * {@code #card-view} 73개, {@code #form-view} 24개, {@code #associate-info} 18개(합 411).
+     * 클래스({@code .table-view})로 잡는 규칙은 <b>0개</b>다. 슬롯 아키타입의 모듈 템플릿은
+     * {@code id}와 {@code class}를 함께 찍지만, FREE_CANVAS 파셜은 같은 뷰를 여러 개 놓을 수 있어
+     * ID 중복을 피하려 {@code class}만 찍었다 — 그 결과 <b>모든 자유배치 화면이 무스타일</b>이었다.
+     *
+     * <p>그래서 <b>그 타입이 캔버스에 하나뿐일 때만</b> ID를 함께 찍는다. 중복이 원천적으로 불가능하고
+     * 판정이 결정적이다. 같은 뷰를 2개 이상 놓은 캔버스는 종전대로 클래스만 나간다(알려진 한계 —
+     * ID는 문서상 유일해야 하므로 여기서 더 나갈 수 없다).
+     *
+     * @param items canvasArea 인스턴스 목록(평면 — 중첩은 layoutParentId 로 표현된다)
+     * @return 등장 횟수가 1인 moduleTypeCode 만 담긴 맵. 템플릿은 {@code (canvasSoleType["X"])!false} 로 읽는다
+     */
+    private Map<String, Boolean> buildCanvasSoleType(List<Map<String, Object>> items) {
+        Map<String, Integer> counts = new LinkedHashMap<>();
+        for (Map<String, Object> inst : items) {
+            if (inst != null && inst.get("moduleTypeCode") instanceof String code && !code.isEmpty()) {
+                counts.merge(code, 1, Integer::sum);
+            }
+        }
+        Map<String, Boolean> sole = new LinkedHashMap<>();
+        counts.forEach((code, n) -> {
+            if (n == 1) {
+                sole.put(code, Boolean.TRUE);
+            }
+        });
+        return Collections.unmodifiableMap(sole);
     }
 
     /**

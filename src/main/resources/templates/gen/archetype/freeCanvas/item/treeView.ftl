@@ -1,6 +1,7 @@
-<#-- TREE_VIEW — 캔버스 인라인 파셜(§17.4). module/treeView.ftl 동형(id 미사용). -->
+<#-- TREE_VIEW — 캔버스 인라인 파셜(§17.4). module/treeView.ftl 동형.
+     §17.13 캔버스에 하나뿐일 때만 id 를 찍는다(#tree-view 규칙 86개는 전부 id 선택자). -->
 <#assign fcTreeClass = cssToken((props["treeStyleClass"])!"")>
-            <section class="tree-view<#if fcTreeClass?length gt 0> ${fcTreeClass}</#if>"
+            <section<#if (canvasSoleType["TREE_VIEW"])!false> id="tree-view"</#if> class="tree-view<#if fcTreeClass?length gt 0> ${fcTreeClass}</#if>"
                 data-select-mode="${htmlAttr((props["selectMode"])!"single")}"
                 data-label-field="${htmlAttr((props["labelField"])!"")}"
                 data-id-field="${htmlAttr((props["idField"])!"")}"

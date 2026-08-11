@@ -3,7 +3,8 @@
      🔒 input type 은 허용목록 리터럴 매핑만(원문 직접삽입 0). -->
 <#assign fcBiFields = (props["fields"])![]>
 <#assign fcBiClass = cssToken((props["basicStyleClass"])!"")>
-            <section class="basic-info view-mode<#if fcBiClass?length gt 0> ${fcBiClass}</#if>">
+            <#-- §17.13 하나뿐일 때만 id(#basic-info 규칙 92개). -->
+            <section<#if (canvasSoleType["DETAIL_BASIC"])!false> id="basic-info"</#if> class="basic-info view-mode<#if fcBiClass?length gt 0> ${fcBiClass}</#if>">
                 <div class="detail-info-view">
                     <div class="layout-column">
                     <#list fcBiFields as f>

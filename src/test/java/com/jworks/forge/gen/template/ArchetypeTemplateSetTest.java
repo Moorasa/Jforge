@@ -150,9 +150,9 @@ class ArchetypeTemplateSetTest {
         assertTrue(list.contains("userMgmtListTableView.jsp"), "TableView include 배선");
 
         String listJs = outs.get("archetype/mgmtListDetail/listJs");
-        assertTrue(listJs.contains("window.MagicIAM_JSUserMgmtAdmin"), "네임스페이스");
+        assertTrue(listJs.contains("window.JWorks_JSUserMgmtAdmin"), "네임스페이스");
         assertTrue(listJs.contains("__defined"), "IIFE __defined 골격");
-        assertTrue(listJs.contains("MagicIAM_JSCommonList.init"), "commonList 배선");
+        assertTrue(listJs.contains("JWorks_JSCommonList.init"), "commonList 배선");
 
         String tv = outs.get("module/tableView");
         assertTrue(tv.contains("data-name=\"userId\""), "컬럼 name 속성");
@@ -163,8 +163,8 @@ class ArchetypeTemplateSetTest {
         assertFalse(tv.contains("data-action=\"csvUpload\""), "csvYn=false 미반영");
 
         String tvJs = outs.get("module/tableViewJs");
-        assertTrue(tvJs.contains("window.MagicIAM_JSUserMgmtAdminTableView"), "TableView 네임스페이스");
-        assertTrue(tvJs.contains("MagicIAM_JSCommonListTableView.init"), "commonListTableView 배선");
+        assertTrue(tvJs.contains("window.JWorks_JSUserMgmtAdminTableView"), "TableView 네임스페이스");
+        assertTrue(tvJs.contains("JWorks_JSCommonListTableView.init"), "commonListTableView 배선");
         assertTrue(tvJs.contains("selectionType = \"checkbox\"".replace("= ", "")) || tvJs.contains("\"checkbox\""),
                 "selectionType 배선");
         assertTrue(tvJs.contains("name: \"userId\""), "컬럼 정의 배열");

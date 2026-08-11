@@ -5,13 +5,13 @@ Description : 대시보드 도그푸딩 화면 (P7-1). /api/projects + /api/scre
 
 XSS: 모든 텍스트 삽입은 createElement/textContent 로만. innerHTML(및 jQuery .html()) 미사용.
 =============================================================================================== */
-window.MagicIAM_JSForgeAdminHome = window.MagicIAM_JSForgeAdminHome || {};
+window.JWorks_JSForgeAdminHome = window.JWorks_JSForgeAdminHome || {};
 (function (page) {
     "use strict";
     if (page.__defined) { return; }
     page.__defined = true;
 
-    var ctx = (window.MagicIAM_JSForge && window.MagicIAM_JSForge.contextPath) || "";
+    var ctx = (window.JWorks_JSForge && window.JWorks_JSForge.contextPath) || "";
     var apiProjects = ctx + "/api/projects";
     var apiScreens = ctx + "/api/screens";
 
@@ -126,4 +126,4 @@ window.MagicIAM_JSForgeAdminHome = window.MagicIAM_JSForgeAdminHome || {};
     }
 
     document.addEventListener("DOMContentLoaded", load);
-})(window.MagicIAM_JSForgeAdminHome);
+})(window.JWorks_JSForgeAdminHome);

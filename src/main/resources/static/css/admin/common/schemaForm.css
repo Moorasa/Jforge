@@ -28,7 +28,14 @@
 /* columns 반복행 그리드 — 좁은 pane 에서 넘치지 않게 100% 폭 + 셀 box-sizing */
 .frg-grid-actions { display: flex; justify-content: flex-end; margin-bottom: 6px; }
 .frg-grid-add { min-height: 28px; padding: 0 9px; font-size: 11px; }
-.frg-grid { width: 100%; border-collapse: collapse; table-layout: fixed; }
+/* 필드가 패널 밖으로 늘어나지 않게 — flex 자식은 min-width:auto 라 최소내용폭만큼 버틴다. */
+.frg-fld { min-width: 0; }
+
+/* 표 전용 스크롤 상자: 표가 좁은 패널보다 넓어도 **여기서만** 가로로 흐른다.
+   이게 없으면 필드 전체가 늘어나 오른쪽 정렬된 "+ 행 추가"가 화면 밖으로 밀려난다. */
+.frg-grid-wrap { max-width: 100%; overflow-x: auto; }
+
+.frg-grid { width: 100%; min-width: 240px; border-collapse: collapse; table-layout: fixed; }
 .frg-grid th, .frg-grid td {
     border: 1px solid var(--frg-field-line, #edf2f7);
     padding: 5px 6px; text-align: left; word-break: break-word;
@@ -38,13 +45,19 @@
     background: var(--frg-field-head-bg, #f7fafc);
     font-size: 10px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase;
     color: var(--frg-field-label, #555);
+    /* 긴 라벨(예: "액션코드(ADD/DELETE/SAVE 등)")이 줄바꿈으로 헤더를 부풀리지 않게. 전문은 title 로. */
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap; word-break: normal;
 }
-.frg-grid-actions-head, .frg-grid-row-actions { width: 90px; text-align: center !important; white-space: nowrap; }
-.frg-grid-row-actions { padding: 3px !important; }
+/* 액션 칸을 좁힌다 — 90px 는 좁은 속성패널에서 데이터 칸을 눌러 헤더가 두 줄로 접히게 만들었다. */
+.frg-grid-actions-head, .frg-grid-row-actions { width: 64px; text-align: center !important; white-space: nowrap; }
+.frg-grid-row-actions { padding: 2px !important; }
 .frg-grid-row-btn {
-    width: 19px; height: 23px; padding: 0; margin: 0 1px;
-    border: 1px solid var(--frg-field-border, #cbd5e0); border-radius: 4px;
+    width: 14px; height: 20px; padding: 0; margin: 0;
+    border: 1px solid var(--frg-field-border, #cbd5e0); border-radius: 3px;
     background: var(--frg-field-bg, #fff); color: var(--frg-field-text, #333); cursor: pointer;
+    /* ⧉(U+29C9)·↑·↓ 는 맑은 고딕에 없어 빈 네모로 떨어진다. 기호를 가진 폰트를 앞에 세운다. */
+    font-family: "Segoe UI Symbol", "Apple Symbols", var(--frg-font, sans-serif);
+    font-size: 11px; line-height: 1;
 }
 .frg-grid-row-btn:hover { border-color: var(--frg-accent, #3d7ef0); color: var(--frg-accent, #3d7ef0); }
 .frg-grid-row-btn-remove:hover { border-color: #e05c5c; color: #e05c5c; }

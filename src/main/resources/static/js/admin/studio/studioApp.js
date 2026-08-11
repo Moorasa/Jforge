@@ -7,23 +7,23 @@ Description : 3-pane 스튜디오 셸 + 오케스트레이션 허브 (P3-3).
              - 하위 모듈(팔레트 P3-5 / 프리뷰 P3-6 / 속성 P3-4)이 붙는 pub/sub 허브 API 제공.
 
 오케스트레이터 공개 API (P3-4/P3-5/P3-6이 참조):
-  MagicIAM_JSForgeAdminStudio.onScreenLoaded(cb)        // cb(screen) — 화면 단건 로드 완료 시
-  MagicIAM_JSForgeAdminStudio.onDefinitionChanged(cb)   // cb(def, meta) — DEFINITION_JSON 변경 시
-  MagicIAM_JSForgeAdminStudio.getScreen()               // 현재 편집중 화면 메타 객체(없으면 null)
-  MagicIAM_JSForgeAdminStudio.getDefinitionJson()       // 현재 DEFINITION_JSON 객체(없으면 null)
-  MagicIAM_JSForgeAdminStudio.updateDefinitionJson(def, meta) // in-memory 갱신 + dirty + 통지
-  MagicIAM_JSForgeAdminStudio.isDirty()                 // 미저장 변경 여부
-  MagicIAM_JSForgeAdminStudio.markSaved()               // 저장 완료 후 dirty 해제(P3-6b)
+  JWorks_JSForgeAdminStudio.onScreenLoaded(cb)        // cb(screen) — 화면 단건 로드 완료 시
+  JWorks_JSForgeAdminStudio.onDefinitionChanged(cb)   // cb(def, meta) — DEFINITION_JSON 변경 시
+  JWorks_JSForgeAdminStudio.getScreen()               // 현재 편집중 화면 메타 객체(없으면 null)
+  JWorks_JSForgeAdminStudio.getDefinitionJson()       // 현재 DEFINITION_JSON 객체(없으면 null)
+  JWorks_JSForgeAdminStudio.updateDefinitionJson(def, meta) // in-memory 갱신 + dirty + 통지
+  JWorks_JSForgeAdminStudio.isDirty()                 // 미저장 변경 여부
+  JWorks_JSForgeAdminStudio.markSaved()               // 저장 완료 후 dirty 해제(P3-6b)
 
 XSS: 모든 텍스트 삽입은 textContent 로만. innerHTML(및 jQuery .html()) 미사용.
 =============================================================================================== */
-window.MagicIAM_JSForgeAdminStudio = window.MagicIAM_JSForgeAdminStudio || {};
+window.JWorks_JSForgeAdminStudio = window.JWorks_JSForgeAdminStudio || {};
 (function (studio) {
     "use strict";
     if (studio.__defined) { return; }
     studio.__defined = true;
 
-    var ctx = (window.MagicIAM_JSForge && window.MagicIAM_JSForge.contextPath) || "";
+    var ctx = (window.JWorks_JSForge && window.JWorks_JSForge.contextPath) || "";
     var apiProjects = ctx + "/api/projects";
     var apiScreens = ctx + "/api/screens";
     var projectsById = {};
@@ -248,7 +248,7 @@ window.MagicIAM_JSForgeAdminStudio = window.MagicIAM_JSForgeAdminStudio || {};
                 if (pendingPreset && String(pendingPreset.screenId) === String(s.screenId)) {
                     var preset = pendingPreset;
                     pendingPreset = null;
-                    var palette = window.MagicIAM_JSForgeAdminStudioPalette;
+                    var palette = window.JWorks_JSForgeAdminStudioPalette;
                     if (palette && typeof palette.applyPreset === "function") {
                         palette.applyPreset(preset.archetype);
                     }
@@ -997,7 +997,7 @@ window.MagicIAM_JSForgeAdminStudio = window.MagicIAM_JSForgeAdminStudio || {};
                 return;
             }
             if (mod && key === "d") {
-                var duplicateBridge = window.MagicIAM_JSForgeAdminStudioPreviewBridge;
+                var duplicateBridge = window.JWorks_JSForgeAdminStudioPreviewBridge;
                 var duplicateId = (duplicateBridge && typeof duplicateBridge.getSelected === "function")
                     ? duplicateBridge.getSelected() : null;
                 if (duplicateId != null && duplicateBridge && typeof duplicateBridge.requestDuplicate === "function") {
@@ -1007,7 +1007,7 @@ window.MagicIAM_JSForgeAdminStudio = window.MagicIAM_JSForgeAdminStudio || {};
                 return;
             }
             if (e.key === "Delete") {
-                var bridge = window.MagicIAM_JSForgeAdminStudioPreviewBridge;
+                var bridge = window.JWorks_JSForgeAdminStudioPreviewBridge;
                 var selId = (bridge && typeof bridge.getSelected === "function") ? bridge.getSelected() : null;
                 if (selId != null && bridge && typeof bridge.requestDelete === "function") {
                     e.preventDefault();
@@ -1132,4 +1132,4 @@ window.MagicIAM_JSForgeAdminStudio = window.MagicIAM_JSForgeAdminStudio || {};
         refreshGenerateButton(); // 초기 상태: 화면 미선택 → 생성 버튼 비활성 유지
         refreshUndoButtons();    // 초기 상태: 히스토리 없음 → undo/redo 비활성(P7-3)
     });
-})(window.MagicIAM_JSForgeAdminStudio);
+})(window.JWorks_JSForgeAdminStudio);

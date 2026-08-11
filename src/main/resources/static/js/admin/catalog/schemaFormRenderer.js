@@ -16,7 +16,7 @@ document.createTextNode / .textContent 로만 삽입하며 innerHTML(및 jQuery 
  - collect(rootEl, schema) — 렌더된 폼 DOM(rootEl)에서 값을 읽어 {key: value} 로 직렬화하는
    순수 함수(rootEl 인자로만 DOM 접근, 전역 DOM 결합 금지). type 별 정확 역직렬화.
 =============================================================================================== */
-window.MagicIAM_JSForgeSchemaRenderer = window.MagicIAM_JSForgeSchemaRenderer || {};
+window.JWorks_JSForgeSchemaRenderer = window.JWorks_JSForgeSchemaRenderer || {};
 (function (mod) {
     "use strict";
     if (mod.__defined) { return; }
@@ -112,6 +112,15 @@ window.MagicIAM_JSForgeSchemaRenderer = window.MagicIAM_JSForgeSchemaRenderer ||
         var sel = el("select", "frg-input");
         sel.name = field.key;
         var v = value !== undefined ? value : field.default;
+        // 규약(스키마_PROP_SCHEMA §54)은 options: [{value,label}] 배열이다.
+        // 문자열("a:A,b:B")로 들어오면 예전에는 **조용히 빈 드롭다운**이 떴다 — 아무 신호가
+        // 없어 시드 오류를 오래 못 잡았다. 이제는 콘솔에 원인을 남긴다(동작은 종전과 동일).
+        if (field.options != null && !Array.isArray(field.options)) {
+            if (window.console && console.warn) {
+                console.warn("[schemaForm] '" + field.key + "' 의 options 가 배열이 아닙니다"
+                    + " — 규약은 [{value,label}] 입니다. 드롭다운이 비어 보입니다. 값:", field.options);
+            }
+        }
         var opts = Array.isArray(field.options) ? field.options : [];
         opts.forEach(function (o) {
             var opt = el("option");
@@ -137,13 +146,19 @@ window.MagicIAM_JSForgeSchemaRenderer = window.MagicIAM_JSForgeSchemaRenderer ||
         add.setAttribute("data-grid-key", String(field.key == null ? "" : field.key));
         actions.appendChild(add);
         wrap.appendChild(actions);
+        // 표가 패널보다 넓어지면 **자기 상자 안에서만** 가로 스크롤하게 가둔다.
+        // 그러지 않으면 필드 전체가 늘어나 오른쪽 정렬된 "+ 행 추가"가 화면 밖으로 밀려난다.
+        var scroller = el("div", "frg-grid-wrap");
         var table = el("table", "frg-grid");
 
         var thead = el("thead");
         var htr = el("tr");
         cols.forEach(function (c) {
             var th = el("th");
-            th.textContent = c && c.label != null ? String(c.label) : ""; // 컬럼 라벨 textContent
+            var label = c && c.label != null ? String(c.label) : "";
+            th.textContent = label;   // 컬럼 라벨 textContent
+            // 좁은 패널에서 헤더는 말줄임되므로(schemaForm.css) 전문은 툴팁으로 남긴다.
+            if (label) { th.title = label; }
             htr.appendChild(th);
         });
         htr.appendChild(el("th", "frg-grid-actions-head", "편집"));
@@ -167,7 +182,8 @@ window.MagicIAM_JSForgeSchemaRenderer = window.MagicIAM_JSForgeSchemaRenderer ||
             });
         }
         table.appendChild(tbody);
-        wrap.appendChild(table);
+        scroller.appendChild(table);
+        wrap.appendChild(scroller);
         return wrap;
     }
 
@@ -539,4 +555,4 @@ window.MagicIAM_JSForgeSchemaRenderer = window.MagicIAM_JSForgeSchemaRenderer ||
     mod.collect = collect;
     mod.handleAction = handleAction;
     mod.handleKeydown = handleKeydown;
-})(window.MagicIAM_JSForgeSchemaRenderer);
+})(window.JWorks_JSForgeSchemaRenderer);

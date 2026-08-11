@@ -223,8 +223,13 @@ body.frg-pane-resizing, body.frg-pane-resizing * { cursor: col-resize !important
     border-bottom: 1px solid var(--frg-chrome-border);
 }
 .frg-props-title-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
-.frg-props-title { font-size: 14px; font-weight: 700; color: var(--frg-chrome-text); }
+.frg-props-title {
+    flex: 1 1 auto; min-width: 0;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    font-size: 14px; font-weight: 700; color: var(--frg-chrome-text);
+}
 .frg-props-del {
+    flex: 0 0 auto;
     border: 1px solid transparent; border-radius: 5px; background: transparent;
     color: #ff8585; font-size: 12px; font-weight: 600; padding: 3px 9px; cursor: pointer;
 }
@@ -247,7 +252,7 @@ body.frg-pane-resizing, body.frg-pane-resizing * { cursor: col-resize !important
 .frg-props-tab:hover { color: var(--frg-chrome-text); }
 .frg-props-tab.is-active { border-bottom-color: var(--frg-accent); color: #fff; }
 .frg-props-tab:focus-visible { outline: 2px solid var(--frg-accent); outline-offset: -2px; }
-.frg-props-content { display: flex; flex-direction: column; gap: 10px; }
+.frg-props-content { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
 .frg-props-content > .frg-props-size { margin-top: 0; padding-top: 0; border-top: 0; }
 
 /* ── 속성패널 크기 입력(P8, §13 layout props) ───────────────────────────── */
@@ -263,9 +268,19 @@ body.frg-pane-resizing, body.frg-pane-resizing * { cursor: col-resize !important
 .frg-size-input { width: 64px; height: 28px; padding: 0 7px; font-size: 12px; }
 .frg-size-unit { font-size: 11px; color: var(--frg-chrome-text-dim); white-space: nowrap; }
 
-/* P13(§17.2): 자유 배치는 5개 좌표 입력이라 줄바꿈을 허용하고 입력 폭을 줄인다. */
+/* 숫자 입력의 스피너 화살표를 없앤다 — 브라우저가 입력칸 **안쪽**에 그리기 때문에
+   좁은 좌표칸에서 화살표가 15px 쯤 먹고 값이 잘렸다("80" → "8("). 좌표는 타이핑/방향키로
+   넣지 스피너로 넣지 않으므로 잃는 게 없다. */
+.frg-size-input::-webkit-outer-spin-button,
+.frg-size-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.frg-size-input[type="number"] { -moz-appearance: textfield; appearance: textfield; }
+
+/* P13(§17.2): 자유 배치는 5개 좌표 입력이라 줄바꿈을 허용한다. */
 .frg-props-canvas { flex-wrap: wrap; row-gap: 6px; }
-.frg-props-canvas .frg-size-input { width: 56px; }
+.frg-props-canvas .frg-size-input { width: 52px; text-align: right; }
+/* 라벨(X/Y/W/H/Z)이 입력 뒤에 오므로 붙여서 한 덩어리로 읽히게 한다. */
+.frg-props-canvas .frg-size-field { gap: 3px; }
+.frg-props-canvas .frg-size-unit { min-width: 9px; }
 
 /* ── 슬롯 "+ 모듈 추가" 선택 모달(라이트 모달 안 항목은 라이트 톤으로 재정의) ── */
 .frg-chooser-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
@@ -432,13 +447,16 @@ body.frg-pane-resizing, body.frg-pane-resizing * { cursor: col-resize !important
 .frg-layer-icon { flex: 0 0 auto; color: var(--frg-chrome-text-dim); font-size: 10px; }
 .frg-layer-row.is-selected .frg-layer-icon { color: #fff; }
 
+/* 이름이 먼저 자리를 갖는다 — 좁아지면 타입 배지가 먼저 줄어들고, 더 좁으면 사라진다.
+   (예전엔 반대로 박혀 있어 사람이 붙인 이름이 "TOO…" 로 죽고 기계 코드가 살아남았다.) */
 .frg-layer-label {
-    flex: 0 1 auto; min-width: 0;
+    flex: 1 1 auto; min-width: 0;
     overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
 }
 
 .frg-layer-type {
-    flex: 0 0 auto;
+    flex: 0 200 auto; min-width: 0;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
     color: var(--frg-chrome-text-dim);
     font-family: var(--frg-mono); font-size: 10px;
 }
@@ -504,3 +522,27 @@ body.frg-pane-resizing, body.frg-pane-resizing * { cursor: col-resize !important
     flex: 0 0 auto; padding: 1px 6px; border-radius: 999px;
     background: var(--frg-accent-soft); color: var(--frg-accent-strong); font-size: 11px;
 }
+
+/* ── 레이어 끌어놓기: 놓을 자리를 눈에 보이게 ──────────────────────────
+   앞/뒤(before·after)는 선으로, 안으로(into)는 테두리로 — 두 동작이 헷갈리면
+   부모가 바뀐 줄 모르고 순서만 바꾼 줄 안다. */
+.frg-layer-row { position: relative; cursor: grab; }
+.frg-layer-row.is-dragging { opacity: .45; cursor: grabbing; }
+
+.frg-layer-row.is-drop-before::before,
+.frg-layer-row.is-drop-after::before {
+    content: ""; position: absolute; left: 4px; right: 4px; height: 2px;
+    background: var(--frg-accent); border-radius: 2px;
+}
+.frg-layer-row.is-drop-before::before { top: -1px; }
+.frg-layer-row.is-drop-after::before { bottom: -1px; }
+
+/* 안으로 = 이 컨테이너의 자식이 된다. 선이 아니라 상자로 보여 준다. */
+.frg-layer-row.is-drop-into {
+    outline: 2px solid var(--frg-accent);
+    outline-offset: -2px;
+    background: var(--frg-chrome-bg-3);
+}
+
+/* 끌 때 버튼이 드래그를 가로채지 않게(행 전체가 손잡이다). */
+.frg-layer-row.is-dragging .frg-layer-actions { opacity: 0; }

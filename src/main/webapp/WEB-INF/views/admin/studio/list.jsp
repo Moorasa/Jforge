@@ -5,32 +5,32 @@
 <html lang="ko">
 <head>
     <jsp:include page="../common/header.jsp" />
-    <link rel="stylesheet" href="${ctx}/css/admin/common/forge-theme.css?v=20260803-4" />
-    <link rel="stylesheet" href="${ctx}/css/admin/common/schemaForm.css?v=20260713-1" />
-    <link rel="stylesheet" href="${ctx}/css/admin/studio/studio.css?v=20260803-4" />
-    <script defer src="${ctx}/js/admin/studio/studioApp.js?v=20260803-4"></script>
-    <script defer src="${ctx}/js/admin/studio/studioLayout.js?v=20260713-1"></script>
+    <link rel="stylesheet" href="${ctx}/css/admin/common/forge-theme.css?v=${assetVer}" />
+    <link rel="stylesheet" href="${ctx}/css/admin/common/schemaForm.css?v=${assetVer}" />
+    <link rel="stylesheet" href="${ctx}/css/admin/studio/studio.css?v=${assetVer}" />
+    <script defer src="${ctx}/js/admin/studio/studioApp.js?v=${assetVer}"></script>
+    <script defer src="${ctx}/js/admin/studio/studioLayout.js?v=${assetVer}"></script>
     <%-- P7-2: 슬롯 메타 단일 소스(속성패널/팔레트/캔버스 공용). 소비자들 앞에 로드 --%>
-    <script defer src="${ctx}/js/admin/studio/slotMeta.js?v=20260803-4"></script>
+    <script defer src="${ctx}/js/admin/studio/slotMeta.js?v=${assetVer}"></script>
     <%-- P3-4: 우측 속성패널 — 순수 렌더러(재사용) + 얇은 컨트롤러. studioApp(허브) 뒤 로드 --%>
-    <script defer src="${ctx}/js/admin/catalog/schemaFormRenderer.js?v=20260713-3"></script>
-    <script defer src="${ctx}/js/admin/studio/propsPanel.js?v=20260803-4"></script>
+    <script defer src="${ctx}/js/admin/catalog/schemaFormRenderer.js?v=${assetVer}"></script>
+    <script defer src="${ctx}/js/admin/studio/propsPanel.js?v=${assetVer}"></script>
     <%-- P11: 타겟 DB 테이블/컬럼 선택기(속성패널 '데이터' 탭에서 호출) --%>
-    <script defer src="${ctx}/js/admin/studio/dbTablePicker.js?v=20260730-1"></script>
+    <script defer src="${ctx}/js/admin/studio/dbTablePicker.js?v=${assetVer}"></script>
     <%-- §19: 프레임에 넣을 화면 고르기. propsPanel 이 LAYOUT_FRAME 선택 시 호출 --%>
-    <script defer src="${ctx}/js/admin/studio/screenPicker.js?v=20260807-1"></script>
+    <script defer src="${ctx}/js/admin/studio/screenPicker.js?v=${assetVer}"></script>
     <%-- P3-5: 좌측 팔레트 + 슬롯 조립. studioApp(허브)/propsPanel(선택 연동) 뒤 로드 --%>
-    <script defer src="${ctx}/js/admin/studio/palette.js?v=20260803-4"></script>
+    <script defer src="${ctx}/js/admin/studio/palette.js?v=${assetVer}"></script>
     <%-- P3-6: 프리뷰 iframe 브리지. studioApp.onDefinitionChanged 구독 → iframe 에 postMessage.
          studioApp.js(허브)는 수정하지 않고 별도 파일에서 공개 API 로만 결선한다. --%>
-    <link rel="stylesheet" href="${ctx}/css/admin/studio/previewBridge.css?v=20260713-1" />
-    <script defer src="${ctx}/js/admin/studio/previewBridge.js?v=20260803-4"></script>
+    <link rel="stylesheet" href="${ctx}/css/admin/studio/previewBridge.css?v=${assetVer}" />
+    <script defer src="${ctx}/js/admin/studio/previewBridge.js?v=${assetVer}"></script>
     <%-- P7-4: 화면 관리(이름변경/복제/삭제) + 생성 dry-run 컨트롤러. studioApp(허브) 뒤 로드 --%>
     <script defer src="${ctx}/js/admin/studio/screenMgmt.js"></script>
     <%-- P7-5: 시작 가이드(빈 상태 안내 + 스튜디오 내 프로젝트 생성). studioApp(허브) 뒤 로드 --%>
     <script defer src="${ctx}/js/admin/studio/studioGuide.js"></script>
     <%-- 레이어 패널: 배치된 부품의 계층 표시. slotMeta(트리 계산)·previewBridge(선택 소유) 뒤 로드 --%>
-    <script defer src="${ctx}/js/admin/studio/layerPanel.js?v=20260807-1"></script>
+    <script defer src="${ctx}/js/admin/studio/layerPanel.js?v=${assetVer}"></script>
 </head>
 <body class="frg-app frg-studio-body">
     <jsp:include page="../common/shell-top.jsp"><jsp:param name="active" value="studio" /></jsp:include>

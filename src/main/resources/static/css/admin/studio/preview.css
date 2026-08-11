@@ -319,3 +319,16 @@ body.frg-preview-doc {
     padding: 1px 6px; border-radius: 9px; font-size: 11px;
     background: #eef1f5; color: #7a8497; border: 1px solid #dde3eb; cursor: help;
 }
+
+/* ── 작은 요소의 편집 툴바: 본체보다 커 보이지 않게 접는다 ──────────────
+   88×36 짜리 버튼 위에 "BUTTON ▲ ▼ ⧉ ×" 가 통째로 뜨면 메뉴가 본체보다 넓어 이상하다.
+   좁으면 타입 라벨을 빼고 아이콘만 남긴다(뜻은 title 툴팁으로 유지). */
+.frg-fc-block.is-chrome-narrow .frg-prev-module { display: none; }
+.frg-fc-block.is-chrome-narrow .frg-prev-block-head { padding: 2px 3px; }
+
+/* 더 작으면 복제까지 접는다 — 남기는 것은 순서(▲▼)와 삭제(×). 복제는 속성패널에도 있다. */
+.frg-fc-block.is-chrome-tiny .frg-prev-duplicate { display: none; }
+.frg-fc-block.is-chrome-tiny .frg-fc-z { padding: 1px 2px; }
+
+/* 툴바가 요소보다 넓어도 캔버스 왼쪽으로 삐져나가지 않게 시작점을 고정한다. */
+.frg-fc-block .frg-prev-block-head { max-width: none; white-space: nowrap; }

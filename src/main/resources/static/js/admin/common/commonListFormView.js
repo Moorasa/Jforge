@@ -1,6 +1,6 @@
 /* ===============================================================================================
 
-Name : MagicIAM_JSCommonListFormView.js
+Name : JWorks_JSCommonListFormView.js
 
 Description :
 	JWORKS 프론트엔드 모듈 Form View에서 공통으로 사용하는 유틸리티 파일입니다.
@@ -9,7 +9,7 @@ Remarks :
 	재배포를 금합니다.
 	
 =============================================================================================== */
-window.MagicIAM_JSCommonListFormView = window.MagicIAM_JSCommonListFormView || {};
+window.JWorks_JSCommonListFormView = window.JWorks_JSCommonListFormView || {};
 (function(formView) {
 	"use strict";
 
@@ -34,7 +34,11 @@ window.MagicIAM_JSCommonListFormView = window.MagicIAM_JSCommonListFormView || {
 		}
 
 		$container = options.$container;
-		apiInfo = options.apiInfo
+		// init 은 두 번 불린다(commonList.showView + 생성물 listFormViewJs). 넘어오지 않은
+		// apiInfo 로 덮어쓰지 않는다 — 상세는 commonListTableView.init 주석 참조.
+		if (options.apiInfo) {
+			apiInfo = options.apiInfo;
+		}
 		let selectionType = options.selectionType || 'checkbox';
 
 		if (selectionType === 'checkbox') {
@@ -53,7 +57,8 @@ window.MagicIAM_JSCommonListFormView = window.MagicIAM_JSCommonListFormView || {
 			});
 		}
 
-		if ("undefined" === typeof apiInfo) {
+		// 미배선 상태는 초기값 null 로도 나타난다(typeof null 은 "object"). 참/거짓으로 판단.
+		if (!apiInfo) {
 		}
 		else {
 			registEvent();
@@ -87,6 +92,11 @@ window.MagicIAM_JSCommonListFormView = window.MagicIAM_JSCommonListFormView || {
 	}
 
 	formView.getList = function() {
+		// 배선 전이면 조회할 대상이 없다(상세는 commonListTableView.getList 주석 참조).
+		if (!apiInfo || !apiInfo.url) {
+			return;
+		}
+
 		const data = {};
 
 		// API 호출
@@ -127,4 +137,4 @@ window.MagicIAM_JSCommonListFormView = window.MagicIAM_JSCommonListFormView || {
 	function render(data) {
 	}
 
-})(window.MagicIAM_JSCommonListFormView);
+})(window.JWorks_JSCommonListFormView);

@@ -1,6 +1,6 @@
 /* ===============================================================================================
 
-Name : MagicIAM_JSCommonListTableView.js
+Name : JWorks_JSCommonListTableView.js
 
 Description :
 	JWORKS 프론트엔드 모듈 Table View에서 공통으로 사용하는 유틸리티 파일입니다.
@@ -9,7 +9,7 @@ Remarks :
 	재배포를 금합니다.
 	
 =============================================================================================== */
-window.MagicIAM_JSCommonListTableView = window.MagicIAM_JSCommonListTableView || {};
+window.JWorks_JSCommonListTableView = window.JWorks_JSCommonListTableView || {};
 (function(tableView) {
 	"use strict";
 
@@ -23,11 +23,11 @@ window.MagicIAM_JSCommonListTableView = window.MagicIAM_JSCommonListTableView ||
 
 	let apiInfo = null;
 
-	let callbacks = null; // 이벤트 콜백 함수들
+	let callbacks = {}; // 이벤트 콜백 함수들
 
 	let selectionType = 'checkbox';
-	
-	let tableType = null;
+
+	let tableType = {};
 
 	let isPopupMode = false;
 
@@ -55,10 +55,24 @@ window.MagicIAM_JSCommonListTableView = window.MagicIAM_JSCommonListTableView ||
 		}
 
 		$container = options.$container;
-		apiInfo = options.apiInfo;
-		callbacks = options.callbacks || {};
-		tableType = options.tableType || {};
-		selectionType = options.selectionType || 'checkbox';
+
+		// init 은 **두 번** 불린다. commonList.showView() 가 뷰 전환용 옵션($container/
+		// renderCallback 등)으로 한 번, 생성물 listTableViewJs 가 도메인 배선(apiInfo/
+		// callbacks)으로 한 번. commonList 는 도메인 지식이 없어 apiInfo 를 넘기지 못하므로,
+		// **넘어오지 않은 값은 덮어쓰지 않는다**. 예전에는 통째로 대입해서 먼저 배선된 apiInfo
+		// 가 undefined 로 날아갔다(로드 시점 레이스 → sorts.push(apiInfo.defaultSort) TypeError).
+		if (options.apiInfo) {
+			apiInfo = options.apiInfo;
+		}
+		if (options.callbacks) {
+			callbacks = options.callbacks;
+		}
+		if (options.tableType) {
+			tableType = options.tableType;
+		}
+		if (options.selectionType) {
+			selectionType = options.selectionType;
+		}
 
 		document.adoptedStyleSheets = [sheet];
 
@@ -78,7 +92,10 @@ window.MagicIAM_JSCommonListTableView = window.MagicIAM_JSCommonListTableView ||
 			});
 		}
 
-		if ("undefined" === typeof apiInfo) {
+		// apiInfo 가 아직 배선되지 않은 호출(= commonList.showView() 쪽)에서는 이벤트/페이지네이션
+		// 초기화를 하지 않는다. 미배선 상태는 이제 초기값 null 로도 나타나므로 typeof 가 아니라
+		// 참/거짓으로 판단한다(typeof null 은 "object" 라 예전 검사를 그대로 두면 통과해 버린다).
+		if (!apiInfo) {
 		}
 		else {
 			registEvent();
@@ -122,7 +139,7 @@ window.MagicIAM_JSCommonListTableView = window.MagicIAM_JSCommonListTableView ||
 		maxRetryCount = maxRetryCount || 30;
 
 		// 객체가 생성되지 않은 경우
-		if(typeof window.MagicIAM_JSPagination === "undefined") {
+		if(typeof window.JWorks_JSPagination === "undefined") {
 			if (retryCount >= maxRetryCount) {
 				console.error("Pagination 초기화 실패:");
 				if (typeof callbacks === "function") {
@@ -137,7 +154,7 @@ window.MagicIAM_JSCommonListTableView = window.MagicIAM_JSCommonListTableView ||
 		}
 		// 객체가 생성된 경우
 		else {
-			MagicIAM_JSPagination.init(paginationEventCallback);
+			JWorks_JSPagination.init(paginationEventCallback);
 		}
 
 	}
@@ -506,6 +523,11 @@ window.MagicIAM_JSCommonListTableView = window.MagicIAM_JSCommonListTableView ||
 	}
 
 	tableView.getList = function() {
+		// 배선 전이면 조회할 대상이 없다. 방어적으로 막는다(배선 순서가 어긋나도 TypeError 대신 무동작).
+		if (!apiInfo || !apiInfo.url) {
+			return;
+		}
+
 		const data = tableView.getCurrentSearchData();
 
 		// API 호출
@@ -713,11 +735,11 @@ window.MagicIAM_JSCommonListTableView = window.MagicIAM_JSCommonListTableView ||
 		}
 
 		// pagination
-		MagicIAM_JSPagination.setPage(paginationInfo);
+		JWorks_JSPagination.setPage(paginationInfo);
 		
 		// 버튼 비활성화
-		MagicIAM_JSCommonUtils.updateSelectionState($container);
+		JWorks_JSCommonUtils.updateSelectionState($container);
 
 	}
 
-})(window.MagicIAM_JSCommonListTableView);
+})(window.JWorks_JSCommonListTableView);

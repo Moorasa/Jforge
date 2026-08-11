@@ -1,6 +1,6 @@
 /* ===============================================================================================
 
-Name : MagicIAM_JSCommonListCardView.js
+Name : JWorks_JSCommonListCardView.js
 
 Description :
 	JWORKS 프론트엔드 모듈 Card View에서 공통으로 사용하는 유틸리티 파일입니다.
@@ -9,7 +9,7 @@ Remarks :
 	재배포를 금합니다.
 	
 =============================================================================================== */
-window.MagicIAM_JSCommonListCardView = window.MagicIAM_JSCommonListCardView || {};
+window.JWorks_JSCommonListCardView = window.JWorks_JSCommonListCardView || {};
 (function(cardView) {
 	"use strict";
 
@@ -47,8 +47,12 @@ window.MagicIAM_JSCommonListCardView = window.MagicIAM_JSCommonListCardView || {
 		}
 
 		$container = options.$container;
-		
-		apiInfo = options.apiInfo
+
+		// init 은 두 번 불린다(commonList.showView + 생성물 listCardViewJs). 넘어오지 않은
+		// apiInfo 로 덮어쓰지 않는다 — 상세는 commonListTableView.init 주석 참조.
+		if (options.apiInfo) {
+			apiInfo = options.apiInfo;
+		}
 
 		// 1. 검색 기능 초기화
 		if (typeof options.searchCallback === 'function') {
@@ -106,7 +110,8 @@ window.MagicIAM_JSCommonListCardView = window.MagicIAM_JSCommonListCardView || {
 			}));
 		});
 		
-		if("undefined" === typeof apiInfo) {
+		// 미배선 상태는 초기값 null 로도 나타난다(typeof null 은 "object"). 참/거짓으로 판단.
+		if(!apiInfo) {
 		}
 		else {
 			registEvent();
@@ -117,7 +122,7 @@ window.MagicIAM_JSCommonListCardView = window.MagicIAM_JSCommonListCardView || {
 			// 기본값으로 초기화
 			paginationInfo.currPage = 1;
 			paginationInfo.countPerPage = Constants.DEFAULT_CARD_VIEW_COUNT_PER_PAGE;
-			MagicIAM_JSPagination.init(paginationEventCallback);
+			JWorks_JSPagination.init(paginationEventCallback);
 		}
 	
 	}
@@ -137,7 +142,12 @@ window.MagicIAM_JSCommonListCardView = window.MagicIAM_JSCommonListCardView || {
 	}
 
 	cardView.getList = function() {
-	
+
+		// 배선 전이면 조회할 대상이 없다(상세는 commonListTableView.getList 주석 참조).
+		if (!apiInfo || !apiInfo.url) {
+			return;
+		}
+
 		const $filter = $container.find(".filter");
 		let filters = [];
 		$filter.children().each(function(index, item) {
@@ -306,9 +316,9 @@ window.MagicIAM_JSCommonListCardView = window.MagicIAM_JSCommonListCardView || {
 		}
 		
 		// pagination
-		MagicIAM_JSPagination.setPage(paginationInfo);
+		JWorks_JSPagination.setPage(paginationInfo);
 
 	}
 
 
-})(window.MagicIAM_JSCommonListCardView);
+})(window.JWorks_JSCommonListCardView);

@@ -1,4 +1,4 @@
-window.MagicIAM_JSUserMgmtAdminTreeView = window.MagicIAM_JSUserMgmtAdminTreeView || {};
+window.JWorks_JSUserMgmtAdminTreeView = window.JWorks_JSUserMgmtAdminTreeView || {};
 (function(view) {
 	"use strict";
 
@@ -39,7 +39,7 @@ window.MagicIAM_JSUserMgmtAdminTreeView = window.MagicIAM_JSUserMgmtAdminTreeVie
 		// 번들 런타임(commonListTreeView.js) 배선. init 시그니처: init(options)(33행).
 		// 필수 $container(34행), 선택 apiInfo(40행)/features(41행)/callbacks(42행)/
 		// dataMapping(43행)/search(44행)/orderingState(50행). apiInfo는 도메인별로 채우는 배선점.
-		MagicIAM_JSCommonListTreeView.init({
+		JWorks_JSCommonListTreeView.init({
 			$container: $container,
 			apiInfo: {
 				// TODO(배선): 실제 트리 조회 API 및 콜백으로 교체.
@@ -85,4 +85,4 @@ window.MagicIAM_JSUserMgmtAdminTreeView = window.MagicIAM_JSUserMgmtAdminTreeVie
 		init();
 	});
 
-})(window.MagicIAM_JSUserMgmtAdminTreeView);
+})(window.JWorks_JSUserMgmtAdminTreeView);

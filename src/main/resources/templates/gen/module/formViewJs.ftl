@@ -1,7 +1,7 @@
-<#-- P5-4: MGMT_LIST_DETAIL+FORM_VIEW 뷰. MagicIAM commonListFormView.js 1:1 배선. -->
+<#-- P5-4: MGMT_LIST_DETAIL+FORM_VIEW 뷰. JWorks commonListFormView.js 1:1 배선. -->
 <#--
   아티팩트: ListFormView (JS) → {stem}ListFormView.js (계약 §8.2)
-  역할: 번들 런타임 window.MagicIAM_JSCommonListFormView(commonListFormView.js) API에 배선.
+  역할: 번들 런타임 window.JWorks_JSCommonListFormView(commonListFormView.js) API에 배선.
         - formView.init = function(options)(29행) → init({ $container, apiInfo, selectionType }) 호출.
         - 필수: options.$container(31행 유효성 검사). 선택: apiInfo(37행: url·renderCallback),
           selectionType(38행, 기본 'checkbox' — 'checkbox'면 #select-all/.row-checkbox 이벤트 활성 42행).
@@ -21,7 +21,7 @@
 <#assign fields = (props["fields"])![]>
 <#assign Domain = stem?cap_first>
 <#assign Role = role?cap_first>
-<#assign NS = "MagicIAM_JS" + Domain + Role + "FormView">
+<#assign NS = "JWorks_JS" + Domain + Role + "FormView">
 window.${NS} = window.${NS} || {};
 (function(view) {
 	"use strict";
@@ -56,7 +56,7 @@ window.${NS} = window.${NS} || {};
 
 		// 번들 런타임(commonListFormView.js) 배선. init 시그니처: init(options)(29행).
 		// 필수 $container(31행), 선택 apiInfo(37행)/selectionType(38행). apiInfo는 도메인별 배선점.
-		MagicIAM_JSCommonListFormView.init({
+		JWorks_JSCommonListFormView.init({
 			$container: $container,
 			apiInfo: {
 				// TODO(배선): 실제 폼 데이터 조회 API 및 콜백으로 교체.

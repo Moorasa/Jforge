@@ -55,7 +55,7 @@ final class GenArtifacts {
                             "archetype/mgmtListDetail/listJs", "List", "js", BaseKind.JS),
                     new ArtifactSpec("listCss",
                             "archetype/mgmtListDetail/listCss", "List", "css", BaseKind.CSS)),
-            // 원본 MagicIAM의 단순 목록 화면은 관리화면의 목록 3종 구조와 동일하다.
+            // 원본 JWorks의 단순 목록 화면은 관리화면의 목록 3종 구조와 동일하다.
             // 상세 슬롯만 없는 아키타입이므로 검증된 목록 템플릿을 재사용한다.
             "SIMPLE_LIST", List.of(
                     new ArtifactSpec("shell",

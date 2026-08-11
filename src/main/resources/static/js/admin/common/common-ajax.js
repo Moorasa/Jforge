@@ -1,6 +1,6 @@
 /* ===============================================================================================
 
-Name : MagicIAM_JSCommonAjax.js
+Name : JWorks_JSCommonAjax.js
 
 Description :
 	JWORKS 프론트엔드 모듈 전반에서 공통으로 사용하는 유틸리티 파일입니다.
@@ -9,7 +9,7 @@ Remarks :
 	재배포를 금합니다.
 	
 =============================================================================================== */
-window.MagicIAM_JSCommonAjax = window.MagicIAM_JSCommonAjax || {};
+window.JWorks_JSCommonAjax = window.JWorks_JSCommonAjax || {};
 (function(commonAjax) {
 	"use strict";
 
@@ -59,4 +59,4 @@ window.MagicIAM_JSCommonAjax = window.MagicIAM_JSCommonAjax || {};
 		// 로딩 인디케이터 hide 처리 등
 	});
 
-})(window.MagicIAM_JSCommonAjax);
+})(window.JWorks_JSCommonAjax);

@@ -1,4 +1,4 @@
-window.MagicIAM_JSUserMgmtAdminTableView = window.MagicIAM_JSUserMgmtAdminTableView || {};
+window.JWorks_JSUserMgmtAdminTableView = window.JWorks_JSUserMgmtAdminTableView || {};
 (function(view) {
 	"use strict";
 
@@ -26,7 +26,7 @@ window.MagicIAM_JSUserMgmtAdminTableView = window.MagicIAM_JSUserMgmtAdminTableV
 		}
 
 		// 번들 런타임(commonListTableView.js) 배선. apiInfo는 도메인별로 채우는 배선점.
-		MagicIAM_JSCommonListTableView.init({
+		JWorks_JSCommonListTableView.init({
 			$container: $container,
 			selectionType: selectionType,
 			tableType: "",
@@ -55,4 +55,4 @@ window.MagicIAM_JSUserMgmtAdminTableView = window.MagicIAM_JSUserMgmtAdminTableV
 		init();
 	});
 
-})(window.MagicIAM_JSUserMgmtAdminTableView);
+})(window.JWorks_JSUserMgmtAdminTableView);

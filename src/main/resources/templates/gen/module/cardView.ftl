@@ -1,4 +1,4 @@
-<#-- P5-2: MGMT_LIST_DETAIL+CARD_VIEW 뷰. MagicIAM commonListCardView.js 1:1 배선. -->
+<#-- P5-2: MGMT_LIST_DETAIL+CARD_VIEW 뷰. JWorks commonListCardView.js 1:1 배선. -->
 <#--
   아티팩트: ListCardView (JSP) → {stem}ListCardView.jsp (계약 §8.2)
   역할: CARD_VIEW props를 정적 카드 골격으로 산출. 번들 commonListCardView.js가

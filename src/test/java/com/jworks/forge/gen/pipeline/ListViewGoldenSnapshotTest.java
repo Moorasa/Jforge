@@ -52,13 +52,13 @@ import com.jworks.forge.screen.service.ForgeScreenService;
  *
  * <h2>🔒 골든 안전성</h2>
  * 골든은 실제 안전 산출물이어야 한다: JWORKS 배너 0, JSP 스크립트릿 0, jQuery 3.7.1 외 참조 0,
- * JS 네임스페이스+IIFE(__defined) 존재, §8.6 MagicIAM init 배선 일치. 본 테스트가 매 실행마다
+ * JS 네임스페이스+IIFE(__defined) 존재, §8.6 JWorks init 배선 일치. 본 테스트가 매 실행마다
  * 이 속성을 자동 단언한다.
  *
  * <h2>골든 갱신 절차 (의도된 템플릿 변경 시에만)</h2>
  * <pre>
  *   mvn -Dtest=ListViewGoldenSnapshotTest -Dforge.golden.update=true test
- *   # git diff 로 산출 변경 검토(배너/스크립트릿/이스케이프/MagicIAM API 회귀 없는지) 후 커밋.
+ *   # git diff 로 산출 변경 검토(배너/스크립트릿/이스케이프/JWorks API 회귀 없는지) 후 커밋.
  * </pre>
  * 자세한 내용은 {@code src/test/resources/golden/README.md} 참조.
  */
@@ -69,16 +69,16 @@ class ListViewGoldenSnapshotTest {
     /** MVP 스코프 뷰 3종 각각의 고정 픽스처·골든 디렉터리·산출 파일 맵·NS/배선 단언 자료. */
     enum ViewCase {
         CARD("golden/mgmtListDetail_cardView", CARDVIEW_JSON, "CardView",
-                "MagicIAM_JSCommonListCardView.init({", cardFiles()),
+                "JWorks_JSCommonListCardView.init({", cardFiles()),
         TREE("golden/mgmtListDetail_treeView", TREEVIEW_JSON, "TreeView",
-                "MagicIAM_JSCommonListTreeView.init({", treeFiles()),
+                "JWorks_JSCommonListTreeView.init({", treeFiles()),
         FORM("golden/mgmtListDetail_formView", FORMVIEW_JSON, "FormView",
-                "MagicIAM_JSCommonListFormView.init({", formFiles());
+                "JWorks_JSCommonListFormView.init({", formFiles());
 
         final String goldenDir;
         final String json;
         final String viewSuffix;   // CardView/TreeView/FormView
-        final String initWiring;   // §8.6 MagicIAM init 시그니처
+        final String initWiring;   // §8.6 JWorks init 시그니처
         final Map<String, String> files; // relativePath -> golden 파일명
 
         ViewCase(String goldenDir, String json, String viewSuffix, String initWiring,
@@ -197,10 +197,10 @@ class ListViewGoldenSnapshotTest {
         }
     }
 
-    /** 🔒 골든이 실제 안전 산출물인지 + §8.6 MagicIAM init 배선을 담는지 매 실행 단언. */
+    /** 🔒 골든이 실제 안전 산출물인지 + §8.6 JWorks init 배선을 담는지 매 실행 단언. */
     @ParameterizedTest
     @EnumSource(ViewCase.class)
-    void 골든은_안전_산출물이고_MagicIAM_배선을_담는다(ViewCase vc) throws IOException {
+    void 골든은_안전_산출물이고_JWorks_배선을_담는다(ViewCase vc) throws IOException {
         newGenerator(vc.json).generate(10L);
         Map<String, String> bodies = new LinkedHashMap<>();
         for (Map.Entry<String, String> e : vc.files.entrySet()) {
@@ -224,15 +224,15 @@ class ListViewGoldenSnapshotTest {
 
         // list.js: 화면 네임스페이스 + IIFE.
         String listJs = bodies.get("userMgmtList.js");
-        assertTrue(listJs.contains("window.MagicIAM_JSUserMgmtAdmin"), vc + " listJs 네임스페이스");
+        assertTrue(listJs.contains("window.JWorks_JSUserMgmtAdmin"), vc + " listJs 네임스페이스");
         assertTrue(listJs.contains("__defined"), vc + " listJs IIFE 골격");
 
         // 뷰 JS: 뷰별 네임스페이스 + §8.6 init 배선.
         String viewJs = bodies.get("userMgmtList" + vc.viewSuffix + ".js");
-        assertTrue(viewJs.contains("window.MagicIAM_JSUserMgmtAdmin" + vc.viewSuffix),
-                vc + " viewJs 네임스페이스(MagicIAM_JS{Domain}{Role}" + vc.viewSuffix + ")");
+        assertTrue(viewJs.contains("window.JWorks_JSUserMgmtAdmin" + vc.viewSuffix),
+                vc + " viewJs 네임스페이스(JWorks_JS{Domain}{Role}" + vc.viewSuffix + ")");
         assertTrue(viewJs.contains("__defined"), vc + " viewJs IIFE 골격");
-        assertTrue(viewJs.contains(vc.initWiring), vc + " §8.6 MagicIAM init 배선: " + vc.initWiring);
+        assertTrue(viewJs.contains(vc.initWiring), vc + " §8.6 JWorks init 배선: " + vc.initWiring);
 
         // FORM_VIEW 는 selectionType 배선을 담아야 한다(§8.6).
         if (vc == ViewCase.FORM) {

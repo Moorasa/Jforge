@@ -56,7 +56,7 @@ class DesignMetadataGenerationTest {
         Path design = root.resolve("static/js/admin/userMgmt/userMgmtDesign.js");
         assertTrue(Files.exists(design));
         String designText = Files.readString(design, StandardCharsets.UTF_8);
-        assertTrue(designText.contains("MagicIAM_Design"));
+        assertTrue(designText.contains("JWorks_Design"));
         assertTrue(designText.contains("openDetail"));
         assertTrue(designText.contains("function load"), "생성 파일이 선언을 실제 런타임으로 연결");
         assertTrue(designText.contains("frg:design:"), "업무 화면이 표준 DOM 이벤트를 구독할 수 있음");

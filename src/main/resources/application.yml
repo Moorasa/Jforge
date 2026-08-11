@@ -25,7 +25,7 @@ mybatis:
     map-underscore-to-camel-case: true   # DB 대문자스네이크 ↔ 자바 카멜
 
 server:
-  # 8080은 로컬 IAM/MagicIAM이 점유 중이라 충돌 회피 위해 18080 사용
+  # 8080은 로컬 IAM/JWorks이 점유 중이라 충돌 회피 위해 18080 사용
   port: 18080
   servlet:
     context-path: /forge

@@ -10,9 +10,9 @@
          ★ 경계: 이 캔버스는 근사 시각화이며 최종 생성물(생성 엔진 산출물)과 미세하게 다를 수 있다.
          ★ forge-theme.css(빌더 테마)는 여기 링크하지 않는다 — 생성물 룩 보존. --%>
     <jsp:include page="../common/header.jsp" />
-    <link rel="stylesheet" href="${ctx}/css/admin/studio/preview.css?v=20260803-4" />
-    <script defer src="${ctx}/js/admin/studio/slotMeta.js?v=20260803-4"></script>
-    <script defer src="${ctx}/js/admin/studio/previewRenderer.js?v=20260803-4"></script>
+    <link rel="stylesheet" href="${ctx}/css/admin/studio/preview.css?v=${assetVer}" />
+    <script defer src="${ctx}/js/admin/studio/slotMeta.js?v=${assetVer}"></script>
+    <script defer src="${ctx}/js/admin/studio/previewRenderer.js?v=${assetVer}"></script>
 </head>
 <body class="frg-preview-doc">
     <%-- 렌더 타겟 컨테이너(비어 있음). previewRenderer.js 가 postMessage 수신 후 채운다. --%>

@@ -3,7 +3,7 @@
 -- 대상 테이블: TB_FRG_MODULE_TYPE (V1 DDL에서 이미 생성됨 — 재생성 금지, 시드 전용)
 -- 멱등(ON CONFLICT (MODULE_TYPE_CODE) DO NOTHING). 재실행 시 중복/오류 0.
 -- add-only: V3/V4/V5는 재실행·수정하지 않는다.
--- 근거: static/js/admin/common/commonSection.js dual-layout-area(326~503행, MagicIAM 1:1, 계약 §10).
+-- 근거: static/js/admin/common/commonSection.js dual-layout-area(326~503행, JWorks 1:1, 계약 §10).
 --   ⚠ DUAL_LAYOUT의 leftArea/rightArea는 iframe 패인(.layout-left > iframe / .layout-right > iframe)이다.
 --     LAYOUT_FRAME은 그 패인 1개(=iframe 1개)를 나타낸다. iframe src(패인 로드 URL)은 props가 아니라
 --     산출 후 도메인이 채우는 배선점이다(§10.3, URL props 없음). frameId=iframe DOM id, title=iframe title,

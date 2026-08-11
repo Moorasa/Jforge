@@ -6,13 +6,13 @@ Description : 프로젝트 관리 도그푸딩 화면 스크립트 (P1-3, P7-1 �
 
 XSS: 모든 텍스트 삽입은 createElement/textContent 로만. innerHTML(및 jQuery .html()) 미사용.
 =============================================================================================== */
-window.MagicIAM_JSForgeAdminProject = window.MagicIAM_JSForgeAdminProject || {};
+window.JWorks_JSForgeAdminProject = window.JWorks_JSForgeAdminProject || {};
 (function (page) {
     "use strict";
     if (page.__defined) { return; }
     page.__defined = true;
 
-    var ctx = (window.MagicIAM_JSForge && window.MagicIAM_JSForge.contextPath) || "";
+    var ctx = (window.JWorks_JSForge && window.JWorks_JSForge.contextPath) || "";
     var api = ctx + "/api/projects";
 
     function el(tag, className, text) {
@@ -356,4 +356,4 @@ window.MagicIAM_JSForgeAdminProject = window.MagicIAM_JSForgeAdminProject || {};
     }
 
     document.addEventListener("DOMContentLoaded", function () { bind(); load(); });
-})(window.MagicIAM_JSForgeAdminProject);
+})(window.JWorks_JSForgeAdminProject);

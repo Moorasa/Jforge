@@ -5,9 +5,9 @@
 <html lang="ko">
 <head>
     <jsp:include page="../common/header.jsp" />
-    <link rel="stylesheet" href="${ctx}/css/admin/common/forge-theme.css?v=20260803-1" />
-    <link rel="stylesheet" href="${ctx}/css/admin/project/projectList.css?v=20260803-2" />
-    <script defer src="${ctx}/js/admin/project/projectList.js?v=20260803-2"></script>
+    <link rel="stylesheet" href="${ctx}/css/admin/common/forge-theme.css?v=${assetVer}" />
+    <link rel="stylesheet" href="${ctx}/css/admin/project/projectList.css?v=${assetVer}" />
+    <script defer src="${ctx}/js/admin/project/projectList.js?v=${assetVer}"></script>
 </head>
 <body class="frg-app">
     <jsp:include page="../common/shell-top.jsp"><jsp:param name="active" value="projects" /></jsp:include>

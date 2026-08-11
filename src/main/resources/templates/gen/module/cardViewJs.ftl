@@ -1,7 +1,7 @@
-<#-- P5-2: MGMT_LIST_DETAIL+CARD_VIEW 뷰. MagicIAM commonListCardView.js 1:1 배선. -->
+<#-- P5-2: MGMT_LIST_DETAIL+CARD_VIEW 뷰. JWorks commonListCardView.js 1:1 배선. -->
 <#--
   아티팩트: ListCardView (JS) → {stem}ListCardView.js (계약 §8.2)
-  역할: 번들 런타임 window.MagicIAM_JSCommonListCardView(commonListCardView.js) API에 배선.
+  역할: 번들 런타임 window.JWorks_JSCommonListCardView(commonListCardView.js) API에 배선.
         - cardView.init = function(options)(43행) → init({ $container, apiInfo,
           searchCallback, sortCallback, categoryChangeCallback }) 호출.
         - 필수: options.$container(44행 유효성 검사). 선택: apiInfo(51행),
@@ -26,7 +26,7 @@
 <#assign imageField = (props["imageField"])!"">
 <#assign Domain = stem?cap_first>
 <#assign Role = role?cap_first>
-<#assign NS = "MagicIAM_JS" + Domain + Role + "CardView">
+<#assign NS = "JWorks_JS" + Domain + Role + "CardView">
 window.${NS} = window.${NS} || {};
 (function(view) {
 	"use strict";
@@ -70,7 +70,7 @@ window.${NS} = window.${NS} || {};
 		// 번들 런타임(commonListCardView.js) 배선. init 시그니처: init(options)(43행).
 		// 필수 $container(44행), 선택 apiInfo(51행)/searchCallback(54행)/sortCallback(78행)/
 		// categoryChangeCallback(91행). apiInfo는 도메인별로 채우는 배선점.
-		MagicIAM_JSCommonListCardView.init({
+		JWorks_JSCommonListCardView.init({
 			$container: $container,
 			apiInfo: {
 				// TODO(배선): 실제 목록 조회 API 및 콜백으로 교체.

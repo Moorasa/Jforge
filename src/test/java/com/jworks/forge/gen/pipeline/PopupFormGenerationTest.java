@@ -45,7 +45,7 @@ class PopupFormGenerationTest {
         assertTrue(jsp.contains("class=\"overlay-popup popup-size-small\""));
         assertTrue(jsp.contains("사용자 추가"));
         assertTrue(jsp.contains("name=\"userName\""));
-        assertTrue(js.contains("window.MagicIAM_JSUserAddPopup"));
+        assertTrue(js.contains("window.JWorks_JSUserAddPopup"));
         assertTrue(Files.exists(targetRoot.resolve("css/admin/userAdd/userAdd.css")));
         assertFalse(jsp.contains("<script>alert"));
     }

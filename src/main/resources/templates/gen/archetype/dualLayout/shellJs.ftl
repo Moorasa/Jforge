@@ -1,8 +1,8 @@
-<#-- P5-5c: DUAL_LAYOUT 아키타입 JS. MagicIAM commonSection.js dual 런타임 배선(계약 §10). -->
+<#-- P5-5c: DUAL_LAYOUT 아키타입 JS. JWorks commonSection.js dual 런타임 배선(계약 §10). -->
 <#--
   아티팩트: dualJs → {stem}.js (계약 §10.1)
-  역할: window.MagicIAM_JS{Domain}{Role} 네임스페이스 + IIFE + __defined 골격.
-    - MagicIAM_JSCommonSection.postMessageEventListener(info)(25행) 등록 → 자식 프레임의
+  역할: window.JWorks_JS{Domain}{Role} 네임스페이스 + IIFE + __defined 골격.
+    - JWorks_JSCommonSection.postMessageEventListener(info)(25행) 등록 → 자식 프레임의
       DUAL_LAYOUT_VIEW_TYPE_CHANGE(45행)/SYNC_VIEW_STATE(64행) 메시지로 좌우 비율·상태 동기화.
     - 리사이저 드래그/접기/펼치기 이벤트는 commonSection.js 자체 $(function)(364행)가 자동 바인딩(여기 불필요).
   🔒 이 파일은 구조값(stem/role)만 사용. props 자유문자열 삽입 없음(패인 배선은 shell iframe id + 도메인 URL).
@@ -14,7 +14,7 @@
 -->
 <#assign Domain = stem?cap_first>
 <#assign Role = role?cap_first>
-<#assign NS = "MagicIAM_JS" + Domain + Role>
+<#assign NS = "JWorks_JS" + Domain + Role>
 window.${NS} = window.${NS} || {};
 (function(page) {
 	"use strict";
@@ -27,7 +27,7 @@ window.${NS} = window.${NS} || {};
 	function init() {
 		// 좌우 프레임 간 상태/뷰타입 동기화 메시지 수신 등록(commonSection.js 25행).
 		// body.dual-layout이므로 SET_HEIGHT는 무시되고 DUAL_LAYOUT_VIEW_TYPE_CHANGE로 비율 조정된다.
-		MagicIAM_JSCommonSection.postMessageEventListener({});
+		JWorks_JSCommonSection.postMessageEventListener({});
 
 		// TODO(배선): 좌/우 iframe의 src를 도메인 화면 URL로 로드.
 		//   var $left = $("#dual-layout-area .layout-left > iframe");

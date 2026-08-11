@@ -1,7 +1,7 @@
-<#-- P5-3: MGMT_LIST_DETAIL+TREE_VIEW 뷰. MagicIAM commonListTreeView.js 1:1 배선. -->
+<#-- P5-3: MGMT_LIST_DETAIL+TREE_VIEW 뷰. JWorks commonListTreeView.js 1:1 배선. -->
 <#--
   아티팩트: ListTreeView (JS) → {stem}ListTreeView.js (계약 §8.2)
-  역할: 번들 런타임 window.MagicIAM_JSCommonListTreeView(commonListTreeView.js) API에 배선.
+  역할: 번들 런타임 window.JWorks_JSCommonListTreeView(commonListTreeView.js) API에 배선.
         - treeView.init = function(options)(33행) → init({ $container, apiInfo, features,
           callbacks, dataMapping, search, orderingState }) 호출.
         - 필수: options.$container(34행 유효성 검사). 선택: apiInfo(40행: parser 494행/renderCallback 461행/
@@ -35,7 +35,7 @@
 <#assign orderingYn = (props["orderingYn"])!false>
 <#assign Domain = stem?cap_first>
 <#assign Role = role?cap_first>
-<#assign NS = "MagicIAM_JS" + Domain + Role + "TreeView">
+<#assign NS = "JWorks_JS" + Domain + Role + "TreeView">
 window.${NS} = window.${NS} || {};
 (function(view) {
 	"use strict";
@@ -77,7 +77,7 @@ window.${NS} = window.${NS} || {};
 		// 번들 런타임(commonListTreeView.js) 배선. init 시그니처: init(options)(33행).
 		// 필수 $container(34행), 선택 apiInfo(40행)/features(41행)/callbacks(42행)/
 		// dataMapping(43행)/search(44행)/orderingState(50행). apiInfo는 도메인별로 채우는 배선점.
-		MagicIAM_JSCommonListTreeView.init({
+		JWorks_JSCommonListTreeView.init({
 			$container: $container,
 			apiInfo: {
 				// TODO(배선): 실제 트리 조회 API 및 콜백으로 교체.

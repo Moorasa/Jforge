@@ -11,14 +11,14 @@ Description : 화면 관리(이름변경/복제/삭제) 컨트롤러 (P7-4).
 
 XSS: 모든 표시 문자열은 createElement/textContent 로만. innerHTML 미사용.
 =============================================================================================== */
-window.MagicIAM_JSForgeAdminStudioScreenMgmt = window.MagicIAM_JSForgeAdminStudioScreenMgmt || {};
+window.JWorks_JSForgeAdminStudioScreenMgmt = window.JWorks_JSForgeAdminStudioScreenMgmt || {};
 (function (mod) {
     "use strict";
     if (mod.__defined) { return; }
     mod.__defined = true;
 
-    var studio = window.MagicIAM_JSForgeAdminStudio;
-    var ctx = (window.MagicIAM_JSForge && window.MagicIAM_JSForge.contextPath) || "";
+    var studio = window.JWorks_JSForgeAdminStudio;
+    var ctx = (window.JWorks_JSForge && window.JWorks_JSForge.contextPath) || "";
     var apiScreens = ctx + "/api/screens";
 
     var STEM_PATTERN = /^[a-z][a-zA-Z0-9]*$/; // ForgeScreenRequest.stem 과 동일(클라 1차 검증)
@@ -279,4 +279,4 @@ window.MagicIAM_JSForgeAdminStudioScreenMgmt = window.MagicIAM_JSForgeAdminStudi
     } else {
         init();
     }
-})(window.MagicIAM_JSForgeAdminStudioScreenMgmt);
+})(window.JWorks_JSForgeAdminStudioScreenMgmt);

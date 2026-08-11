@@ -241,3 +241,24 @@ html, body.dual-layout {
 .dual-layout-area .layout-middle.resizer .expand {
 	display: none;
 }
+
+/* ── MGMT_LIST_DETAIL 좌우 2단 (add-only) ────────────────────────────────
+   상세(detail)가 있는 관리화면은 목록·상세를 **좌우로** 배치한다(JWorks 관리화면 원본 레이아웃).
+   shell 이 이미 `page-shell with-detail` 클래스를 달지만 정작 그 클래스에 배치 규칙이 없어
+   세로로 쌓였다. 여기서 그 규칙을 채운다. `with-detail` 이 없는 단순 목록은 종전대로 세로.
+   기존 선택자는 한 줄도 수정하지 않는다. */
+.page-shell.with-detail {
+	display: flex;
+	flex-direction: row;
+	gap: 12px;
+	align-items: flex-start;
+}
+.page-shell.with-detail > .common-list,
+.page-shell.with-detail > .detail-area {
+	flex: 1 1 0;
+	min-width: 0;
+}
+.page-shell.with-detail > .detail-area {
+	border-left: 1px solid #d5dce5;
+	padding-left: 12px;
+}

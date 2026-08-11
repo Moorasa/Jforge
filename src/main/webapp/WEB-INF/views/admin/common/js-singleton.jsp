@@ -4,7 +4,7 @@
 <c:set var="ctx" value="${pageContext.request.contextPath}" />
 <script>
     // J-FORGE 전역 싱글톤 (빌더가 타겟용으로 생성/관리하는 자리)
-    window.MagicIAM_JSForge = window.MagicIAM_JSForge || {};
-    window.MagicIAM_JSForge.contextPath = "${ctx}";
-    window.MagicIAM_JSForge.appName = "J-FORGE";
+    window.JWorks_JSForge = window.JWorks_JSForge || {};
+    window.JWorks_JSForge.contextPath = "${ctx}";
+    window.JWorks_JSForge.appName = "J-FORGE";
 </script>

@@ -1,0 +1,1 @@
+window.JWorks_JSOpsBoardEmptyState=window.JWorks_JSOpsBoardEmptyState||{};(function(widget){"use strict";if(widget.__defined){return;}widget.__defined=true;widget.init=function(){var root=document.querySelector("#opsBoard-empty-state");if(!root){return;}};document.addEventListener("DOMContentLoaded",widget.init);})(window.JWorks_JSOpsBoardEmptyState);

@@ -1,4 +1,4 @@
-window.MagicIAM_JSOrgDualAdmin = window.MagicIAM_JSOrgDualAdmin || {};
+window.JWorks_JSOrgDualAdmin = window.JWorks_JSOrgDualAdmin || {};
 (function(page) {
 	"use strict";
 
@@ -10,7 +10,7 @@ window.MagicIAM_JSOrgDualAdmin = window.MagicIAM_JSOrgDualAdmin || {};
 	function init() {
 		// 좌우 프레임 간 상태/뷰타입 동기화 메시지 수신 등록(commonSection.js 25행).
 		// body.dual-layout이므로 SET_HEIGHT는 무시되고 DUAL_LAYOUT_VIEW_TYPE_CHANGE로 비율 조정된다.
-		MagicIAM_JSCommonSection.postMessageEventListener({});
+		JWorks_JSCommonSection.postMessageEventListener({});
 
 		// TODO(배선): 좌/우 iframe의 src를 도메인 화면 URL로 로드.
 		//   var $left = $("#dual-layout-area .layout-left > iframe");
@@ -27,4 +27,4 @@ window.MagicIAM_JSOrgDualAdmin = window.MagicIAM_JSOrgDualAdmin || {};
 		init();
 	});
 
-})(window.MagicIAM_JSOrgDualAdmin);
+})(window.JWorks_JSOrgDualAdmin);

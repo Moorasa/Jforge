@@ -1,4 +1,4 @@
-window.MagicIAM_JSFreeBoardCanvas = window.MagicIAM_JSFreeBoardCanvas || {};
+window.JWorks_JSFreeBoardCanvas = window.JWorks_JSFreeBoardCanvas || {};
 (function(screen) {
     "use strict";
     if (screen.__defined) { return; }
@@ -21,4 +21,4 @@ window.MagicIAM_JSFreeBoardCanvas = window.MagicIAM_JSFreeBoardCanvas || {};
     };
 
     $(screen.init);
-})(window.MagicIAM_JSFreeBoardCanvas);
+})(window.JWorks_JSFreeBoardCanvas);

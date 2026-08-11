@@ -157,10 +157,10 @@ class CardViewGenerationTest {
 
         // JS: NS + commonListCardView.init 배선(§8.6).
         String jsBody = Files.readString(js, StandardCharsets.UTF_8);
-        assertTrue(jsBody.contains("window.MagicIAM_JSUserMgmtAdminCardView"),
-                "NS = MagicIAM_JS{Domain}{Role}CardView");
+        assertTrue(jsBody.contains("window.JWorks_JSUserMgmtAdminCardView"),
+                "NS = JWorks_JS{Domain}{Role}CardView");
         assertTrue(jsBody.contains("view.__defined"), "IIFE __defined 골격");
-        assertTrue(jsBody.contains("MagicIAM_JSCommonListCardView.init({"), "번들 런타임 init 배선");
+        assertTrue(jsBody.contains("JWorks_JSCommonListCardView.init({"), "번들 런타임 init 배선");
         assertTrue(jsBody.contains("$container:"), "필수 옵션 $container(44행)");
         assertTrue(jsBody.contains("apiInfo:"), "apiInfo(51행)");
         assertTrue(jsBody.contains("searchCallback:"), "searchCallback(54행)");

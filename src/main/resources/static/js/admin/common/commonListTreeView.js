@@ -1,6 +1,6 @@
 /* ===============================================================================================
 
-Name : MagicIAM_JSCommonListTreeView.js
+Name : JWorks_JSCommonListTreeView.js
 
 Description :
 	JWORKS 프론트엔드 모듈 Tree View에서 공통으로 사용하는 유틸리티 파일입니다.
@@ -9,7 +9,7 @@ Remarks :
 	재배포를 금합니다.
 	
 =============================================================================================== */
-window.MagicIAM_JSCommonListTreeView = window.MagicIAM_JSCommonListTreeView || {};
+window.JWorks_JSCommonListTreeView = window.JWorks_JSCommonListTreeView || {};
 (function(treeView) {
 	"use strict";
 
@@ -37,11 +37,27 @@ window.MagicIAM_JSCommonListTreeView = window.MagicIAM_JSCommonListTreeView || {
 		}
 
 		$container = options.$container;
-		apiInfo = options.apiInfo;
-		features = options.features || {};
-		callbacks = options.callbacks || {};
-		dataMapping = options.dataMapping || {};
-		searchOptions = options.search || {};
+		// init 은 두 번 불린다(commonList.showView + 생성물 listTreeViewJs). 넘어오지 않은
+		// 도메인 배선으로 덮어쓰지 않는다 — 상세는 commonListTableView.init 주석 참조.
+		if (options.apiInfo) {
+			apiInfo = options.apiInfo;
+		}
+		if (options.features) {
+			features = options.features;
+		}
+		if (options.callbacks) {
+			callbacks = options.callbacks;
+		}
+		if (options.dataMapping) {
+			dataMapping = options.dataMapping;
+		}
+		if (options.search) {
+			searchOptions = options.search;
+		}
+		features = features || {};
+		callbacks = callbacks || {};
+		dataMapping = dataMapping || {};
+		searchOptions = searchOptions || {};
 		searchIndex = [];
 		lastSearch = null;
 		lastMatchCount = 0;
@@ -133,6 +149,11 @@ window.MagicIAM_JSCommonListTreeView = window.MagicIAM_JSCommonListTreeView || {
 	}
 
 	treeView.getList = function() {
+		// 배선 전이면 조회할 대상이 없다(상세는 commonListTableView.getList 주석 참조).
+		if (!apiInfo || !apiInfo.url) {
+			return;
+		}
+
 		const data = {
 			...{
 				//				category: $filter.val(),
@@ -600,4 +621,4 @@ window.MagicIAM_JSCommonListTreeView = window.MagicIAM_JSCommonListTreeView || {
 			.replace(/'/g, "&#039;");
 	};
 
-})(window.MagicIAM_JSCommonListTreeView);
+})(window.JWorks_JSCommonListTreeView);

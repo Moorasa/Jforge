@@ -118,10 +118,10 @@ class DetailGoldenSnapshotTest {
         // 스크립트릿 0(JSP).
         assertTrue(!jsp.matches("(?s).*<%[^@\\-].*"), "스크립트릿(<% ) 0");
         assertTrue(!jsp.contains("<%="), "표현식 스크립트릿 0");
-        // MagicIAM commonSection 배선(§9.1 §8.6 동형).
-        assertTrue(js.contains("window.MagicIAM_JSUserMgmtAdminDetail"), "Detail 네임스페이스");
-        assertTrue(js.contains("MagicIAM_JSCommonSection.registEventBasicInfo({"), "기본정보 배선");
-        assertTrue(js.contains("MagicIAM_JSCommonSection.registEventAssociateInfo({"), "연관탭 배선");
+        // JWorks commonSection 배선(§9.1 §8.6 동형).
+        assertTrue(js.contains("window.JWorks_JSUserMgmtAdminDetail"), "Detail 네임스페이스");
+        assertTrue(js.contains("JWorks_JSCommonSection.registEventBasicInfo({"), "기본정보 배선");
+        assertTrue(js.contains("JWorks_JSCommonSection.registEventAssociateInfo({"), "연관탭 배선");
     }
 
     // ------------------------------------------------------------------

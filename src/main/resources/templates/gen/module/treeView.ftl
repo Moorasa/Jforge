@@ -1,4 +1,4 @@
-<#-- P5-3: MGMT_LIST_DETAIL+TREE_VIEW 뷰. MagicIAM commonListTreeView.js 1:1 배선. -->
+<#-- P5-3: MGMT_LIST_DETAIL+TREE_VIEW 뷰. JWorks commonListTreeView.js 1:1 배선. -->
 <#--
   아티팩트: ListTreeView (JSP) → {stem}ListTreeView.jsp (계약 §8.2)
   역할: TREE_VIEW props를 정적 트리 골격으로 산출. 번들 commonListTreeView.js가

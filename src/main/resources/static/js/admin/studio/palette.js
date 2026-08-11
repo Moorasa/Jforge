@@ -1,7 +1,7 @@
 /* ===============================================================================================
 Name : palette.js
 Description : 좌측 팔레트 + 슬롯 조립 컨트롤러 (P3-5, P7-2 전면 개편).
-             MagicIAM_JSForgeAdminStudio(허브) 위에서 동작. 기획서 0장 2번 원칙(자유 드래그 캔버스
+             JWorks_JSForgeAdminStudio(허브) 위에서 동작. 기획서 0장 2번 원칙(자유 드래그 캔버스
              아님 → 팔레트/캔버스 클릭으로 정해진 슬롯에 조립)을 구현한다.
 
 P7-2 배치 흐름(슬롯픽커 폐기):
@@ -18,20 +18,20 @@ P7-2 배치 흐름(슬롯픽커 폐기):
 XSS: 모든 표시 문자열은 textContent/createElement 로만. innerHTML(및 .html()) 미사용.
 의존: slotMeta.js(슬롯 메타 단일 소스), previewBridge.js(배치 대기/선택 코디네이터, 지연 조회)
 =============================================================================================== */
-window.MagicIAM_JSForgeAdminStudioPalette = window.MagicIAM_JSForgeAdminStudioPalette || {};
+window.JWorks_JSForgeAdminStudioPalette = window.JWorks_JSForgeAdminStudioPalette || {};
 (function (mod) {
     "use strict";
     if (mod.__defined) { return; }
     mod.__defined = true;
 
-    var studio = window.MagicIAM_JSForgeAdminStudio;
-    var slotMeta = window.MagicIAM_JSForgeAdminStudioSlotMeta;
-    var ctx = (window.MagicIAM_JSForge && window.MagicIAM_JSForge.contextPath) || "";
+    var studio = window.JWorks_JSForgeAdminStudio;
+    var slotMeta = window.JWorks_JSForgeAdminStudioSlotMeta;
+    var ctx = (window.JWorks_JSForge && window.JWorks_JSForge.contextPath) || "";
     var apiModuleTypes = ctx + "/api/module-types";
 
     // 브리지/속성패널은 로드 순서 이슈를 피해 사용 시점에 조회.
-    function bridge() { return window.MagicIAM_JSForgeAdminStudioPreviewBridge; }
-    function props() { return window.MagicIAM_JSForgeAdminStudioProps; }
+    function bridge() { return window.JWorks_JSForgeAdminStudioPreviewBridge; }
+    function props() { return window.JWorks_JSForgeAdminStudioProps; }
 
     // 카테고리 표시 순서/라벨(그 외 카테고리는 뒤에 원문 표기).
     var CATEGORY_ORDER = ["VIEW", "FILTER", "ACTION", "DETAIL", "LAYOUT"];
@@ -707,4 +707,4 @@ window.MagicIAM_JSForgeAdminStudioPalette = window.MagicIAM_JSForgeAdminStudioPa
     } else {
         init();
     }
-})(window.MagicIAM_JSForgeAdminStudioPalette);
+})(window.JWorks_JSForgeAdminStudioPalette);

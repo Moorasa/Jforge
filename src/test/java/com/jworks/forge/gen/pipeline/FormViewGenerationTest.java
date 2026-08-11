@@ -171,10 +171,10 @@ class FormViewGenerationTest {
 
         // JS: NS + commonListFormView.init 배선(§8.6).
         String jsBody = Files.readString(js, StandardCharsets.UTF_8);
-        assertTrue(jsBody.contains("window.MagicIAM_JSUserMgmtAdminFormView"),
-                "NS = MagicIAM_JS{Domain}{Role}FormView");
+        assertTrue(jsBody.contains("window.JWorks_JSUserMgmtAdminFormView"),
+                "NS = JWorks_JS{Domain}{Role}FormView");
         assertTrue(jsBody.contains("view.__defined"), "IIFE __defined 골격");
-        assertTrue(jsBody.contains("MagicIAM_JSCommonListFormView.init({"), "번들 런타임 init 배선");
+        assertTrue(jsBody.contains("JWorks_JSCommonListFormView.init({"), "번들 런타임 init 배선");
         assertTrue(jsBody.contains("$container:"), "필수 옵션 $container(31행)");
         assertTrue(jsBody.contains("apiInfo:"), "apiInfo(37행)");
         assertTrue(jsBody.contains("renderCallback:"), "apiInfo.renderCallback(124행)");

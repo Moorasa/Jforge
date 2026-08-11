@@ -19,36 +19,160 @@ Description : 레이어 패널 — 화면에 배치된 인스턴스의 **계층 
 
 🔒 XSS: DOM 은 createElement + textContent 로만 만든다(innerHTML 금지 — 자유문자열이 라벨로 들어온다).
 =============================================================================================== */
-window.MagicIAM_JSForgeAdminStudioLayerPanel = window.MagicIAM_JSForgeAdminStudioLayerPanel || {};
+window.JWorks_JSForgeAdminStudioLayerPanel = window.JWorks_JSForgeAdminStudioLayerPanel || {};
 (function (mod) {
     "use strict";
     if (mod.__defined) { return; }
     mod.__defined = true;
 
-    var studio = window.MagicIAM_JSForgeAdminStudio;
-    var slotMeta = window.MagicIAM_JSForgeAdminStudioSlotMeta;
+    var studio = window.JWorks_JSForgeAdminStudio;
+    var slotMeta = window.JWorks_JSForgeAdminStudioSlotMeta;
 
-    function bridge() { return window.MagicIAM_JSForgeAdminStudioPreviewBridge; }
+    function bridge() { return window.JWorks_JSForgeAdminStudioPreviewBridge; }
     function listEl() { return document.getElementById("frg-layer-list"); }
     function panelEl() { return document.getElementById("frg-pane-layers"); }
 
-    /** 인스턴스의 표시 이름 — 사람이 붙인 이름이 있으면 그것, 없으면 모듈 타입. */
-    function displayName(inst) {
+    /**
+     * 사람이 붙인 이름(있으면). 없으면 null — 호출측이 타입을 이름 자리에 쓴다.
+     * 이름과 타입을 **둘 다** 그리면 이름 없는 부품이 "TOOLBAR TOOLBAR"로 두 번 나오고,
+     * 좁은 패널에서 그 중복이 이름을 밀어내 잘리게 만든다.
+     */
+    function customName(inst) {
         var p = (inst && inst.props) || {};
         var candidates = [p.title, p.text, p.label, p.placeholder];
         for (var i = 0; i < candidates.length; i++) {
             var v = candidates[i];
-            if (typeof v === "string" && v.trim() !== "") {
-                return v.trim().length > 24 ? v.trim().slice(0, 24) + "…" : v.trim();
-            }
+            if (typeof v === "string" && v.trim() !== "") { return v.trim(); }
         }
-        return String((inst && inst.moduleTypeCode) || "?");
+        return null;
+    }
+
+    function displayName(inst) {
+        return customName(inst) || String((inst && inst.moduleTypeCode) || "?");
     }
 
     function zOf(inst) {
         var raw = inst && inst.props ? inst.props.layoutZ : null;
         var n = Number(raw);
         return (raw == null || !isFinite(n)) ? null : n;
+    }
+
+    // ---------- 끌어놓기(DOM 판정) ----------
+
+    var dragId = null;   // 끌고 있는 instanceId
+
+    function clearDropMarks() {
+        var ul = listEl();
+        if (!ul) { return; }
+        for (var i = 0; i < ul.childNodes.length; i++) {
+            var n = ul.childNodes[i];
+            if (n && n.className) {
+                n.className = n.className
+                    .replace(/\s*is-drop-(before|after|into)/g, "");
+            }
+        }
+    }
+
+    /**
+     * 커서 위치로 모드를 정한다 — 행 위쪽 30% = 앞에, 아래쪽 30% = 뒤에,
+     * 가운데 40% = 그 안으로(컨테이너일 때만). 캔버스의 "패널에 끌어넣기"와 같은 감각이다.
+     */
+    function dropModeAt(row, clientY, isContainer) {
+        var rect = (typeof row.getBoundingClientRect === "function")
+            ? row.getBoundingClientRect() : null;
+        if (!rect || !rect.height) { return isContainer ? "into" : "before"; }
+        var ratio = (clientY - rect.top) / rect.height;
+        if (isContainer && ratio > 0.3 && ratio < 0.7) { return "into"; }
+        return ratio < 0.5 ? "before" : "after";
+    }
+
+    function attachDrag(row, id, isContainer) {
+        row.draggable = true;
+
+        row.addEventListener("dragstart", function (e) {
+            dragId = id;
+            row.className += " is-dragging";
+            if (e.dataTransfer) {
+                e.dataTransfer.effectAllowed = "move";
+                // 일부 브라우저는 데이터가 없으면 드래그를 시작하지 않는다.
+                try { e.dataTransfer.setData("text/plain", id); } catch (ignored) { /* 무시 */ }
+            }
+        });
+
+        row.addEventListener("dragend", function () {
+            dragId = null;
+            row.className = row.className.replace(/\s*is-dragging/g, "");
+            clearDropMarks();
+        });
+
+        row.addEventListener("dragover", function (e) {
+            if (!dragId || dragId === id) { return; }
+            var mode = dropModeAt(row, e.clientY, isContainer);
+            var def = studio ? studio.getDefinitionJson() : null;
+            var items = canvasItems(def);
+            var newParent = (mode === "into") ? id : parentIdOf(items, id);
+            if (!canDrop(items, dragId, newParent)) { return; }  // 금지면 드롭 자체를 안 받는다
+            if (e.preventDefault) { e.preventDefault(); }
+            if (e.dataTransfer) { e.dataTransfer.dropEffect = "move"; }
+            clearDropMarks();
+            row.className += " is-drop-" + mode;
+        });
+
+        row.addEventListener("dragleave", function () {
+            row.className = row.className.replace(/\s*is-drop-(before|after|into)/g, "");
+        });
+
+        row.addEventListener("drop", function (e) {
+            if (e.preventDefault) { e.preventDefault(); }
+            if (e.stopPropagation) { e.stopPropagation(); }
+            var dragged = dragId;
+            clearDropMarks();
+            dragId = null;
+            if (!dragged || dragged === id) { return; }
+            applyMove(dragged, id, dropModeAt(row, e.clientY, isContainer));
+        });
+    }
+
+    /** 목록 빈 곳에 놓으면 루트로 빼낸다(패널 밖으로 꺼내는 유일한 방법). */
+    function attachRootDrop(ul) {
+        ul.addEventListener("dragover", function (e) {
+            if (!dragId) { return; }
+            if (e.preventDefault) { e.preventDefault(); }
+        });
+        ul.addEventListener("drop", function (e) {
+            if (!dragId) { return; }
+            if (e.preventDefault) { e.preventDefault(); }
+            var dragged = dragId;
+            dragId = null;
+            clearDropMarks();
+            moveToRoot(dragged);
+        });
+    }
+
+    /** 루트 맨 위로 빼낸다. 부모가 이미 없으면 아무 일도 하지 않는다. */
+    function moveToRoot(draggedId) {
+        if (!studio) { return false; }
+        var def = studio.getDefinitionJson();
+        if (!def) { return false; }
+        var items = canvasItems(def);
+        if (parentIdOf(items, draggedId) == null) { return false; }
+
+        var ordered = siblingsOf(items, null)
+            .map(function (inst, i) { return { inst: inst, i: i, z: zOf(inst) || 0 }; })
+            .sort(function (a, b) { return (b.z - a.z) || (a.i - b.i); })
+            .map(function (x) { return x.inst; });
+        ordered.unshift(findItem(items, draggedId));
+
+        var zById = {};
+        var n = ordered.length;
+        ordered.forEach(function (inst, idx) {
+            var z = n - 1 - idx;
+            if (slotMeta) { z = slotMeta.clampCanvas("layoutZ", z); }
+            zById[String(inst.instanceId)] = z;
+        });
+        studio.updateDefinitionJson(
+            withZ(def, zById, String(draggedId), null), { reason: "layerPanel" });
+        return true;
     }
 
     // ---------- 행 만들기 ----------
@@ -59,7 +183,9 @@ window.MagicIAM_JSForgeAdminStudioLayerPanel = window.MagicIAM_JSForgeAdminStudi
         row.className = "frg-layer-row";
         if (String(selectedId) === id) { row.className += " is-selected"; }
         row.setAttribute("data-instance-id", id);
+        row.setAttribute("data-container", isContainer ? "1" : "0");
         row.style.paddingLeft = (8 + depth * 14) + "px";
+        attachDrag(row, id, isContainer);
 
         var btn = document.createElement("button");
         btn.type = "button";
@@ -71,15 +197,21 @@ window.MagicIAM_JSForgeAdminStudioLayerPanel = window.MagicIAM_JSForgeAdminStudi
         icon.textContent = isContainer ? "▣" : "▪";  // 컨테이너인지 한눈에
         btn.appendChild(icon);
 
+        var custom = customName(inst);
         var name = document.createElement("span");
         name.className = "frg-layer-label";
-        name.textContent = displayName(inst);        // 🔒 textContent
+        name.textContent = custom || String(inst.moduleTypeCode || "?");  // 🔒 textContent
+        name.title = String(inst.moduleTypeCode || "");
         btn.appendChild(name);
 
-        var type = document.createElement("span");
-        type.className = "frg-layer-type";
-        type.textContent = String(inst.moduleTypeCode || "");
-        btn.appendChild(type);
+        // 타입 배지는 **이름이 따로 있을 때만** 단다. 이름이 곧 타입인 부품에 또 붙이면
+        // 같은 글자가 두 번 나오면서 좁은 패널에서 이름을 잘라먹는다.
+        if (custom) {
+            var type = document.createElement("span");
+            type.className = "frg-layer-type";
+            type.textContent = String(inst.moduleTypeCode || "");
+            btn.appendChild(type);
+        }
 
         var z = zOf(inst);
         if (z !== null) {
@@ -98,9 +230,9 @@ window.MagicIAM_JSForgeAdminStudioLayerPanel = window.MagicIAM_JSForgeAdminStudi
 
         var actions = document.createElement("span");
         actions.className = "frg-layer-actions";
-        actions.appendChild(makeActionButton("▲", "앞으로 보내기", function () { bumpZ(id, +1); }));
-        actions.appendChild(makeActionButton("▼", "뒤로 보내기", function () { bumpZ(id, -1); }));
-        actions.appendChild(makeActionButton("×", "삭제", function () { requestDelete(id, inst); }));
+        actions.appendChild(makeActionButton("▲", "한 칸 앞으로", function () { moveLayer(id, +1); }));
+        actions.appendChild(makeActionButton("▼", "한 칸 뒤로", function () { moveLayer(id, -1); }));
+        actions.appendChild(makeActionButton("×", "삭제", function () { requestDelete(id); }));
         row.appendChild(actions);
         return row;
     }
@@ -125,48 +257,154 @@ window.MagicIAM_JSForgeAdminStudioLayerPanel = window.MagicIAM_JSForgeAdminStudi
         return (def && def.slots && Array.isArray(def.slots.canvasArea)) ? def.slots.canvasArea : [];
     }
 
-    /**
-     * 같은 부모를 가진 형제 중 맨 앞/맨 뒤로 보낸다. §17.10 이후 z 는 형제 범위에서만 의미가
-     * 있으므로 형제만 훑는다. 값은 §17.2 유효범위(0~999)로 클램프한다 — 벗어나면 산출이
-     * 0바이트가 되어 "조절했는데 파일엔 안 나가는" 상태가 된다.
-     */
-    function bumpZ(instanceId, direction) {
-        if (!studio) { return; }
-        var def = studio.getDefinitionJson();
-        if (!def) { return; }
-        var items = canvasItems(def);
-        var target = null;
-        items.forEach(function (i) { if (i && String(i.instanceId) === String(instanceId)) { target = i; } });
-        if (!target) { return; }
+    // ---------- 계층 질의(끌어놓기 판정에 쓰는 순수 함수들) ----------
 
-        var parentId = slotMeta ? slotMeta.parentIdOf(target) : null;
-        var siblingZ = [];
+    function findItem(items, id) {
+        var found = null;
         items.forEach(function (i) {
-            if (!i || String(i.instanceId) === String(instanceId)) { return; }
-            var pid = slotMeta ? slotMeta.parentIdOf(i) : null;
-            if (String(pid) !== String(parentId)) { return; }
-            var z = zOf(i);
-            if (z !== null) { siblingZ.push(z); }
+            if (i && String(i.instanceId) === String(id)) { found = i; }
         });
-
-        var next;
-        if (siblingZ.length === 0) {
-            next = direction > 0 ? 1 : 0;
-        } else if (direction > 0) {
-            next = Math.max.apply(null, siblingZ) + 1;
-        } else {
-            next = Math.min.apply(null, siblingZ) - 1;
-        }
-        var clamped = slotMeta ? slotMeta.clampCanvas("layoutZ", next) : next;
-        if (clamped === null) { return; }
-        if (zOf(target) === clamped) { return; }   // 이미 끝이면 아무것도 하지 않는다(빈 undo 방지)
-
-        var newDef = cloneWithProp(def, instanceId, "layoutZ", clamped);
-        studio.updateDefinitionJson(newDef, { reason: "layerPanel" });
+        return found;
     }
 
-    /** props 한 키만 바꾼 새 정의를 만든다(원본 불변 — undo 가 성립하려면 새 객체여야 한다). */
-    function cloneWithProp(def, instanceId, key, value) {
+    function parentIdOf(items, id) {
+        var inst = findItem(items, id);
+        return inst && slotMeta ? slotMeta.parentIdOf(inst) : null;
+    }
+
+    /** 형제 목록(같은 부모). parentId 가 null 이면 루트들. */
+    function siblingsOf(items, parentId) {
+        return items.filter(function (i) {
+            if (!i || i.instanceId == null) { return false; }
+            var pid = slotMeta ? slotMeta.parentIdOf(i) : null;
+            return String(pid) === String(parentId);
+        });
+    }
+
+    /** 루트를 1로 센 깊이. 부모 사슬이 끊기면 1(루트 수렴 — 산출측과 같은 안전측 규칙). */
+    function depthOf(items, id) {
+        var d = 1;
+        var seen = {};
+        var cursor = parentIdOf(items, id);
+        while (cursor && !seen[cursor]) {
+            seen[cursor] = 1;
+            d++;
+            cursor = parentIdOf(items, cursor);
+        }
+        return d;
+    }
+
+    /** 이 인스턴스를 뿌리로 하는 하위 트리의 높이(자기만 있으면 1). */
+    function subtreeHeight(items, id) {
+        var kids = siblingsOf(items, String(id));
+        if (kids.length === 0) { return 1; }
+        var max = 1;
+        kids.forEach(function (k) {
+            var h = 1 + subtreeHeight(items, k.instanceId);
+            if (h > max) { max = h; }
+        });
+        return max;
+    }
+
+    function isDescendant(items, candidateId, ancestorId) {
+        var seen = {};
+        var cursor = parentIdOf(items, candidateId);
+        while (cursor && !seen[cursor]) {
+            if (String(cursor) === String(ancestorId)) { return true; }
+            seen[cursor] = 1;
+            cursor = parentIdOf(items, cursor);
+        }
+        return false;
+    }
+
+    /**
+     * 끌어놓기가 허용되는가. 캔버스·저장 검증(§17.8)과 **같은 규칙**을 미리 본다 —
+     * 여기서 막지 않으면 저장 시점에 400 으로 튕기거나 산출에서 루트로 수렴해 버린다.
+     */
+    function canDrop(items, draggedId, newParentId) {
+        if (!draggedId) { return false; }
+        if (newParentId == null) { return true; }                       // 루트로 빼는 건 언제나 가능
+        if (String(newParentId) === String(draggedId)) { return false; } // 자기 자신
+        if (isDescendant(items, newParentId, draggedId)) { return false; } // 자기 자손 안으로
+        var parent = findItem(items, newParentId);
+        if (!parent || !slotMeta || !slotMeta.isContainer(parent.moduleTypeCode)) { return false; }
+        var max = slotMeta.MAX_CANVAS_DEPTH || 3;
+        // 새 부모의 깊이 + 끌고 온 가지의 높이가 한계를 넘으면 안 된다(자식까지 함께 내려간다).
+        return depthOf(items, newParentId) + subtreeHeight(items, draggedId) <= max;
+    }
+
+    /**
+     * 끌어놓기 적용. DOM 판정과 분리된 **순수 진입점**이라 그대로 시험할 수 있다.
+     *
+     * @param mode "before" | "after" — target 의 형제가 되어 그 앞/뒤에 놓인다(위=앞)
+     *             "into"            — target 의 자식이 되어 맨 위에 놓인다
+     * @return 바뀌었으면 true
+     */
+    function applyMove(draggedId, targetId, mode) {
+        if (!studio) { return false; }
+        var def = studio.getDefinitionJson();
+        if (!def) { return false; }
+        var items = canvasItems(def);
+        if (!findItem(items, draggedId) || String(draggedId) === String(targetId)) { return false; }
+
+        var newParentId = (mode === "into") ? String(targetId) : parentIdOf(items, targetId);
+        if (mode !== "into" && !findItem(items, targetId)) { return false; }
+        if (!canDrop(items, draggedId, newParentId)) { return false; }
+
+        // 새 부모의 형제열을 화면 순서(위=앞)로 만든 뒤, 끌고 온 것을 원하는 자리에 끼운다.
+        var group = siblingsOf(items, newParentId).filter(function (i) {
+            return String(i.instanceId) !== String(draggedId);
+        });
+        var ordered = group
+            .map(function (inst, i) { return { inst: inst, i: i, z: zOf(inst) || 0 }; })
+            .sort(function (a, b) { return (b.z - a.z) || (a.i - b.i); })
+            .map(function (x) { return x.inst; });
+
+        var at = 0;
+        if (mode !== "into") {
+            ordered.forEach(function (inst, idx) {
+                if (String(inst.instanceId) === String(targetId)) {
+                    at = (mode === "before") ? idx : idx + 1;
+                }
+            });
+        }
+        ordered.splice(at, 0, findItem(items, draggedId));
+
+        var zById = {};
+        var n = ordered.length;
+        ordered.forEach(function (inst, idx) {
+            var z = n - 1 - idx;
+            if (slotMeta) { z = slotMeta.clampCanvas("layoutZ", z); }
+            zById[String(inst.instanceId)] = z;
+        });
+
+        studio.updateDefinitionJson(
+            withZ(def, zById, String(draggedId), newParentId), { reason: "layerPanel" });
+        return true;
+    }
+
+    /**
+     * 목록에서 **한 칸** 위/아래로 옮긴다(포토샵 레이어 목록과 같은 감각).
+     *
+     * 예전에는 `max(형제 z) + 1` 로 "맨 앞으로 보내기"를 했다. 그래서 누를 때마다 z 가
+     * 36 → 37 → 38 … 로 **끝없이 커지고** 값 사이가 벌어져 숫자가 의미를 잃었다(§17.2 상한
+     * 999 에 닿기 전에 이미 못 읽는 값이 된다). 지금은 이웃과 자리를 바꾼 뒤 **형제 전체에
+     * 0..n-1 을 다시 매긴다** — 값이 촘촘하게 유지되고 목록 순서와 언제나 일치한다.
+     *
+     * @param direction +1 = 한 칸 앞으로(위) / -1 = 한 칸 뒤로(아래)
+     */
+    function moveLayer(instanceId, direction) {
+        var b = bridge();
+        if (b && typeof b.requestLayerMove === "function") {
+            b.requestLayerMove(instanceId, direction);
+        }
+    }
+
+    /**
+     * 형제들의 layoutZ 를 한 번에 새로 매긴 정의를 만든다(원본 불변 — undo 1건).
+     * 건드리지 않는 인스턴스는 **같은 객체를 그대로** 재사용해 불필요한 diff 를 만들지 않는다.
+     */
+    function withZ(def, zById, reparentId, newParentId) {
         var copy = {};
         Object.keys(def || {}).forEach(function (k) { copy[k] = def[k]; });
         var slots = {};
@@ -175,12 +413,24 @@ window.MagicIAM_JSForgeAdminStudioLayerPanel = window.MagicIAM_JSForgeAdminStudi
             var arr = src[sk];
             if (!Array.isArray(arr)) { slots[sk] = arr; return; }
             slots[sk] = arr.map(function (inst) {
-                if (!inst || String(inst.instanceId) !== String(instanceId)) { return inst; }
+                if (!inst || inst.instanceId == null) { return inst; }
+                var id = String(inst.instanceId);
+                var nextZ = zById[id];
+                var reparent = (reparentId != null && id === String(reparentId));
+                if (nextZ === undefined && !reparent) { return inst; }
+                if (!reparent && zOf(inst) === nextZ) { return inst; }
+
                 var nextInst = {};
                 Object.keys(inst).forEach(function (ik) { nextInst[ik] = inst[ik]; });
                 var nextProps = {};
                 Object.keys(inst.props || {}).forEach(function (pk) { nextProps[pk] = inst.props[pk]; });
-                nextProps[key] = value;
+                if (nextZ !== undefined) { nextProps.layoutZ = nextZ; }
+                if (reparent) {
+                    // 루트로 뺄 때는 키를 **지운다** — 빈 문자열을 남기면 "부모 없음"과
+                    // "부모가 빈 값"이 갈라져 저장 검증(§17.8)이 헷갈린다.
+                    if (newParentId == null) { delete nextProps.layoutParentId; }
+                    else { nextProps.layoutParentId = String(newParentId); }
+                }
                 nextInst.props = nextProps;
                 return nextInst;
             });
@@ -189,41 +439,41 @@ window.MagicIAM_JSForgeAdminStudioLayerPanel = window.MagicIAM_JSForgeAdminStudi
         return copy;
     }
 
-    function requestDelete(instanceId, inst) {
+    /**
+     * 삭제 확인은 **브리지가 단일 소유**한다(previewBridge.requestDelete).
+     * 여기서 또 물으면 확인 창이 두 번 뜨고, 문구가 갈라진다.
+     */
+    function requestDelete(instanceId) {
         var b = bridge();
-        if (!b || typeof b.requestDelete !== "function") { return; }
-        var isContainer = slotMeta && slotMeta.isContainer(inst && inst.moduleTypeCode);
-        var text = isContainer
-            ? "\"" + displayName(inst) + "\" 를 지우면 그 안의 부품도 함께 지워집니다. 계속할까요?"
-            : "\"" + displayName(inst) + "\" 를 지울까요?";
-        confirmThen("부품 삭제", text, function (ok) {
-            if (ok) { b.requestDelete(instanceId); }
-        });
-    }
-
-    // 번들 위젯 우선(P7 규약: window.confirm 직접 호출 금지, 미로드시에만 폴백).
-    function confirmThen(title, text, cb) {
-        if (window.JWORKS_JSConfirm && typeof window.JWORKS_JSConfirm.start === "function") {
-            window.JWORKS_JSConfirm.start(String(title), String(text), function (result) {
-                cb(result === true || result === "true" || result === 1);
-            });
-            return;
-        }
-        cb(window.confirm(String(text)));
+        if (b && typeof b.requestDelete === "function") { b.requestDelete(instanceId); }
     }
 
     // ---------- 렌더 ----------
 
+    /**
+     * 레이어 목록의 순서 = **앞에 있는 것이 위**(포토샵/델파이 관례).
+     * §17.10 으로 layoutZ 의 의미가 "형제 사이의 순서"로 확정됐으므로 정렬도 형제 단위다.
+     * z 가 같거나 없으면 원래 배열 순서를 유지한다(안정 정렬 — 목록이 제멋대로 흔들리지 않게).
+     */
+    function sortSiblingsByZ(nodes) {
+        return nodes
+            .map(function (node, i) { return { node: node, i: i, z: zOf(node.inst) || 0 }; })
+            .sort(function (a, b) { return (b.z - a.z) || (a.i - b.i); })
+            .map(function (x) { return x.node; });
+    }
+
     function renderCanvasTree(ul, items, selectedId) {
         var roots = slotMeta ? slotMeta.buildCanvasTree(items) : [];
+        var count = 0;
         (function walk(nodes, depth) {
-            nodes.forEach(function (node) {
+            sortSiblingsByZ(nodes).forEach(function (node) {
                 var isContainer = slotMeta && slotMeta.isContainer(node.inst.moduleTypeCode);
                 ul.appendChild(makeRow(node.inst, depth, selectedId, isContainer));
+                count++;
                 walk(node.children, depth + 1);
             });
         })(roots, 0);
-        return roots.length;
+        return count;
     }
 
     function renderSlotGroup(ul, slotKey, items, selectedId) {
@@ -280,6 +530,8 @@ window.MagicIAM_JSForgeAdminStudioLayerPanel = window.MagicIAM_JSForgeAdminStudi
     function init() {
         if (!studio || typeof studio.onDefinitionChanged !== "function") { return; }
         if (!panelEl()) { return; }
+        var ul = listEl();
+        if (ul) { attachRootDrop(ul); }   // 목록 배선은 한 번만(행은 매 렌더마다 새로 만든다)
         studio.onDefinitionChanged(function () { render(); });
         var b = bridge();
         if (b && typeof b.onSelectionChanged === "function") {
@@ -288,11 +540,17 @@ window.MagicIAM_JSForgeAdminStudioLayerPanel = window.MagicIAM_JSForgeAdminStudi
         render();
     }
 
-    mod.render = render; // 테스트/디버그 진입점
+    mod.render = render;        // 테스트/디버그 진입점
+    mod.applyMove = applyMove;  // 끌어놓기 모델 변경(DOM 판정과 분리 — 그대로 시험 가능)
+    mod.moveToRoot = moveToRoot;
+    mod.canDrop = function (draggedId, newParentId) {
+        var def = studio ? studio.getDefinitionJson() : null;
+        return canDrop(canvasItems(def), draggedId, newParentId);
+    };
 
     if (document.readyState === "loading") {
         document.addEventListener("DOMContentLoaded", init);
     } else {
         init();
     }
-})(window.MagicIAM_JSForgeAdminStudioLayerPanel);
+})(window.JWorks_JSForgeAdminStudioLayerPanel);

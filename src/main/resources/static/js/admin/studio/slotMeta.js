@@ -11,7 +11,7 @@ Description : 아키타입별 슬롯 메타데이터 단일 소스 (P7-2).
   LABELS[slotKey] = 한글 표시 라벨
   ORDER = 캔버스 표시 순서(위→아래 조립 순서)
 =============================================================================================== */
-window.MagicIAM_JSForgeAdminStudioSlotMeta = window.MagicIAM_JSForgeAdminStudioSlotMeta || {};
+window.JWorks_JSForgeAdminStudioSlotMeta = window.JWorks_JSForgeAdminStudioSlotMeta || {};
 (function (meta) {
     "use strict";
     if (meta.__defined) { return; }
@@ -240,4 +240,4 @@ window.MagicIAM_JSForgeAdminStudioSlotMeta = window.MagicIAM_JSForgeAdminStudioS
         });
         return out;
     };
-})(window.MagicIAM_JSForgeAdminStudioSlotMeta);
+})(window.JWorks_JSForgeAdminStudioSlotMeta);

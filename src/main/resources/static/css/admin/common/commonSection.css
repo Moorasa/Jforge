@@ -24,7 +24,7 @@ section#main-list-info .tabs .tab:last-child {
 	border: 1px solid #313942;
 } 
 section#main-list-info .tabs .tab.on {
-	background: #313942;
+	background: #1865A1;
 	color: #FFFFFF;
 	border: 1px solid #313942;
 }
@@ -476,7 +476,7 @@ section#associate-info .tabs .tab:last-child {
 	border-right: 1px solid #313942;
 } 
 section#associate-info .tabs .tab.on {
-	background: #313942;
+	background: #1865A1;
 	color: #FFFFFF;
 	border: 1px solid #313942;
 }

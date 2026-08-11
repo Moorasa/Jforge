@@ -6,10 +6,10 @@
 <head>
     <jsp:include page="../common/header.jsp" />
     <link rel="stylesheet" href="${ctx}/css/admin/common/forge-theme.css?v=${assetVer}" />
-    <link rel="stylesheet" href="${ctx}/css/admin/common/schemaForm.css" />
-    <link rel="stylesheet" href="${ctx}/css/admin/catalog/catalogList.css" />
-    <script defer src="${ctx}/js/admin/catalog/schemaFormRenderer.js"></script>
-    <script defer src="${ctx}/js/admin/catalog/catalogList.js"></script>
+    <link rel="stylesheet" href="${ctx}/css/admin/common/schemaForm.css?v=${assetVer}" />
+    <link rel="stylesheet" href="${ctx}/css/admin/catalog/catalogList.css?v=${assetVer}" />
+    <script defer src="${ctx}/js/admin/catalog/schemaFormRenderer.js?v=${assetVer}"></script>
+    <script defer src="${ctx}/js/admin/catalog/catalogList.js?v=${assetVer}"></script>
 </head>
 <body class="frg-app">
     <jsp:include page="../common/shell-top.jsp"><jsp:param name="active" value="catalog" /></jsp:include>

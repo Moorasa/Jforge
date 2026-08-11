@@ -25,9 +25,13 @@ window.JWorks_JSForgeSchemaRenderer = window.JWorks_JSForgeSchemaRenderer || {};
     var SUPPORTED = { text: 1, number: 1, boolean: 1, select: 1, columns: 1, chips: 1 };
 
     // --- 안전한 DOM 헬퍼: 텍스트는 반드시 textContent/createTextNode 로만 주입 ---
-    function el(tag, className) {
+    // 빌더 JS 공용 헬퍼와 **같은 시그니처**(tag, className, text). 예전에는 이 파일만 text 인자가
+    // 없어서, 세 번째 인자로 넘긴 라벨이 조용히 버려졌다 — "+ 행 추가"·"편집" 헤더·행 액션
+    // 버튼(↑↓⧉×)이 전부 빈 상자로 그려졌다(카탈로그 속성폼과 스튜디오 속성패널 양쪽).
+    function el(tag, className, text) {
         var node = document.createElement(tag);
         if (className) { node.className = className; }
+        if (text != null) { node.textContent = String(text); } // textContent 로만
         return node;
     }
 

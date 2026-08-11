@@ -26,9 +26,9 @@
     <link rel="stylesheet" href="${ctx}/css/admin/studio/previewBridge.css?v=${assetVer}" />
     <script defer src="${ctx}/js/admin/studio/previewBridge.js?v=${assetVer}"></script>
     <%-- P7-4: 화면 관리(이름변경/복제/삭제) + 생성 dry-run 컨트롤러. studioApp(허브) 뒤 로드 --%>
-    <script defer src="${ctx}/js/admin/studio/screenMgmt.js"></script>
+    <script defer src="${ctx}/js/admin/studio/screenMgmt.js?v=${assetVer}"></script>
     <%-- P7-5: 시작 가이드(빈 상태 안내 + 스튜디오 내 프로젝트 생성). studioApp(허브) 뒤 로드 --%>
-    <script defer src="${ctx}/js/admin/studio/studioGuide.js"></script>
+    <script defer src="${ctx}/js/admin/studio/studioGuide.js?v=${assetVer}"></script>
     <%-- 레이어 패널: 배치된 부품의 계층 표시. slotMeta(트리 계산)·previewBridge(선택 소유) 뒤 로드 --%>
     <script defer src="${ctx}/js/admin/studio/layerPanel.js?v=${assetVer}"></script>
 </head>

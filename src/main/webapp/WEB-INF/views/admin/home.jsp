@@ -6,8 +6,8 @@
 <head>
     <jsp:include page="./common/header.jsp" />
     <link rel="stylesheet" href="${ctx}/css/admin/common/forge-theme.css?v=${assetVer}" />
-    <link rel="stylesheet" href="${ctx}/css/admin/home/home.css" />
-    <script defer src="${ctx}/js/admin/home/home.js"></script>
+    <link rel="stylesheet" href="${ctx}/css/admin/home/home.css?v=${assetVer}" />
+    <script defer src="${ctx}/js/admin/home/home.js?v=${assetVer}"></script>
 </head>
 <body class="frg-app">
     <jsp:include page="./common/shell-top.jsp"><jsp:param name="active" value="home" /></jsp:include>

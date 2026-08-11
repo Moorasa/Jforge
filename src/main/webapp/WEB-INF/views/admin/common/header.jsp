@@ -10,39 +10,39 @@
 
 <title>J-FORGE</title>
 
-<link rel="stylesheet" href="${ctx}/external/jworks/jworks-loadingspinner-1.0.0.css" />
-<link rel="stylesheet" href="${ctx}/external/jworks/jworks-snackbar-1.0.0.css" />
-<link rel="stylesheet" href="${ctx}/external/jworks/jworks-alert-1.0.0.css" />
-<link rel="stylesheet" href="${ctx}/external/jworks/jworks-confirm-1.0.0.css" />
-<link rel="stylesheet" href="${ctx}/external/jworks/jworks-tooltip-1.0.0.css" />
-<link rel="stylesheet" href="${ctx}/external/jworks/jworks-empty-view-0.0.1.css" />
-<link rel="stylesheet" href="${ctx}/css/admin/common/init.css" />
-<link rel="stylesheet" href="${ctx}/css/admin/common/commonSection.css" />
-<link rel="stylesheet" href="${ctx}/css/admin/common/commonPopup.css" />
-<link rel="stylesheet" href="${ctx}/css/admin/common/commonListTableView.css" />
-<link rel="stylesheet" href="${ctx}/css/admin/common/commonListCardView.css" />
-<link rel="stylesheet" href="${ctx}/css/admin/common/commonListTreeView.css" />
-<link rel="stylesheet" href="${ctx}/css/admin/common/commonListFormView.css" />
-<link rel="stylesheet" href="${ctx}/css/admin/common/commonScreenLayout.css" />
+<link rel="stylesheet" href="${ctx}/external/jworks/jworks-loadingspinner-1.0.0.css?v=${assetVer}" />
+<link rel="stylesheet" href="${ctx}/external/jworks/jworks-snackbar-1.0.0.css?v=${assetVer}" />
+<link rel="stylesheet" href="${ctx}/external/jworks/jworks-alert-1.0.0.css?v=${assetVer}" />
+<link rel="stylesheet" href="${ctx}/external/jworks/jworks-confirm-1.0.0.css?v=${assetVer}" />
+<link rel="stylesheet" href="${ctx}/external/jworks/jworks-tooltip-1.0.0.css?v=${assetVer}" />
+<link rel="stylesheet" href="${ctx}/external/jworks/jworks-empty-view-0.0.1.css?v=${assetVer}" />
+<link rel="stylesheet" href="${ctx}/css/admin/common/init.css?v=${assetVer}" />
+<link rel="stylesheet" href="${ctx}/css/admin/common/commonSection.css?v=${assetVer}" />
+<link rel="stylesheet" href="${ctx}/css/admin/common/commonPopup.css?v=${assetVer}" />
+<link rel="stylesheet" href="${ctx}/css/admin/common/commonListTableView.css?v=${assetVer}" />
+<link rel="stylesheet" href="${ctx}/css/admin/common/commonListCardView.css?v=${assetVer}" />
+<link rel="stylesheet" href="${ctx}/css/admin/common/commonListTreeView.css?v=${assetVer}" />
+<link rel="stylesheet" href="${ctx}/css/admin/common/commonListFormView.css?v=${assetVer}" />
+<link rel="stylesheet" href="${ctx}/css/admin/common/commonScreenLayout.css?v=${assetVer}" />
 
-<script defer src="${ctx}/external/jquery/jquery-3.7.1.min.js"></script>
-<script defer src="${ctx}/external/jworks/jworks-loadingspinner-1.0.0.js"></script>
-<script defer src="${ctx}/external/jworks/jworks-snackbar-1.0.0.js"></script>
-<script defer src="${ctx}/external/jworks/jworks-alert-1.0.0.js"></script>
-<script defer src="${ctx}/external/jworks/jworks-confirm-1.0.0.js"></script>
-<script defer src="${ctx}/external/jworks/jworks-tooltip-1.0.0.js"></script>
-<script defer src="${ctx}/external/jworks/jworks-empty-view-0.0.1.js"></script>
+<script defer src="${ctx}/external/jquery/jquery-3.7.1.min.js?v=${assetVer}"></script>
+<script defer src="${ctx}/external/jworks/jworks-loadingspinner-1.0.0.js?v=${assetVer}"></script>
+<script defer src="${ctx}/external/jworks/jworks-snackbar-1.0.0.js?v=${assetVer}"></script>
+<script defer src="${ctx}/external/jworks/jworks-alert-1.0.0.js?v=${assetVer}"></script>
+<script defer src="${ctx}/external/jworks/jworks-confirm-1.0.0.js?v=${assetVer}"></script>
+<script defer src="${ctx}/external/jworks/jworks-tooltip-1.0.0.js?v=${assetVer}"></script>
+<script defer src="${ctx}/external/jworks/jworks-empty-view-0.0.1.js?v=${assetVer}"></script>
 <jsp:include page="./js-singleton.jsp" />
 <jsp:include page="./js-constants.jsp" />
-<script defer src="${ctx}/js/admin/common/constants.js"></script>
-<script defer src="${ctx}/js/admin/common/sendPost.js"></script>
-<script defer src="${ctx}/js/admin/common/common-ajax.js"></script>
-<script defer src="${ctx}/js/admin/common/commonUtils.js"></script>
-<script defer src="${ctx}/js/admin/common/commonSection.js"></script>
-<script defer src="${ctx}/js/admin/common/commonPopup.js"></script>
-<script defer src="${ctx}/js/admin/common/commonList.js"></script>
-<script defer src="${ctx}/js/admin/common/commonListTableView.js"></script>
-<script defer src="${ctx}/js/admin/common/commonListCardView.js"></script>
-<script defer src="${ctx}/js/admin/common/commonListTreeView.js"></script>
-<script defer src="${ctx}/js/admin/common/commonListFormView.js"></script>
-<script defer src="${ctx}/js/admin/common/commonAttributeHandler.js"></script>
+<script defer src="${ctx}/js/admin/common/constants.js?v=${assetVer}"></script>
+<script defer src="${ctx}/js/admin/common/sendPost.js?v=${assetVer}"></script>
+<script defer src="${ctx}/js/admin/common/common-ajax.js?v=${assetVer}"></script>
+<script defer src="${ctx}/js/admin/common/commonUtils.js?v=${assetVer}"></script>
+<script defer src="${ctx}/js/admin/common/commonSection.js?v=${assetVer}"></script>
+<script defer src="${ctx}/js/admin/common/commonPopup.js?v=${assetVer}"></script>
+<script defer src="${ctx}/js/admin/common/commonList.js?v=${assetVer}"></script>
+<script defer src="${ctx}/js/admin/common/commonListTableView.js?v=${assetVer}"></script>
+<script defer src="${ctx}/js/admin/common/commonListCardView.js?v=${assetVer}"></script>
+<script defer src="${ctx}/js/admin/common/commonListTreeView.js?v=${assetVer}"></script>
+<script defer src="${ctx}/js/admin/common/commonListFormView.js?v=${assetVer}"></script>
+<script defer src="${ctx}/js/admin/common/commonAttributeHandler.js?v=${assetVer}"></script>

@@ -5,7 +5,7 @@
 <html lang="ko">
 <head>
     <jsp:include page="../common/header.jsp" />
-    <link rel="stylesheet" href="${ctx}/css/admin/common/forge-theme.css?v=20260803-1" />
+    <link rel="stylesheet" href="${ctx}/css/admin/common/forge-theme.css?v=${assetVer}" />
     <link rel="stylesheet" href="${ctx}/css/admin/common/schemaForm.css" />
     <link rel="stylesheet" href="${ctx}/css/admin/catalog/catalogList.css" />
     <script defer src="${ctx}/js/admin/catalog/schemaFormRenderer.js"></script>

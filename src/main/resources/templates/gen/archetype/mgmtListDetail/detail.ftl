@@ -12,8 +12,10 @@
       / field.styleClass·basicStyleClass → cssToken / field.requiredYn → boolean
     - tab.label → htmlText / tab.tabClass → cssToken / tab.frameId → htmlAttr
     - toolbar btn.label → htmlText / btn.styleClass → cssToken / btn.actionCode → htmlAttr
-  URL 직접수신 props 없음(§9.3): tab.location은 props 아님(TODO 배선점). 스크립트릿 0 / 배너 0.
+  탭 iframe src: §9(B)에서는 산출하지 않았다(도메인 배선점). §19.5 부터 탭 props `frameSrc` 가
+  게이트(common/frameSrc.ftl)를 통과할 때만 같은 출처 절대경로로 산출한다 — 없으면 종전과 동일.
 -->
+<#import "/common/frameSrc.ftl" as frameLib>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <section id="${stem}-detail" class="detail-area">
@@ -130,8 +132,10 @@
         <#list slots["detailTabs"] as tabsInst>
             <#list (tabsInst.props["tabs"])![] as tab>
                 <#assign tabCls = cssToken(tab["tabClass"]!"")>
-            <#-- iframe src(tab.location)은 도메인 채움 TODO 배선점(§9 (B)) — 산출 시 src 미지정. -->
-            <iframe title="${htmlText(tab["label"]!"")}" id="${htmlAttr(tab["frameId"]!"")}" class="associate-frame<#if (tabCls?length > 0)> ${tabCls}</#if><#if frameIdx == 0> on</#if>"></iframe>
+            <#-- §19.5: 탭 props `frameSrc` 가 게이트를 통과할 때만 src 산출. 없으면 종전대로 미지정
+                 (도메인 배선점 — §9 (B)). 게이트는 common/frameSrc.ftl 단일 소스(LAYOUT_FRAME 과 공유). -->
+                <#assign tabSrc = frameLib.safeFrameSrc(tab)>
+            <iframe title="${htmlText(tab["label"]!"")}" id="${htmlAttr(tab["frameId"]!"")}"<#if (tabSrc?length > 0)> src="${r"${ctx}"}${htmlAttr(tabSrc)}"</#if> class="associate-frame<#if (tabCls?length > 0)> ${tabCls}</#if><#if frameIdx == 0> on</#if>"></iframe>
                 <#assign frameIdx = frameIdx + 1>
             </#list>
         </#list>

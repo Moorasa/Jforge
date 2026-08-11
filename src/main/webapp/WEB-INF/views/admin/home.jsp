@@ -5,7 +5,7 @@
 <html lang="ko">
 <head>
     <jsp:include page="./common/header.jsp" />
-    <link rel="stylesheet" href="${ctx}/css/admin/common/forge-theme.css?v=20260803-1" />
+    <link rel="stylesheet" href="${ctx}/css/admin/common/forge-theme.css?v=${assetVer}" />
     <link rel="stylesheet" href="${ctx}/css/admin/home/home.css" />
     <script defer src="${ctx}/js/admin/home/home.js"></script>
 </head>

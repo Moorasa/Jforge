@@ -199,7 +199,7 @@ section#card-view .layout-header section.search .input:empty::before {
 section#card-view .layout-header section.search .search-icon {
 	width: 1.7708rem;
 	height: 1.7708rem;
-	background: #313942;
+	background: #1865A1;
 	border-radius: 0 4px 4px 0;
 	display: flex;
 	flex-direction: row;

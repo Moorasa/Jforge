@@ -5,7 +5,7 @@
 <#assign sizeRaw = (props["size"])!"medium"><#assign sizeConst="MEDIUM">
 <#if sizeRaw == "small"><#assign sizeConst="SMALL"><#elseif sizeRaw == "large"><#assign sizeConst="LARGE"></#if>
 <#assign Domain = stem?cap_first>
-window.MagicIAM_JS${Domain}Popup = window.MagicIAM_JS${Domain}Popup || {};
+window.JWorks_JS${Domain}Popup = window.JWorks_JS${Domain}Popup || {};
 (function(popup) {
     "use strict";
     if (popup.__defined) { return; }
@@ -14,7 +14,7 @@ window.MagicIAM_JS${Domain}Popup = window.MagicIAM_JS${Domain}Popup || {};
     var $container = $("#${stem}-popup");
 
     popup.init = function() {
-        MagicIAM_JSCommonPopup.init({
+        JWorks_JSCommonPopup.init({
             $container: $container,
             type: PopupType.width.${sizeConst},
             footer: {
@@ -30,4 +30,4 @@ window.MagicIAM_JS${Domain}Popup = window.MagicIAM_JS${Domain}Popup || {};
     };
 
     $(popup.init);
-})(window.MagicIAM_JS${Domain}Popup);
+})(window.JWorks_JS${Domain}Popup);

@@ -23,7 +23,7 @@
 </#if>
 </#list>
 </#macro>
-window.MagicIAM_JS${Domain}Canvas = window.MagicIAM_JS${Domain}Canvas || {};
+window.JWorks_JS${Domain}Canvas = window.JWorks_JS${Domain}Canvas || {};
 (function(screen) {
     "use strict";
     if (screen.__defined) { return; }
@@ -41,4 +41,4 @@ window.MagicIAM_JS${Domain}Canvas = window.MagicIAM_JS${Domain}Canvas || {};
     };
 
     $(screen.init);
-})(window.MagicIAM_JS${Domain}Canvas);
+})(window.JWorks_JS${Domain}Canvas);

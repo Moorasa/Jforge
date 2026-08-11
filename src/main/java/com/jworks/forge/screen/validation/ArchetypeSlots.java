@@ -75,7 +75,7 @@ public final class ArchetypeSlots {
         dual.put("rightArea", new SlotRule(Cardinality.ZERO_OR_MANY, "FRAME")); // 0..N
         wl.put("DUAL_LAYOUT", Collections.unmodifiableMap(dual));
 
-        // POPUP — 원본 MagicIAM overlay-popup 기반 추가/수정 팝업.
+        // POPUP — 원본 JWorks overlay-popup 기반 추가/수정 팝업.
         Map<String, SlotRule> popup = new LinkedHashMap<>();
         popup.put("popupBody", new SlotRule(Cardinality.MIN_ONE_MAX_ONE, "VIEW"));
         wl.put("POPUP", Collections.unmodifiableMap(popup));

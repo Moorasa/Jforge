@@ -13,13 +13,13 @@ Description : 프레임에 넣을 화면 고르기(계약 §19). 프로젝트의
 
 XSS: 모든 텍스트 삽입은 createElement/textContent 로만. innerHTML 미사용.
 =============================================================================================== */
-window.MagicIAM_JSForgeAdminStudioScreenPicker = window.MagicIAM_JSForgeAdminStudioScreenPicker || {};
+window.JWorks_JSForgeAdminStudioScreenPicker = window.JWorks_JSForgeAdminStudioScreenPicker || {};
 (function (picker) {
     "use strict";
     if (picker.__defined) { return; }
     picker.__defined = true;
 
-    var ctx = (window.MagicIAM_JSForge && window.MagicIAM_JSForge.contextPath) || "";
+    var ctx = (window.JWorks_JSForge && window.JWorks_JSForge.contextPath) || "";
     var backdrop = null;
     var state = { onPick: null, current: "" };
 
@@ -205,4 +205,4 @@ window.MagicIAM_JSForgeAdminStudioScreenPicker = window.MagicIAM_JSForgeAdminStu
     };
 
     picker.close = close;
-})(window.MagicIAM_JSForgeAdminStudioScreenPicker);
+})(window.JWorks_JSForgeAdminStudioScreenPicker);

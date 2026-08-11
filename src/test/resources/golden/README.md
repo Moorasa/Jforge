@@ -24,6 +24,12 @@
 | `golden/freeCanvas_nested/` | (P13-6) 3단 중첩 + §17.10 컨테이너 격리 + §17.11 깊이 들여쓰기 산출 **3종** | `FreeCanvasGoldenTest` |
 | `golden/freeCanvas_composite/` | (P13-6) 복합 모듈 2종 + 같은 타입 3개(§17.4 3파일 고정) 산출 **3종** | `FreeCanvasGoldenTest` |
 | `golden/freeCanvas_injection/` | (P13-6) 캔버스 전 문맥 악성 props → 이스케이프/좌표 0바이트 산출 **3종** | `FreeCanvasGoldenTest` |
+| `golden/dashboard_widgets/` | DASHBOARD(BAR_CHART+EMPTY_STATE) 산출 **7종**(shell 1 + 위젯별 3종×2) | `DashboardGoldenTest` |
+| `golden/dashboard_injection/` | DASHBOARD 전 문맥 악성 props + 숫자 자리 문자열 산출 **7종** | `DashboardGoldenTest` |
+
+> **DASHBOARD 골든이 왜 늦게 생겼나**: P13-9 에서 숫자가 포매터 객체로 찍히는 결함이
+> `module/widgetBase.ftl` 에도 있었는데 *"대시보드 골든이 없어 아무도 못 잡고 있었다"*.
+> 그 공백을 메운 것이다. `data-value="82"` 가 회귀 고정점이다.
 
 > **FREE_CANVAS 는 화면당 3종 고정**(`{stem}.jsp/.js/.css`)이다 — 캔버스는 모듈별 파일을
 > 만들지 않으므로 같은 모듈을 몇 개 놓아도 산출 파일 수가 변하지 않는다(계약 §17.4).
@@ -69,6 +75,7 @@ mvn -Dtest=DetailGoldenSnapshotTest   -Dforge.golden.update=true test  # Detail 
 mvn -Dtest=DualLayoutGoldenSnapshotTest -Dforge.golden.update=true test  # DUAL_LAYOUT(P5-5c)
 mvn -Dtest=FullCombinationGoldenSnapshotTest -Dforge.golden.update=true test  # 풀조합+인젝션(P6-4)
 mvn -Dtest=FreeCanvasGoldenTest    -Dforge.golden.update=true test  # FREE_CANVAS 5종(P13-6)
+mvn -Dtest=DashboardGoldenTest     -Dforge.golden.update=true test  # DASHBOARD 2종
 
 # 2) 변경 검토: 배너/스크립트릿/이스케이프 회귀가 없는지 눈으로 확인
 git diff src/test/resources/golden/

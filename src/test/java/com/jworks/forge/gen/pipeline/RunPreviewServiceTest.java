@@ -134,8 +134,8 @@ class RunPreviewServiceTest {
 
         RunPreviewService.PreviewAsset js = service.asset(10L, "listJs");
         assertEquals("js", js.ext());
-        // List.js 네임스페이스는 MagicIAM_JS{Domain}{Role}(stem 대문자화) — 골든과 동일 규칙.
-        assertTrue(js.content().contains("MagicIAM_JSUserMgmtAdmin"), "렌더된 JS 내용: " + js.content());
+        // List.js 네임스페이스는 JWorks_JS{Domain}{Role}(stem 대문자화) — 골든과 동일 규칙.
+        assertTrue(js.content().contains("JWorks_JSUserMgmtAdmin"), "렌더된 JS 내용: " + js.content());
 
         RunPreviewService.PreviewAsset css = service.asset(10L, "listCss");
         assertEquals("css", css.ext());

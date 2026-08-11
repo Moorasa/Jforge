@@ -1,5 +1,5 @@
 -- J-FORGE POPUP 아키타입 + POPUP_FORM 모듈 시드.
--- 근거: MagicIAM v2 admin/*/*Popup.jsp, commonPopup.js/commonPopup.css.
+-- 근거: JWorks v2 admin/*/*Popup.jsp, commonPopup.js/commonPopup.css.
 SET search_path TO jforge;
 
 INSERT INTO TB_FRG_COMMON_CODE (GRP_CODE, CODE, CODE_NAME, SORT_ORDER)

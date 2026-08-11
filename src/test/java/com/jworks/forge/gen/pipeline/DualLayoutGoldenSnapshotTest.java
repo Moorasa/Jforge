@@ -99,7 +99,7 @@ class DualLayoutGoldenSnapshotTest {
         assertTrue(!jsp.matches("(?s).*<%[^@\\-].*"), "스크립트릿(<% ) 0");
         assertTrue(!jsp.contains("<%="), "표현식 스크립트릿 0");
         assertTrue(jsp.contains("<body class=\"dual-layout\">"), "body.dual-layout(commonSection dual 계약)");
-        assertTrue(js.contains("MagicIAM_JSCommonSection.postMessageEventListener"), "프레임 동기화 배선");
+        assertTrue(js.contains("JWorks_JSCommonSection.postMessageEventListener"), "프레임 동기화 배선");
     }
 
     private ScreenGenerator newGenerator(String json) {

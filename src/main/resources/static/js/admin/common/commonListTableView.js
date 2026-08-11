@@ -1,6 +1,6 @@
 /* ===============================================================================================
 
-Name : MagicIAM_JSCommonListTableView.js
+Name : JWorks_JSCommonListTableView.js
 
 Description :
 	JWORKS 프론트엔드 모듈 Table View에서 공통으로 사용하는 유틸리티 파일입니다.
@@ -9,7 +9,7 @@ Remarks :
 	재배포를 금합니다.
 	
 =============================================================================================== */
-window.MagicIAM_JSCommonListTableView = window.MagicIAM_JSCommonListTableView || {};
+window.JWorks_JSCommonListTableView = window.JWorks_JSCommonListTableView || {};
 (function(tableView) {
 	"use strict";
 
@@ -122,7 +122,7 @@ window.MagicIAM_JSCommonListTableView = window.MagicIAM_JSCommonListTableView ||
 		maxRetryCount = maxRetryCount || 30;
 
 		// 객체가 생성되지 않은 경우
-		if(typeof window.MagicIAM_JSPagination === "undefined") {
+		if(typeof window.JWorks_JSPagination === "undefined") {
 			if (retryCount >= maxRetryCount) {
 				console.error("Pagination 초기화 실패:");
 				if (typeof callbacks === "function") {
@@ -137,7 +137,7 @@ window.MagicIAM_JSCommonListTableView = window.MagicIAM_JSCommonListTableView ||
 		}
 		// 객체가 생성된 경우
 		else {
-			MagicIAM_JSPagination.init(paginationEventCallback);
+			JWorks_JSPagination.init(paginationEventCallback);
 		}
 
 	}
@@ -713,11 +713,11 @@ window.MagicIAM_JSCommonListTableView = window.MagicIAM_JSCommonListTableView ||
 		}
 
 		// pagination
-		MagicIAM_JSPagination.setPage(paginationInfo);
+		JWorks_JSPagination.setPage(paginationInfo);
 		
 		// 버튼 비활성화
-		MagicIAM_JSCommonUtils.updateSelectionState($container);
+		JWorks_JSCommonUtils.updateSelectionState($container);
 
 	}
 
-})(window.MagicIAM_JSCommonListTableView);
+})(window.JWorks_JSCommonListTableView);

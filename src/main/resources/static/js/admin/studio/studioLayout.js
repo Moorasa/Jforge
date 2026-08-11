@@ -5,7 +5,7 @@ Description : 3-pane 스튜디오의 도킹 패널 폭 조절 컨트롤러.
              - 사용자가 정한 폭을 브라우저에만 저장(localStorage)해 다음 편집에도 유지.
              - 좁은 화면의 세로 레이아웃에서는 CSS가 리사이저를 숨기므로 동작하지 않는다.
 =============================================================================================== */
-window.MagicIAM_JSForgeAdminStudioLayout = window.MagicIAM_JSForgeAdminStudioLayout || {};
+window.JWorks_JSForgeAdminStudioLayout = window.JWorks_JSForgeAdminStudioLayout || {};
 (function (mod) {
     "use strict";
     if (mod.__defined) { return; }
@@ -120,4 +120,4 @@ window.MagicIAM_JSForgeAdminStudioLayout = window.MagicIAM_JSForgeAdminStudioLay
     } else {
         init();
     }
-})(window.MagicIAM_JSForgeAdminStudioLayout);
+})(window.JWorks_JSForgeAdminStudioLayout);

@@ -1,7 +1,7 @@
 <#-- P4 MVP: MGMT_LIST_DETAIL+TABLE_VIEW 1뷰. 다른 뷰/모듈은 P5. -->
 <#--
   아티팩트: ListTableView (JS) → {stem}ListTableView.js (계약 §1.1 #6)
-  역할: 번들 런타임 window.MagicIAM_JSCommonListTableView(commonListTableView.js) API에 배선.
+  역할: 번들 런타임 window.JWorks_JSCommonListTableView(commonListTableView.js) API에 배선.
         - init({ $container, apiInfo, selectionType, tableType }) 호출(시그니처는 commonListTableView.js 확인).
         - columns 정의 배열(name/displayName/displayYn/sortYn)을 뷰 네임스페이스에 노출(헤더/엑셀 참조용).
   🔒 자유문자열 전량 GenEscaper 경유:
@@ -19,7 +19,7 @@
 <#assign selectMode = (props["selectMode"])!"none">
 <#assign Domain = stem?cap_first>
 <#assign Role = role?cap_first>
-<#assign NS = "MagicIAM_JS" + Domain + Role + "TableView">
+<#assign NS = "JWorks_JS" + Domain + Role + "TableView">
 window.${NS} = window.${NS} || {};
 (function(view) {
 	"use strict";
@@ -50,7 +50,7 @@ window.${NS} = window.${NS} || {};
 		}
 
 		// 번들 런타임(commonListTableView.js) 배선. apiInfo는 도메인별로 채우는 배선점.
-		MagicIAM_JSCommonListTableView.init({
+		JWorks_JSCommonListTableView.init({
 			$container: $container,
 			selectionType: selectionType,
 			tableType: "",

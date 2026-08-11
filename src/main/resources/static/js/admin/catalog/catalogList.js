@@ -5,15 +5,15 @@ Description : 모듈 카탈로그 도그푸딩 화면 (P2-5). 좌측 목록(/api
 
 XSS: 모든 텍스트 삽입은 textContent/createTextNode 로만. innerHTML(및 jQuery .html()) 미사용.
 =============================================================================================== */
-window.MagicIAM_JSForgeAdminCatalog = window.MagicIAM_JSForgeAdminCatalog || {};
+window.JWorks_JSForgeAdminCatalog = window.JWorks_JSForgeAdminCatalog || {};
 (function (page) {
     "use strict";
     if (page.__defined) { return; }
     page.__defined = true;
 
-    var ctx = (window.MagicIAM_JSForge && window.MagicIAM_JSForge.contextPath) || "";
+    var ctx = (window.JWorks_JSForge && window.JWorks_JSForge.contextPath) || "";
     var api = ctx + "/api/module-types";
-    var renderer = window.MagicIAM_JSForgeSchemaRenderer;
+    var renderer = window.JWorks_JSForgeSchemaRenderer;
 
     function elText(tag, className, text) {
         var node = document.createElement(tag);
@@ -120,4 +120,4 @@ window.MagicIAM_JSForgeAdminCatalog = window.MagicIAM_JSForgeAdminCatalog || {};
         bind();
         load();
     });
-})(window.MagicIAM_JSForgeAdminCatalog);
+})(window.JWorks_JSForgeAdminCatalog);

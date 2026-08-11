@@ -1,6 +1,6 @@
 /* ===============================================================================================
 
-Name : MagicIAM_JSCommonListFormView.js
+Name : JWorks_JSCommonListFormView.js
 
 Description :
 	JWORKS 프론트엔드 모듈 Form View에서 공통으로 사용하는 유틸리티 파일입니다.
@@ -9,7 +9,7 @@ Remarks :
 	재배포를 금합니다.
 	
 =============================================================================================== */
-window.MagicIAM_JSCommonListFormView = window.MagicIAM_JSCommonListFormView || {};
+window.JWorks_JSCommonListFormView = window.JWorks_JSCommonListFormView || {};
 (function(formView) {
 	"use strict";
 
@@ -127,4 +127,4 @@ window.MagicIAM_JSCommonListFormView = window.MagicIAM_JSCommonListFormView || {
 	function render(data) {
 	}
 
-})(window.MagicIAM_JSCommonListFormView);
+})(window.JWorks_JSCommonListFormView);

@@ -1,6 +1,6 @@
 /* ===============================================================================================
 
-Name : MagicIAM_JSCommonSection.js
+Name : JWorks_JSCommonSection.js
 
 Description :
 	JWORKS 프론트엔드 모듈 전반에서 공통으로 사용하는 유틸리티 파일입니다.
@@ -9,7 +9,7 @@ Remarks :
 	재배포를 금합니다.
 	
 =============================================================================================== */
-window.MagicIAM_JSCommonSection = window.MagicIAM_JSCommonSection || {};
+window.JWorks_JSCommonSection = window.JWorks_JSCommonSection || {};
 (function(commonSection){
 	"use strict";
 
@@ -56,7 +56,7 @@ window.MagicIAM_JSCommonSection = window.MagicIAM_JSCommonSection || {};
 				$("#header .header-my-menu").trigger("click");
 			}
 			else if (data.type === PostMessageType.SESSION_RENEW) {
-				MagicIAM_JSSessionTimer.resetTimer();
+				JWorks_JSSessionTimer.resetTimer();
 			}
 			else if (data.type === PostMessageType.MY_PROFILE_SET_HEIGHT) {
 				$('.myPopup-overlay .tab-content #myTabFrame').css("height", data.height + "px");
@@ -65,10 +65,10 @@ window.MagicIAM_JSCommonSection = window.MagicIAM_JSCommonSection || {};
 				// TODO: frame간 상태 동기화가 필요한 경우 모두 사용 가능하도록 개선
 				// right > top > left leload 상태 동기화를 위해 공통 key로 targetFrameId를 관리
 				// top은 이번 변경이 삭제인지 수정인지 구분할 1회성 action만 덧붙임
-				const state = MagicIAM_JSCommonUtils.getSessionState("dualLayoutFrameState");
+				const state = JWorks_JSCommonUtils.getSessionState("dualLayoutFrameState");
 				state.targetFrameId = data.targetFrameId;
 				state.action = data.action || "";
-				MagicIAM_JSCommonUtils.setSessionState("dualLayoutFrameState", state);
+				JWorks_JSCommonUtils.setSessionState("dualLayoutFrameState", state);
 
 				const targetFrame = data.targetFrameId ? window.document.getElementById(data.targetFrameId) : null;
 				if (targetFrame && targetFrame.contentWindow && data.targetUrl) {
@@ -144,7 +144,7 @@ window.MagicIAM_JSCommonSection = window.MagicIAM_JSCommonSection || {};
 		$("#basic-info .buttons-edit .save").on("click", info.saveCallback);
 	
 		// 클리어 버튼
-		MagicIAM_JSCommonUtils.registEventClearableInput({
+		JWorks_JSCommonUtils.registEventClearableInput({
 			$container: $("section#basic-info .detail-info-edit .layout-column") 
 		});
 	
@@ -216,7 +216,7 @@ window.MagicIAM_JSCommonSection = window.MagicIAM_JSCommonSection || {};
 	 * <p>확장 규칙(타 화면 추후 적용): 각 {@code .tabs .tab} 과 짝이 되는 {@code .contents iframe} 의 {@code class} 에
 	 * 동일한 TB_IAM_SETTING KEY_CODE 토큰(예: {@code C3400119})을 넣는다. 기존 tabClass 등과 공존 가능.
 	 * 페이지 {@code ready} 에서 {@code registEventAssociateInfo} 보다 먼저
-	 * {@code MagicIAM_JSCommonSection.applyAssociateTabsVisibilityByClass($("section#associate-info"))} 호출.
+	 * {@code JWorks_JSCommonSection.applyAssociateTabsVisibilityByClass($("section#associate-info"))} 호출.
 	 * <p>현재 JSP 반영·검증 범위: 권한 위임 상세만.
 	 * @param $container jQuery (기본: section#associate-info)
 	 */
@@ -264,7 +264,7 @@ window.MagicIAM_JSCommonSection = window.MagicIAM_JSCommonSection || {};
 					.map(c => c.trim()) // 공백 제거
 					.filter(c => c !== 'tab' && c !== 'on') // 공통 클래스 제외
 					.join(' ');
-				MagicIAM_JSCommonUtils.setTabCookie("associateInfo-selectedTab", tabClass);
+				JWorks_JSCommonUtils.setTabCookie("associateInfo-selectedTab", tabClass);
 				
 				// 기본 정보 영역이 있는 경우 접기 + 보기 모드 전환 (수정 모드에서 탭 이동 시 버튼이 남아있는 문제 수정)
 				$("section#basic-info").length > 0 && $("section#basic-info").removeClass("edit-mode").addClass("view-mode");
@@ -403,7 +403,7 @@ frame 내부에서 변경이 일어났을때 다른 탭에도 반영이 되어�
 		// 펼치기
 		$expand.on('click', function(e) {
 			const window = $(document).find("#dual-layout-area .layout-left > iframe").get(0).contentWindow;
-			const currViewType = window.MagicIAM_JSCommonList.getCurrViewType();
+			const currViewType = window.JWorks_JSCommonList.getCurrViewType();
 			if($left[0].style.width) {
 				$left.css("flex", "0 0 auto");
 			}
@@ -494,8 +494,8 @@ frame 내부에서 변경이 일어났을때 다른 탭에도 반영이 되어�
 
 				const leftIframe = $('#dual-layout-area .layout-left > iframe').get(0);
 				const win = leftIframe ? leftIframe.contentWindow : null;
-				const viewType = (win && win.MagicIAM_JSCommonList)
-					? win.MagicIAM_JSCommonList.getCurrViewType()
+				const viewType = (win && win.JWorks_JSCommonList)
+					? win.JWorks_JSCommonList.getCurrViewType()
 					: null;
 				commonSection.setDualLayoutRatioByViewType(viewType);
 			}, 150);
@@ -503,10 +503,10 @@ frame 내부에서 변경이 일어났을때 다른 탭에도 반영이 되어�
 	});
 
 
-})(window.MagicIAM_JSCommonSection);
+})(window.JWorks_JSCommonSection);
 
 
-window.MagicIAM_JSSessionTimer = window.MagicIAM_JSSessionTimer || {};
+window.JWorks_JSSessionTimer = window.JWorks_JSSessionTimer || {};
 (function(sessionTimer) {
 	"use strict";
 
@@ -595,4 +595,4 @@ window.MagicIAM_JSSessionTimer = window.MagicIAM_JSSessionTimer || {};
 	***/
 
 
-})(window.MagicIAM_JSSessionTimer);
+})(window.JWorks_JSSessionTimer);

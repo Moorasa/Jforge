@@ -1,7 +1,7 @@
 /* ===============================================================================================
 Name : previewBridge.js
 Description : 부모(스튜디오) 측 캔버스 브리지 (P3-6, P7-2 확장). 오케스트레이터 허브
-             (MagicIAM_JSForgeAdminStudio)의 공개 API 만으로 중앙 인터랙티브 캔버스 iframe 과 결선.
+             (JWorks_JSForgeAdminStudio)의 공개 API 만으로 중앙 인터랙티브 캔버스 iframe 과 결선.
              캔버스에서 일어나는 선택/삭제/순서이동 + (P7-2) 슬롯 배치 확정/모듈 추가 요청을
              DEFINITION_JSON 갱신 또는 팔레트 호출로 반영한다.
 
@@ -18,7 +18,7 @@ P7-2 push 페이로드: { type, definition, selectedId, archetype, pending }
  - 삭제/순서이동/배치는 구조(instanceId/slotKey/index)만 다루며 props 자유문자열은 무가공 보존.
  - 서버 최종 구조검증은 저장 시 다시 수행되므로, 브리지 편집은 UX 편의 계층이다.
 =============================================================================================== */
-window.MagicIAM_JSForgeAdminStudioPreviewBridge = window.MagicIAM_JSForgeAdminStudioPreviewBridge || {};
+window.JWorks_JSForgeAdminStudioPreviewBridge = window.JWorks_JSForgeAdminStudioPreviewBridge || {};
 (function (mod) {
     "use strict";
     if (mod.__defined) { return; }
@@ -36,12 +36,12 @@ window.MagicIAM_JSForgeAdminStudioPreviewBridge = window.MagicIAM_JSForgeAdminSt
     var MSG_RESIZE = "frg:preview:resize";                // iframe → 부모 : 크기 조절 확정(P8, §13)
     var MSG_CANVAS_LAYOUT = "frg:preview:canvasLayout";   // iframe → 부모 : 자유 배치 좌표 확정(P13, §17.2)
 
-    var studio = window.MagicIAM_JSForgeAdminStudio;
-    var slotMeta = window.MagicIAM_JSForgeAdminStudioSlotMeta;
+    var studio = window.JWorks_JSForgeAdminStudio;
+    var slotMeta = window.JWorks_JSForgeAdminStudioSlotMeta;
 
     // palette 는 로드 순서 상 나중에 준비될 수 있어 사용 시점에 조회한다.
-    function palette() { return window.MagicIAM_JSForgeAdminStudioPalette; }
-    function props() { return window.MagicIAM_JSForgeAdminStudioProps; }
+    function palette() { return window.JWorks_JSForgeAdminStudioPalette; }
+    function props() { return window.JWorks_JSForgeAdminStudioProps; }
 
     var selectedId = null; // 캔버스/속성패널이 공유하는 단일 선택 상태
     var pending = null;    // 팔레트발 배치 대기 { moduleTypeCode, moduleName, slots:[...] } | null
@@ -132,6 +132,143 @@ window.MagicIAM_JSForgeAdminStudioPreviewBridge = window.MagicIAM_JSForgeAdminSt
         return ids;
     }
 
+    // ---------- 레이어 순서(구조 편집 — 삭제와 같이 브리지가 소유) ----------
+
+    function canvasItemsOf(def) {
+        return (def && def.slots && Array.isArray(def.slots.canvasArea)) ? def.slots.canvasArea : [];
+    }
+
+    function zOf(inst) {
+        var raw = inst && inst.props ? inst.props.layoutZ : null;
+        var n = Number(raw);
+        return (raw == null || !isFinite(n)) ? null : n;
+    }
+
+    /**
+     * 목록/캔버스에서 **한 칸** 앞뒤로 옮긴다. 캔버스 ▲▼ 와 레이어 패널 ▲▼ 가 같은 진입점이다.
+     *
+     * 예전에는 두 곳이 각자 `max + 1` 로 "맨 앞으로"를 했다. 그래서 누를 때마다 z 가 끝없이
+     * 커졌고(36→37→38…), 캔버스 쪽은 형제가 아니라 **캔버스 전체**에서 최댓값을 찾아 더 빨리
+     * 불어났다. §17.10 으로 z 는 형제 범위에서만 의미가 있으므로 형제만 보고, 이웃과 자리를
+     * 바꾼 뒤 **0..n-1 로 다시 매긴다** — 값이 촘촘하고 목록 순서와 항상 일치한다.
+     *
+     * @param direction +1 = 한 칸 앞으로 / -1 = 한 칸 뒤로
+     */
+    function requestLayerMove(instanceId, direction) {
+        if (!studio) { return false; }
+        var def = studio.getDefinitionJson();
+        if (!def) { return false; }
+        var items = canvasItemsOf(def);
+
+        var target = null;
+        items.forEach(function (i) {
+            if (i && String(i.instanceId) === String(instanceId)) { target = i; }
+        });
+        if (!target) { return false; }
+
+        var parentId = slotMeta ? slotMeta.parentIdOf(target) : null;
+        var siblings = items.filter(function (i) {
+            if (!i || i.instanceId == null) { return false; }
+            var pid = slotMeta ? slotMeta.parentIdOf(i) : null;
+            return String(pid) === String(parentId);
+        });
+        if (siblings.length < 2) { return false; }
+
+        var ordered = siblings
+            .map(function (inst, i) { return { inst: inst, i: i, z: zOf(inst) || 0 }; })
+            .sort(function (a, b) { return (b.z - a.z) || (a.i - b.i); })
+            .map(function (x) { return x.inst; });
+
+        var at = -1;
+        ordered.forEach(function (inst, idx) {
+            if (String(inst.instanceId) === String(instanceId)) { at = idx; }
+        });
+        var to = at - direction;
+        if (at < 0 || to < 0 || to >= ordered.length) { return false; }  // 끝 — 빈 undo 방지
+
+        var swap = ordered[at];
+        ordered[at] = ordered[to];
+        ordered[to] = swap;
+
+        var n = ordered.length;
+        var zById = {};
+        ordered.forEach(function (inst, idx) {
+            var z = n - 1 - idx;
+            if (slotMeta) { z = slotMeta.clampCanvas("layoutZ", z); }
+            zById[String(inst.instanceId)] = z;
+        });
+
+        var newDef = cloneDef(def);
+        Object.keys(newDef.slots).forEach(function (sk) {
+            var arr = newDef.slots[sk];
+            if (!Array.isArray(arr)) { return; }
+            newDef.slots[sk] = arr.map(function (inst) {
+                if (!inst || inst.instanceId == null) { return inst; }
+                var next = zById[String(inst.instanceId)];
+                if (next === undefined || zOf(inst) === next) { return inst; }
+                var nextInst = {};
+                Object.keys(inst).forEach(function (k) { nextInst[k] = inst[k]; });
+                nextInst.props = copyProps(inst.props);
+                nextInst.props.layoutZ = next;
+                return nextInst;
+            });
+        });
+        studio.updateDefinitionJson(newDef, { reason: "layerOrder" });
+        return true;
+    }
+
+    /**
+     * 삭제 확인은 **이 브리지가 단일 소유**한다(선택 상태와 같은 원칙).
+     * 캔버스 ×, 속성패널 삭제, 레이어 패널 × 가 전부 이 진입점으로 들어오므로
+     * 확인 문구·규칙이 자리마다 갈리지 않는다. 컨테이너면 자손 동반 삭제(§17.8)를 알린다.
+     */
+    function requestDelete(instanceId) {
+        if (!studio) { return; }
+        var def = studio.getDefinitionJson();
+        var inst = null;
+        Object.keys((def && def.slots) || {}).forEach(function (sk) {
+            var arr = def.slots[sk];
+            if (!Array.isArray(arr)) { return; }
+            arr.forEach(function (i) {
+                if (i && String(i.instanceId) === String(instanceId)) { inst = i; }
+            });
+        });
+        if (!inst) { return; }
+
+        var isContainer = slotMeta && slotMeta.isContainer(inst.moduleTypeCode);
+        var name = instanceLabel(inst);
+        var text = isContainer
+            ? "\"" + name + "\" 를 지우면 그 안에 담긴 부품도 함께 지워집니다. 계속할까요?"
+            : "\"" + name + "\" 를 화면에서 지울까요?";
+
+        askConfirm("모듈 삭제", text, function (ok) {
+            if (ok) { deleteInstance(String(instanceId)); }
+        });
+    }
+
+    function instanceLabel(inst) {
+        var p = (inst && inst.props) || {};
+        var candidates = [p.title, p.text, p.label];
+        for (var i = 0; i < candidates.length; i++) {
+            if (typeof candidates[i] === "string" && candidates[i].trim() !== "") {
+                return candidates[i].trim();
+            }
+        }
+        return String(inst.moduleTypeCode || "이 모듈");
+    }
+
+    // 번들 위젯 우선(P7 규약: window.confirm 직접 호출 금지, 미로드 시에만 폴백).
+    function askConfirm(title, text, cb) {
+        if (window.JWORKS_JSConfirm && typeof window.JWORKS_JSConfirm.start === "function") {
+            window.JWORKS_JSConfirm.start(String(title), String(text), function (result) {
+                cb(result === true || result === "true" || result === 1);
+            });
+            return;
+        }
+        cb(window.confirm(String(text)));
+    }
+
+    /** 실제 삭제(확인 이후). 자손 동반 삭제 규칙은 withDescendants 가 담당한다. */
     function deleteInstance(instanceId) {
         if (!studio) { return; }
         var def = studio.getDefinitionJson();
@@ -325,7 +462,7 @@ window.MagicIAM_JSForgeAdminStudioPreviewBridge = window.MagicIAM_JSForgeAdminSt
             return;
         }
         if (data.type === MSG_DELETE && data.instanceId != null) {
-            deleteInstance(String(data.instanceId));
+            requestDelete(String(data.instanceId));
             return;
         }
         if (data.type === MSG_DUPLICATE && data.instanceId != null) {
@@ -359,6 +496,11 @@ window.MagicIAM_JSForgeAdminStudioPreviewBridge = window.MagicIAM_JSForgeAdminSt
         }
         // P13: 자유 배치 좌표 확정 — §17.2 layout 키 병합.
         if (data.type === MSG_CANVAS_LAYOUT && data.instanceId != null) {
+            // 한 칸 이동 의도(zStep)는 형제 판정·재번호가 필요하므로 전용 경로로 보낸다.
+            if (data.zStep === 1 || data.zStep === -1) {
+                requestLayerMove(String(data.instanceId), data.zStep);
+                return;
+            }
             applyCanvasLayout(String(data.instanceId), data);
             return;
         }
@@ -406,12 +548,13 @@ window.MagicIAM_JSForgeAdminStudioPreviewBridge = window.MagicIAM_JSForgeAdminSt
     mod.onSelectionChanged = function (fn) {
         if (typeof fn === "function") { selectionListeners.push(fn); }
     };
-    mod.requestDelete = deleteInstance; // 속성패널 삭제 버튼 등 부모측 삭제 진입점
+    mod.requestDelete = requestDelete;  // 🔒 확인을 포함한 단일 삭제 진입점(캔버스·속성·레이어 공통)
     mod.requestDuplicate = duplicateInstance;
+    mod.requestLayerMove = requestLayerMove; // 한 칸 앞뒤 이동(캔버스·레이어 패널 공통)
 
     if (document.readyState === "loading") {
         document.addEventListener("DOMContentLoaded", init);
     } else {
         init();
     }
-})(window.MagicIAM_JSForgeAdminStudioPreviewBridge);
+})(window.JWorks_JSForgeAdminStudioPreviewBridge);

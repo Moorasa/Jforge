@@ -71,7 +71,7 @@ class DualLayoutGenerationTest {
     }
 
     @Test
-    void shell이_commonSection_dual_DOM계약을_MagicIAM대로_그린다() throws IOException {
+    void shell이_commonSection_dual_DOM계약을_JWorks대로_그린다() throws IOException {
         newGenerator(DUAL_JSON).generate(10L);
         String jsp = read(SHELL_REL);
 
@@ -98,9 +98,9 @@ class DualLayoutGenerationTest {
     void shell_JS가_commonSection_postMessage를_배선하고_NS_IIFE_골격이다() throws IOException {
         newGenerator(DUAL_JSON).generate(10L);
         String js = read(JS_REL);
-        assertTrue(js.contains("window.MagicIAM_JSOrgDualAdmin"), "DUAL NS(MagicIAM_JS{Domain}{Role})");
+        assertTrue(js.contains("window.JWorks_JSOrgDualAdmin"), "DUAL NS(JWorks_JS{Domain}{Role})");
         assertTrue(js.contains("__defined"), "IIFE __defined 골격");
-        assertTrue(js.contains("MagicIAM_JSCommonSection.postMessageEventListener"), "프레임 동기화 배선(25행)");
+        assertTrue(js.contains("JWorks_JSCommonSection.postMessageEventListener"), "프레임 동기화 배선(25행)");
         assertFalse(js.contains("JWORKS"), "JWORKS 배너 0");
     }
 

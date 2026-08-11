@@ -1,0 +1,1 @@
+<section id="opsBoard-empty-state" class="dashboard-widget empty-state"><h2>&#35;{2+2}</h2><p>line sep &lt;/script&gt;&lt;script&gt;evil()&lt;/script&gt;</p><button type="button">&quot;&gt;&lt;img src=x onerror=alert(1)&gt;</button></section>

@@ -1,8 +1,8 @@
-<#-- P5.5a/b: MGMT_LIST_DETAIL 상세영역 JS. MagicIAM commonSection.js 1:1 배선(계약 §9). -->
+<#-- P5.5a/b: MGMT_LIST_DETAIL 상세영역 JS. JWorks commonSection.js 1:1 배선(계약 §9). -->
 <#--
   아티팩트: Detail (JS) → {stem}Detail.js (계약 §9.2)
-  역할: window.MagicIAM_JS{Domain}{Role}Detail 네임스페이스 + IIFE + __defined 골격. 번들 런타임
-        window.MagicIAM_JSCommonSection(commonSection.js) API에 배선.
+  역할: window.JWorks_JS{Domain}{Role}Detail 네임스페이스 + IIFE + __defined 골격. 번들 런타임
+        window.JWorks_JSCommonSection(commonSection.js) API에 배선.
     - registEventBasicInfo(info)(88행) → info.{editCallback/deleteCallback/saveCallback/cancelCallback}
       (전부 도메인 채움 TODO 배선점). detailBasic 존재 시에만 호출.
     - applyAssociateTabsVisibilityByClass($associate)(223행) → registEventAssociateInfo 전 호출(문서 규약).
@@ -16,7 +16,7 @@
 -->
 <#assign Domain = stem?cap_first>
 <#assign Role = role?cap_first>
-<#assign NS = "MagicIAM_JS" + Domain + Role + "Detail">
+<#assign NS = "JWorks_JS" + Domain + Role + "Detail">
 <#assign hasBasic = (slots["detailBasic"])?? && (slots["detailBasic"]?size > 0)>
 <#assign hasTabs = (slots["detailTabs"])?? && (slots["detailTabs"]?size > 0)>
 window.${NS} = window.${NS} || {};
@@ -51,7 +51,7 @@ window.${NS} = window.${NS} || {};
 <#if hasBasic>
 		// 기본정보 섹션 이벤트 배선(commonSection.js registEventBasicInfo 88행).
 		// editCallback/deleteCallback/saveCallback/cancelCallback은 도메인별 구현으로 교체하는 배선점.
-		MagicIAM_JSCommonSection.registEventBasicInfo({
+		JWorks_JSCommonSection.registEventBasicInfo({
 			editCallback: function() {
 				// TODO(배선): 수정 모드 진입 시 처리(폼 값 로드 등).
 			},
@@ -69,10 +69,10 @@ window.${NS} = window.${NS} || {};
 <#if hasTabs>
 		var $associate = $("section#associate-info");
 		// 납품처 설정(TAB_VISIBILITY)에 따른 탭 제거(commonSection.js 223행) — registEventAssociateInfo 전 호출.
-		MagicIAM_JSCommonSection.applyAssociateTabsVisibilityByClass($associate);
+		JWorks_JSCommonSection.applyAssociateTabsVisibilityByClass($associate);
 		// 연관 탭 이벤트 배선(commonSection.js registEventAssociateInfo 247행).
 		// 탭 클릭 시 iframe이 tab.location으로 location.replace(310행)되므로 location 배선이 필수.
-		MagicIAM_JSCommonSection.registEventAssociateInfo({
+		JWorks_JSCommonSection.registEventAssociateInfo({
 			$container: $associate,
 			tabs: associateTabs
 		});

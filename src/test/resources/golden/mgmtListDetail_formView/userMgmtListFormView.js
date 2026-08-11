@@ -1,4 +1,4 @@
-window.MagicIAM_JSUserMgmtAdminFormView = window.MagicIAM_JSUserMgmtAdminFormView || {};
+window.JWorks_JSUserMgmtAdminFormView = window.JWorks_JSUserMgmtAdminFormView || {};
 (function(view) {
 	"use strict";
 
@@ -33,7 +33,7 @@ window.MagicIAM_JSUserMgmtAdminFormView = window.MagicIAM_JSUserMgmtAdminFormVie
 
 		// 번들 런타임(commonListFormView.js) 배선. init 시그니처: init(options)(29행).
 		// 필수 $container(31행), 선택 apiInfo(37행)/selectionType(38행). apiInfo는 도메인별 배선점.
-		MagicIAM_JSCommonListFormView.init({
+		JWorks_JSCommonListFormView.init({
 			$container: $container,
 			apiInfo: {
 				// TODO(배선): 실제 폼 데이터 조회 API 및 콜백으로 교체.
@@ -55,4 +55,4 @@ window.MagicIAM_JSUserMgmtAdminFormView = window.MagicIAM_JSUserMgmtAdminFormVie
 		init();
 	});
 
-})(window.MagicIAM_JSUserMgmtAdminFormView);
+})(window.JWorks_JSUserMgmtAdminFormView);

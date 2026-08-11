@@ -217,10 +217,10 @@ class GoldenSnapshotTest {
 
         // JS 네임스페이스 + IIFE 골격.
         String listJs = bodies.get("userMgmtList.js");
-        assertTrue(listJs.contains("window.MagicIAM_JSUserMgmtAdmin"), "listJs 네임스페이스");
+        assertTrue(listJs.contains("window.JWorks_JSUserMgmtAdmin"), "listJs 네임스페이스");
         assertTrue(listJs.contains("__defined"), "listJs IIFE 골격");
         String tvJs = bodies.get("userMgmtListTableView.js");
-        assertTrue(tvJs.contains("window.MagicIAM_JSUserMgmtAdminTableView"), "tableViewJs 네임스페이스");
+        assertTrue(tvJs.contains("window.JWorks_JSUserMgmtAdminTableView"), "tableViewJs 네임스페이스");
         assertTrue(tvJs.contains("__defined"), "tableViewJs IIFE 골격");
     }
 

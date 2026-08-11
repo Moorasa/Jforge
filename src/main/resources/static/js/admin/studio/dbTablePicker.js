@@ -6,13 +6,13 @@ Description : P11 타겟 DB 테이블/컬럼 선택기. /api/projects/{id}/db �
 
 XSS: 모든 텍스트 삽입은 createElement/textContent 로만. innerHTML 미사용.
 =============================================================================================== */
-window.MagicIAM_JSForgeAdminStudioDbPicker = window.MagicIAM_JSForgeAdminStudioDbPicker || {};
+window.JWorks_JSForgeAdminStudioDbPicker = window.JWorks_JSForgeAdminStudioDbPicker || {};
 (function (picker) {
     "use strict";
     if (picker.__defined) { return; }
     picker.__defined = true;
 
-    var ctx = (window.MagicIAM_JSForge && window.MagicIAM_JSForge.contextPath) || "";
+    var ctx = (window.JWorks_JSForge && window.JWorks_JSForge.contextPath) || "";
     var backdrop = null;
     var state = { projectId: null, onPick: null, table: null, columns: [] };
 
@@ -273,4 +273,4 @@ window.MagicIAM_JSForgeAdminStudioDbPicker = window.MagicIAM_JSForgeAdminStudioD
         renderTableStep();
     };
 
-})(window.MagicIAM_JSForgeAdminStudioDbPicker);
+})(window.JWorks_JSForgeAdminStudioDbPicker);

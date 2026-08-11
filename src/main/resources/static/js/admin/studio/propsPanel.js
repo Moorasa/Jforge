@@ -1,7 +1,7 @@
 /* ===============================================================================================
 Name : propsPanel.js
 Description : 우측 속성패널 컨트롤러 (P3-4, P7-2/3 개편). schemaFormRenderer(순수 렌더러)와
-             MagicIAM_JSForgeAdminStudio(허브)를 잇는 얇은 어댑터.
+             JWorks_JSForgeAdminStudio(허브)를 잇는 얇은 어댑터.
 
 동작:
  1) 인스턴스 선택(브리지 단일 소유 — previewBridge.setSelected → 여기 selectInstance 호출) 시:
@@ -15,21 +15,21 @@ P7-3: 임시 자동선택(autoSelectFirst) 제거 — 선택은 캔버스/팔레
 
 XSS: 모든 표시 문자열은 schemaFormRenderer/이 컨트롤러 모두 textContent/createElement 로만.
 =============================================================================================== */
-window.MagicIAM_JSForgeAdminStudioProps = window.MagicIAM_JSForgeAdminStudioProps || {};
+window.JWorks_JSForgeAdminStudioProps = window.JWorks_JSForgeAdminStudioProps || {};
 (function (mod) {
     "use strict";
     if (mod.__defined) { return; }
     mod.__defined = true;
 
-    var studio = window.MagicIAM_JSForgeAdminStudio;
-    var renderer = window.MagicIAM_JSForgeSchemaRenderer;
-    var slotMeta = window.MagicIAM_JSForgeAdminStudioSlotMeta;
-    var ctx = (window.MagicIAM_JSForge && window.MagicIAM_JSForge.contextPath) || "";
+    var studio = window.JWorks_JSForgeAdminStudio;
+    var renderer = window.JWorks_JSForgeSchemaRenderer;
+    var slotMeta = window.JWorks_JSForgeAdminStudioSlotMeta;
+    var ctx = (window.JWorks_JSForge && window.JWorks_JSForge.contextPath) || "";
     var apiModuleTypes = ctx + "/api/module-types";
 
     // 팔레트(모듈명 조회)/브리지(삭제 진입점)는 사용 시점에 조회(로드 순서 무관).
-    function palette() { return window.MagicIAM_JSForgeAdminStudioPalette; }
-    function bridge() { return window.MagicIAM_JSForgeAdminStudioPreviewBridge; }
+    function palette() { return window.JWorks_JSForgeAdminStudioPalette; }
+    function bridge() { return window.JWorks_JSForgeAdminStudioPreviewBridge; }
 
     // moduleTypeCode → PROP_SCHEMA_JSON(파싱된 객체) 캐시.
     var schemaCache = {};
@@ -521,7 +521,7 @@ window.MagicIAM_JSForgeAdminStudioProps = window.MagicIAM_JSForgeAdminStudioProp
     }
 
     function openDbPicker(instanceId) {
-        var picker = window.MagicIAM_JSForgeAdminStudioDbPicker;
+        var picker = window.JWorks_JSForgeAdminStudioDbPicker;
         if (!picker || typeof picker.open !== "function") { return; }
         var projectId = (typeof studio.getProjectId === "function") ? studio.getProjectId() : null;
         picker.open(projectId, function (selection) { applyDbSelection(instanceId, selection); });
@@ -545,7 +545,7 @@ window.MagicIAM_JSForgeAdminStudioProps = window.MagicIAM_JSForgeAdminStudioProp
     }
 
     function openScreenPicker(instanceId) {
-        var picker = window.MagicIAM_JSForgeAdminStudioScreenPicker;
+        var picker = window.JWorks_JSForgeAdminStudioScreenPicker;
         if (!picker || typeof picker.open !== "function") { return; }
         var projectId = (typeof studio.getProjectId === "function") ? studio.getProjectId() : null;
         var def = studio.getDefinitionJson();
@@ -716,6 +716,7 @@ window.MagicIAM_JSForgeAdminStudioProps = window.MagicIAM_JSForgeAdminStudioProp
                 }
                 var id = t && t.getAttribute ? t.getAttribute("data-del-instance") : null;
                 if (!id) { return; }
+                // 확인은 브리지가 소유한다(세 자리의 삭제가 같은 규칙을 타게).
                 var b = bridge();
                 if (b && typeof b.requestDelete === "function") { b.requestDelete(id); }
             });
@@ -733,4 +734,4 @@ window.MagicIAM_JSForgeAdminStudioProps = window.MagicIAM_JSForgeAdminStudioProp
     } else {
         init();
     }
-})(window.MagicIAM_JSForgeAdminStudioProps);
+})(window.JWorks_JSForgeAdminStudioProps);

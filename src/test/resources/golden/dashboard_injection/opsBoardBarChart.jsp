@@ -1,0 +1,1 @@
+<section id="opsBoard-bar-chart" class="dashboard-widget bar-chart" data-value="99&quot; onload=&quot;alert(1)"><h2>&lt;script&gt;alert(1)&lt;/script&gt; &#36;{7*7}</h2><div class="bar-track"><span class="bar-value"></span></div><strong>99&quot; onload=&quot;alert(1)&lt;/script&gt;&lt;b&gt;%&lt;/b&gt;</strong></section>

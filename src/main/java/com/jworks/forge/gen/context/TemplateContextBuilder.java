@@ -56,7 +56,7 @@ public class TemplateContextBuilder {
 
     /**
      * role 화이트리스트 정규식(§5.1). role은 생성 경로(admin/user)·JS 네임스페이스
-     * {@code window.MagicIAM_JS{Domain}{Role}}·HTML 속성에 원문 삽입되므로, 컨텍스트에 넣기 전
+     * {@code window.JWorks_JS{Domain}{Role}}·HTML 속성에 원문 삽입되므로, 컨텍스트에 넣기 전
      * 이 형태로 <b>재검증</b>한다(위반 시 하드 실패). 소문자 시작 영숫자만 허용 — 인젝션 문자
      * ({@code "}/{@code '}/{@code <}/{@code >}/{@code /}/공백)를 구조적으로 배제한다.
      * 저장 시점 {@code ForgeScreenService.codeExists("ROLE", ...)}·{@code ForgeScreenRequest.@Pattern}이

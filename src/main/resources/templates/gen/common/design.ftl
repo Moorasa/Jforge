@@ -1,7 +1,7 @@
 <#-- P9: 화면별 선언형 data/events 메타. 이 파일은 값을 실행하지 않고 안전하게 노출만 한다. -->
 <#assign emitted = false>
-window.MagicIAM_Design = window.MagicIAM_Design || {};
-window.MagicIAM_Design["${jsString(stem)}"] = {
+window.JWorks_Design = window.JWorks_Design || {};
+window.JWorks_Design["${jsString(stem)}"] = {
     modules: {
 <#list slots?values as instances>
 <#list instances as inst>
@@ -37,15 +37,15 @@ window.MagicIAM_Design["${jsString(stem)}"] = {
 <#-- P10: 선언형 설계 런타임. 같은 도메인 API만 조회하고, DOM에는 textContent로만 반영한다. -->
 (function(win, doc, screenKey) {
     "use strict";
-    var screen = win.MagicIAM_Design[screenKey];
-    if (!screen || !screen.modules || win.MagicIAM_DesignRuntime && win.MagicIAM_DesignRuntime[screenKey]) {
+    var screen = win.JWorks_Design[screenKey];
+    if (!screen || !screen.modules || win.JWorks_DesignRuntime && win.JWorks_DesignRuntime[screenKey]) {
         return;
     }
 
     var hasOwn = Object.prototype.hasOwnProperty;
-    var dataStore = win.MagicIAM_DesignData = win.MagicIAM_DesignData || Object.create(null);
+    var dataStore = win.JWorks_DesignData = win.JWorks_DesignData || Object.create(null);
     var screenData = dataStore[screenKey] = dataStore[screenKey] || Object.create(null);
-    var runtime = win.MagicIAM_DesignRuntime = win.MagicIAM_DesignRuntime || Object.create(null);
+    var runtime = win.JWorks_DesignRuntime = win.JWorks_DesignRuntime || Object.create(null);
 
     function hasModule(instanceId) {
         return hasOwn.call(screen.modules, instanceId);

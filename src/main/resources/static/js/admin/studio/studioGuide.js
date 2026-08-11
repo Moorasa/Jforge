@@ -16,14 +16,14 @@ Description : 스튜디오 시작 가이드 (P7-5). 화면이 선택되기 전�
 
 XSS: 모든 표시 문자열은 createElement/textContent 로만. innerHTML 미사용.
 =============================================================================================== */
-window.MagicIAM_JSForgeAdminStudioGuide = window.MagicIAM_JSForgeAdminStudioGuide || {};
+window.JWorks_JSForgeAdminStudioGuide = window.JWorks_JSForgeAdminStudioGuide || {};
 (function (mod) {
     "use strict";
     if (mod.__defined) { return; }
     mod.__defined = true;
 
-    var studio = window.MagicIAM_JSForgeAdminStudio;
-    var ctx = (window.MagicIAM_JSForge && window.MagicIAM_JSForge.contextPath) || "";
+    var studio = window.JWorks_JSForgeAdminStudio;
+    var ctx = (window.JWorks_JSForge && window.JWorks_JSForge.contextPath) || "";
     var apiProjects = ctx + "/api/projects";
 
     // ---------- DOM 헬퍼 ----------
@@ -259,4 +259,4 @@ window.MagicIAM_JSForgeAdminStudioGuide = window.MagicIAM_JSForgeAdminStudioGuid
     } else {
         init();
     }
-})(window.MagicIAM_JSForgeAdminStudioGuide);
+})(window.JWorks_JSForgeAdminStudioGuide);

@@ -1,4 +1,4 @@
-window.MagicIAM_JSUserMgmtAdminCardView = window.MagicIAM_JSUserMgmtAdminCardView || {};
+window.JWorks_JSUserMgmtAdminCardView = window.JWorks_JSUserMgmtAdminCardView || {};
 (function(view) {
 	"use strict";
 
@@ -39,7 +39,7 @@ window.MagicIAM_JSUserMgmtAdminCardView = window.MagicIAM_JSUserMgmtAdminCardVie
 		// 번들 런타임(commonListCardView.js) 배선. init 시그니처: init(options)(43행).
 		// 필수 $container(44행), 선택 apiInfo(51행)/searchCallback(54행)/sortCallback(78행)/
 		// categoryChangeCallback(91행). apiInfo는 도메인별로 채우는 배선점.
-		MagicIAM_JSCommonListCardView.init({
+		JWorks_JSCommonListCardView.init({
 			$container: $container,
 			apiInfo: {
 				// TODO(배선): 실제 목록 조회 API 및 콜백으로 교체.
@@ -72,4 +72,4 @@ window.MagicIAM_JSUserMgmtAdminCardView = window.MagicIAM_JSUserMgmtAdminCardVie
 		init();
 	});
 
-})(window.MagicIAM_JSUserMgmtAdminCardView);
+})(window.JWorks_JSUserMgmtAdminCardView);

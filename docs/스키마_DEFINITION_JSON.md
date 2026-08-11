@@ -45,7 +45,7 @@
 | `schemaVersion` | number | 문서모델 버전. 현재 **`1`**. forward-compat 규칙은 §4. |
 | `archetype` | string | 화면 아키타입. `TB_FRG_COMMON_CODE(GRP_CODE='ARCHETYPE')` 실존 코드. **슬롯 화이트리스트를 결정**(§2). |
 | `stem` | string | 파일 접두. `^[a-z][a-zA-Z0-9]*$` 화이트리스트 검증(파일명·식별자로 쓰이므로). `TB_FRG_SCREEN.STEM`과 일치. |
-| `role` | string | `admin` / `user` (`GRP_CODE='ROLE'`). 생성 경로(admin/user)·`window.MagicIAM_JS{Domain}{Role}` 네임스페이스 결정. |
+| `role` | string | `admin` / `user` (`GRP_CODE='ROLE'`). 생성 경로(admin/user)·`window.JWorks_JS{Domain}{Role}` 네임스페이스 결정. |
 | `slots` | object | 슬롯키 → 인스턴스 배열 맵. 키 집합은 `archetype`의 슬롯 화이트리스트(§2)로 제한. |
 
 > `archetype`/`role`/`stem`은 코드로 평가되지 않으며, 화이트리스트(공통코드 실존 또는 정규식)를 통과한 값만 허용한다(템플릿 인젝션 방지). PROP_SCHEMA §1.1의 `key` 규칙과 동일 원칙.

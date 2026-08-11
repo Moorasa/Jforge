@@ -1,6 +1,6 @@
 /* ===============================================================================================
 
-Name : MagicIAM_JSCommonAttributeHandler.js
+Name : JWorks_JSCommonAttributeHandler.js
 
 Description :
 	속성을 관리하는 모든 화면에서 공통으로 사용하는 유틸리티 파일
@@ -9,7 +9,7 @@ Remarks :
 	재배포를 금합니다.
 	
 =============================================================================================== */
-window.MagicIAM_JSCommonAttributeHandler = window.MagicIAM_JSCommonAttributeHandler || {};
+window.JWorks_JSCommonAttributeHandler = window.JWorks_JSCommonAttributeHandler || {};
 (function(attributeHandler) {
 	"use strict";
 
@@ -404,7 +404,7 @@ window.MagicIAM_JSCommonAttributeHandler = window.MagicIAM_JSCommonAttributeHand
 	// 유효성 및 입력값 검사
 	attributeHandler.getValidatedData = function($container) {
 		// 형식 검사
-		const attributeData = MagicIAM_JSCommonUtils.getAttributeData({
+		const attributeData = JWorks_JSCommonUtils.getAttributeData({
 			$container: $container.find(".attribute-body")
 		});
 		if (!attributeData) return null;
@@ -459,4 +459,4 @@ window.MagicIAM_JSCommonAttributeHandler = window.MagicIAM_JSCommonAttributeHand
 		$attrBody.append(newRowHtml);
 	};
 
-})(window.MagicIAM_JSCommonAttributeHandler);
+})(window.JWorks_JSCommonAttributeHandler);

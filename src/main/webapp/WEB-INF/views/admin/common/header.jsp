@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
-<%-- J-FORGE 번들 런타임 매니페스트 (MagicIAM admin/common/header.jsp 규약 복제, 스크립트릿 없음) --%>
+<%-- J-FORGE 번들 런타임 매니페스트 (JWorks admin/common/header.jsp 규약 복제, 스크립트릿 없음) --%>
 <%-- 경로는 context-path 인식을 위해 EL 사용. jQuery는 3.7.1, JWORKS 저작권 배너 없음. --%>
 <c:set var="ctx" value="${pageContext.request.contextPath}" />
 

@@ -21,15 +21,15 @@ Description : 중앙 인터랙티브 캔버스 iframe 내부 렌더러 (P3-6, P7
  - instanceId/slotKey 는 data 속성/맵 조회로만 사용(§5.1). styleClass 는 cssToken 규칙
    (영숫자·하이픈·언더스코어)로 클라이언트 재검증 후에만 class 로 사용.
 
-의존: slotMeta.js (MagicIAM_JSForgeAdminStudioSlotMeta — 슬롯 화이트리스트/라벨/순서 단일 소스)
+의존: slotMeta.js (JWorks_JSForgeAdminStudioSlotMeta — 슬롯 화이트리스트/라벨/순서 단일 소스)
 =============================================================================================== */
-window.MagicIAM_JSForgeAdminStudioPreview = window.MagicIAM_JSForgeAdminStudioPreview || {};
+window.JWorks_JSForgeAdminStudioPreview = window.JWorks_JSForgeAdminStudioPreview || {};
 (function (mod) {
     "use strict";
     if (mod.__defined) { return; }
     mod.__defined = true;
 
-    var slotMeta = window.MagicIAM_JSForgeAdminStudioSlotMeta;
+    var slotMeta = window.JWorks_JSForgeAdminStudioSlotMeta;
 
     // 부모와 주고받는 메시지 타입(단일 origin 스튜디오 전용 규약).
     var MSG_DEFINITION = "frg:preview:definition";       // 부모 → iframe : def + selectedId + archetype + pending
@@ -635,7 +635,7 @@ window.MagicIAM_JSForgeAdminStudioPreview = window.MagicIAM_JSForgeAdminStudioPr
         block.appendChild(body);
     }
 
-    // ---------- POPUP_FORM 실물 렌더(MagicIAM overlay-popup 골격) ----------
+    // ---------- POPUP_FORM 실물 렌더(JWorks overlay-popup 골격) ----------
     function renderPopupForm(block, props) {
         var body = realBody();
         var popup = el("section", "overlay-popup frg-popup-preview");
@@ -929,17 +929,23 @@ window.MagicIAM_JSForgeAdminStudioPreview = window.MagicIAM_JSForgeAdminStudioPr
         if (isSelected) { block.classList.add("is-selected"); }
 
         // 크롬은 hover/선택 시에만 보인다(CSS) — 평소엔 결과물 그대로 보이게.
+        // 요소가 작으면 툴바가 요소보다 넓어져 "메뉴가 본체보다 큰" 그림이 된다.
+        // 폭에 따라 접는다 — 좁으면 타입 라벨을 빼고 아이콘만 남긴다(툴팁으로 뜻은 유지).
         var head = el("header", "frg-prev-block-head");
-        head.appendChild(el("span", "frg-prev-module", (inst && inst.moduleTypeCode) || "?"));
+        if (g.w < 150) { block.classList.add("is-chrome-narrow"); }
+        if (g.w < 96) { block.classList.add("is-chrome-tiny"); }
+        var moduleLabel = el("span", "frg-prev-module", (inst && inst.moduleTypeCode) || "?");
+        moduleLabel.title = (inst && inst.moduleTypeCode) || "";
+        head.appendChild(moduleLabel);
         var instanceId = (inst && inst.instanceId != null) ? String(inst.instanceId) : "";
         var front = el("button", "frg-fc-z", "▲");
         front.type = "button";
-        front.title = "맨 앞으로";
+        front.title = "한 칸 앞으로";
         front.setAttribute("data-zfront", instanceId);
         head.appendChild(front);
         var back = el("button", "frg-fc-z", "▼");
         back.type = "button";
-        back.title = "맨 뒤로";
+        back.title = "한 칸 뒤로";
         back.setAttribute("data-zback", instanceId);
         head.appendChild(back);
         var duplicate = el("button", "frg-prev-duplicate", "⧉");
@@ -1523,19 +1529,14 @@ window.MagicIAM_JSForgeAdminStudioPreview = window.MagicIAM_JSForgeAdminStudioPr
     }
 
     /** 맨 앞으로/맨 뒤로 — 현재 캔버스 인스턴스들의 z 범위를 보고 절대값을 정해 보낸다(§17.2 범위 클램프). */
+    /**
+     * 한 칸 앞/뒤 이동 **의도만** 부모에 보낸다. 예전에는 여기서 `max + 1` 로 값을 정했는데,
+     * 캔버스 전체에서 최댓값을 찾는 바람에 누를 때마다 z 가 끝없이 불어났다(z40 …).
+     * §17.10 상 z 는 형제 범위에서만 의미가 있으므로, 형제 판정과 재번호는 부모(브리지)가 한다.
+     */
     function postZOrder(instanceId, toFront) {
         if (!instanceId) { return; }
-        var items = canvasItems(lastDef);
-        var max = 0;
-        var min = 0;
-        items.forEach(function (inst, index) {
-            var z = canvasGeometry(inst, index).z;
-            if (z > max) { max = z; }
-            if (z < min) { min = z; }
-        });
-        var next = toFront ? max + 1 : min - 1;
-        var z = slotMeta ? slotMeta.clampCanvas("layoutZ", next) : next;
-        post(MSG_CANVAS_LAYOUT, { instanceId: String(instanceId), z: z });
+        post(MSG_CANVAS_LAYOUT, { instanceId: String(instanceId), zStep: toFront ? 1 : -1 });
     }
 
     /**
@@ -1583,4 +1584,4 @@ window.MagicIAM_JSForgeAdminStudioPreview = window.MagicIAM_JSForgeAdminStudioPr
     } else {
         init();
     }
-})(window.MagicIAM_JSForgeAdminStudioPreview);
+})(window.JWorks_JSForgeAdminStudioPreview);

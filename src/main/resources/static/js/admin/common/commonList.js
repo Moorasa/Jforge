@@ -1,6 +1,6 @@
 /* ===============================================================================================
 
-Name : MagicIAM_JSCommonList.js
+Name : JWorks_JSCommonList.js
 
 Description :
 	JWORKS 프론트엔드 모듈 Table View에서 공통으로 사용하는 유틸리티 파일입니다.
@@ -9,7 +9,7 @@ Remarks :
 	재배포를 금합니다.
 	
 =============================================================================================== */
-window.MagicIAM_JSCommonList = window.MagicIAM_JSCommonList || {};
+window.JWorks_JSCommonList = window.JWorks_JSCommonList || {};
 (function(commonList) {
 	"use strict";
 
@@ -71,7 +71,7 @@ window.MagicIAM_JSCommonList = window.MagicIAM_JSCommonList || {};
 		
 	function registEvent() {
 		// postMessage 수신 처리
-		MagicIAM_JSCommonSection.postMessageEventListener({
+		JWorks_JSCommonSection.postMessageEventListener({
 			$containerToSetHeight: $("section#associate-info iframe")
 		});
 	}
@@ -171,7 +171,7 @@ window.MagicIAM_JSCommonList = window.MagicIAM_JSCommonList || {};
 		if (!_state.delayInitialLoad) {
 			view.getList();
 		} else {
-			console.log("[MagicIAM] delayInitialLoad가 true이므로 초기 렌더링을 대기합니다.");
+			console.log("[JWorks] delayInitialLoad가 true이므로 초기 렌더링을 대기합니다.");
 		}
 		
 	}
@@ -194,4 +194,4 @@ window.MagicIAM_JSCommonList = window.MagicIAM_JSCommonList || {};
 	commonList.getCurrViewType = getCurrViewType;
 
 
-})(window.MagicIAM_JSCommonList);
+})(window.JWorks_JSCommonList);

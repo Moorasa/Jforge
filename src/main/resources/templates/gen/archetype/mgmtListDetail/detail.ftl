@@ -1,7 +1,7 @@
-<#-- P5.5a/b: MGMT_LIST_DETAIL 상세영역. MagicIAM commonSection.js 1:1 배선(계약 §9). -->
+<#-- P5.5a/b: MGMT_LIST_DETAIL 상세영역. JWorks commonSection.js 1:1 배선(계약 §9). -->
 <#--
   아티팩트: Detail (JSP) → {stem}Detail.jsp (계약 §9.2)
-  역할: 상세영역 정적 골격 산출. 번들 commonSection.js(MagicIAM_JSCommonSection)가 타겟:
+  역할: 상세영역 정적 골격 산출. 번들 commonSection.js(JWorks_JSCommonSection)가 타겟:
     - detailToolbar(TOOLBAR)  → section.detail-toolbar 액션바(선택, list.ftl listToolbar 동형)
     - detailBasic(DETAIL_BASIC) → section#basic-info(보기/수정 2모드·접기·속성칩, registEventBasicInfo 88행)
     - detailTabs(ASSOCIATE_TABS) → section#associate-info(.tabs .tab + .contents iframe.{tabClass},

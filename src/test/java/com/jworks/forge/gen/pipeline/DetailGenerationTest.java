@@ -104,7 +104,7 @@ class DetailGenerationTest {
     }
 
     @Test
-    void detail_JSP가_basic_info와_associate_info를_MagicIAM_DOM으로_그린다() throws IOException {
+    void detail_JSP가_basic_info와_associate_info를_JWorks_DOM으로_그린다() throws IOException {
         newGenerator(DETAIL_JSON).generate(10L);
         String jsp = read(DETAIL_REL);
 
@@ -133,11 +133,11 @@ class DetailGenerationTest {
         newGenerator(DETAIL_JSON).generate(10L);
         String js = read(DETAIL_JS_REL);
 
-        assertTrue(js.contains("window.MagicIAM_JSUserMgmtAdminDetail"), "Detail 네임스페이스");
+        assertTrue(js.contains("window.JWorks_JSUserMgmtAdminDetail"), "Detail 네임스페이스");
         assertTrue(js.contains("__defined"), "IIFE __defined 골격");
-        assertTrue(js.contains("MagicIAM_JSCommonSection.registEventBasicInfo({"), "기본정보 배선(88행)");
-        assertTrue(js.contains("MagicIAM_JSCommonSection.registEventAssociateInfo({"), "연관탭 배선(247행)");
-        assertTrue(js.contains("MagicIAM_JSCommonSection.applyAssociateTabsVisibilityByClass"), "탭 가시성(223행)");
+        assertTrue(js.contains("JWorks_JSCommonSection.registEventBasicInfo({"), "기본정보 배선(88행)");
+        assertTrue(js.contains("JWorks_JSCommonSection.registEventAssociateInfo({"), "연관탭 배선(247행)");
+        assertTrue(js.contains("JWorks_JSCommonSection.applyAssociateTabsVisibilityByClass"), "탭 가시성(223행)");
         assertTrue(js.contains("tabClass: \"tab-role\""), "탭 config tabClass");
         assertTrue(js.contains("frameId: \"roleFrame\""), "탭 config frameId");
         assertTrue(js.contains("location: \"\""), "탭 location TODO 배선점(빈 문자열)");

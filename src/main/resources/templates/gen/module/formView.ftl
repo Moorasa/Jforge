@@ -1,4 +1,4 @@
-<#-- P5-4: MGMT_LIST_DETAIL+FORM_VIEW 뷰. MagicIAM commonListFormView.js 1:1 배선. -->
+<#-- P5-4: MGMT_LIST_DETAIL+FORM_VIEW 뷰. JWorks commonListFormView.js 1:1 배선. -->
 <#--
   아티팩트: ListFormView (JSP) → {stem}ListFormView.jsp (계약 §8.2)
   역할: FORM_VIEW props를 정적 폼 골격으로 산출. 번들 commonListFormView.js가

@@ -3,7 +3,7 @@
 -- 대상 테이블: TB_FRG_MODULE_TYPE (V1 DDL에서 이미 생성됨 — 재생성 금지, 시드 전용)
 -- 멱등(ON CONFLICT (MODULE_TYPE_CODE) DO NOTHING). 재실행 시 중복/오류 0.
 -- add-only: V3(TABLE_VIEW/SEARCH_FILTER_BAR/TOOLBAR)·V4(CARD/TREE/FORM_VIEW)는 재실행·수정하지 않는다.
--- 근거: static/js/admin/common/commonSection.js (MagicIAM 1:1, 계약 §9.1).
+-- 근거: static/js/admin/common/commonSection.js (JWorks 1:1, 계약 §9.1).
 --   ⚠ commonSection.js는 상세 값(기본정보 값·연관 iframe 로드)을 정적 props가 아니라 런타임/도메인
 --     콜백으로 채운다(registEventBasicInfo 88행 editCallback 등, registEventAssociateInfo 310행
 --     iframe.contentWindow.location.replace(tab.location)). 따라서 아래 props는 "어떤 필드/탭을

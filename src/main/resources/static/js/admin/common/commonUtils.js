@@ -1,6 +1,6 @@
 /* ===============================================================================================
 
-Name : MagicIAM_JSCommonUtils.js
+Name : JWorks_JSCommonUtils.js
 
 Description :
 	JWORKS 프론트엔드 모듈 전반에서 공통으로 사용하는 유틸리티 파일입니다.
@@ -9,7 +9,7 @@ Remarks :
 	재배포를 금합니다.
 	
 =============================================================================================== */
-window.MagicIAM_JSCommonUtils = window.MagicIAM_JSCommonUtils || {};
+window.JWorks_JSCommonUtils = window.JWorks_JSCommonUtils || {};
 (function(commonUtils) {
 	"use strict";
 
@@ -365,7 +365,7 @@ frame 내부에서 변경이 일어났을때 다른 탭에도 반영이 되어�
 			}
 
 			// [Case 2] Key 형식 검사
-			const filteredKey = MagicIAM_JSCommonUtils.stringFilterEnglishKoreanNumberUnderscoreHyphen(key);
+			const filteredKey = JWorks_JSCommonUtils.stringFilterEnglishKoreanNumberUnderscoreHyphen(key);
 			if (key !== filteredKey) {
 				JWORKS_JSAlert.start("", "속성명은 다음 문자만 허용됩니다 : 영문, 한글, 숫자, '_', '-'", function() {
 					$row.find(".attr-key").focus();
@@ -410,7 +410,7 @@ frame 내부에서 변경이 일어났을때 다른 탭에도 반영이 되어�
 
 		// 2. 유효성 검증
 		if (!targetUrl) {
-			console.error(`[MagicIAM Jump Error] 정의되지 않은 jumpType 입니다: ${jumpType}`);
+			console.error(`[JWorks Jump Error] 정의되지 않은 jumpType 입니다: ${jumpType}`);
 			return;
 		}
 
@@ -478,4 +478,4 @@ frame 내부에서 변경이 일어났을때 다른 탭에도 반영이 되어�
 		}
 	};
 
-})(window.MagicIAM_JSCommonUtils);
+})(window.JWorks_JSCommonUtils);

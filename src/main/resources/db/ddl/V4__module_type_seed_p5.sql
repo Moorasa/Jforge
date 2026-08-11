@@ -3,7 +3,7 @@
 -- 대상 테이블: TB_FRG_MODULE_TYPE (V1 DDL에서 이미 생성됨 — 재생성 금지, 시드 전용)
 -- 멱등(ON CONFLICT (MODULE_TYPE_CODE) DO NOTHING). 재실행 시 중복/오류 0.
 -- add-only: V3(TABLE_VIEW/SEARCH_FILTER_BAR/TOOLBAR)는 재실행·수정하지 않는다.
--- 근거: static/js/admin/common/commonListCardView.js (MagicIAM 1:1, 계약 §8.6).
+-- 근거: static/js/admin/common/commonListCardView.js (JWorks 1:1, 계약 §8.6).
 --   ⚠ commonListCardView.js는 카드 데이터(제목/부제/이미지)를 정적 props가 아니라
 --     런타임 콜백(apiInfo.renderCallback, 243행)으로 그린다. 따라서 아래 titleField/subtitleField/
 --     imageField/columns는 "어느 데이터 키를 무엇으로 바인딩할지"의 배선 힌트 설정 props다(§8.4 주의).
@@ -61,7 +61,7 @@ VALUES
 ON CONFLICT (MODULE_TYPE_CODE) DO NOTHING;
 
 -- ---------------------------------------------------------------------
--- TREE_VIEW (뷰). 근거: static/js/admin/common/commonListTreeView.js (MagicIAM 1:1, 계약 §8.6).
+-- TREE_VIEW (뷰). 근거: static/js/admin/common/commonListTreeView.js (JWorks 1:1, 계약 §8.6).
 --   ⚠ commonListTreeView.js는 계층 노드를 정적 props가 아니라 런타임 파서/콜백
 --     (apiInfo.parser 494행, apiInfo.renderCallback 461행)으로 그린다. 따라서 아래
 --     labelField/idField/parentField/iconField/selectMode 는 "어느 데이터 키를 무엇으로
@@ -104,7 +104,7 @@ VALUES
 ON CONFLICT (MODULE_TYPE_CODE) DO NOTHING;
 
 -- ---------------------------------------------------------------------
--- FORM_VIEW (뷰). 근거: static/js/admin/common/commonListFormView.js (MagicIAM 1:1, 계약 §8.6).
+-- FORM_VIEW (뷰). 근거: static/js/admin/common/commonListFormView.js (JWorks 1:1, 계약 §8.6).
 --   ⚠ commonListFormView.js init 시그니처: formView.init = function(options)(29행). 필수 옵션
 --     options.$container(31행), 선택 apiInfo(37행: url·renderCallback), selectionType(38행, 기본 'checkbox').
 --     render(data)는 비어 있다(127~128행) — 폼 본문은 산출 JSP 정적 골격/도메인 콜백 소관.

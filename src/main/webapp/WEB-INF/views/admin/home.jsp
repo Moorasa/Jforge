@@ -17,7 +17,7 @@
         <section class="frg-home-hero">
             <div class="frg-hero-copy">
                 <h2>화면을 조립하고, 3종 세트로 생성하세요</h2>
-                <p>팔레트에서 모듈을 골라 슬롯에 배치하면 MagicIAM 규약의 JSP + JS + CSS 가
+                <p>팔레트에서 모듈을 골라 슬롯에 배치하면 JWorks 규약의 JSP + JS + CSS 가
                    타겟 프로젝트에 그대로 생성됩니다.</p>
             </div>
             <div class="frg-hero-stats">

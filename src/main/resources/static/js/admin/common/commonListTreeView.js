@@ -1,6 +1,6 @@
 /* ===============================================================================================
 
-Name : MagicIAM_JSCommonListTreeView.js
+Name : JWorks_JSCommonListTreeView.js
 
 Description :
 	JWORKS 프론트엔드 모듈 Tree View에서 공통으로 사용하는 유틸리티 파일입니다.
@@ -9,7 +9,7 @@ Remarks :
 	재배포를 금합니다.
 	
 =============================================================================================== */
-window.MagicIAM_JSCommonListTreeView = window.MagicIAM_JSCommonListTreeView || {};
+window.JWorks_JSCommonListTreeView = window.JWorks_JSCommonListTreeView || {};
 (function(treeView) {
 	"use strict";
 
@@ -600,4 +600,4 @@ window.MagicIAM_JSCommonListTreeView = window.MagicIAM_JSCommonListTreeView || {
 			.replace(/'/g, "&#039;");
 	};
 
-})(window.MagicIAM_JSCommonListTreeView);
+})(window.JWorks_JSCommonListTreeView);

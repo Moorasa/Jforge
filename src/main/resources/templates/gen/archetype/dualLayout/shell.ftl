@@ -1,4 +1,4 @@
-<#-- P5-5c: DUAL_LAYOUT(좌우 2단) 아키타입 shell. MagicIAM commonSection.js dual 런타임 1:1(계약 §10). -->
+<#-- P5-5c: DUAL_LAYOUT(좌우 2단) 아키타입 shell. JWorks commonSection.js dual 런타임 1:1(계약 §10). -->
 <#--
   아티팩트: dualShell → {stem}.jsp (계약 §10.1)
   역할: body.dual-layout + #dual-layout-area(.layout-left>iframe / .layout-middle.resizer / .layout-right>iframe).

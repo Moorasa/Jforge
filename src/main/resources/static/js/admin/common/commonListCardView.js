@@ -1,6 +1,6 @@
 /* ===============================================================================================
 
-Name : MagicIAM_JSCommonListCardView.js
+Name : JWorks_JSCommonListCardView.js
 
 Description :
 	JWORKS 프론트엔드 모듈 Card View에서 공통으로 사용하는 유틸리티 파일입니다.
@@ -9,7 +9,7 @@ Remarks :
 	재배포를 금합니다.
 	
 =============================================================================================== */
-window.MagicIAM_JSCommonListCardView = window.MagicIAM_JSCommonListCardView || {};
+window.JWorks_JSCommonListCardView = window.JWorks_JSCommonListCardView || {};
 (function(cardView) {
 	"use strict";
 
@@ -117,7 +117,7 @@ window.MagicIAM_JSCommonListCardView = window.MagicIAM_JSCommonListCardView || {
 			// 기본값으로 초기화
 			paginationInfo.currPage = 1;
 			paginationInfo.countPerPage = Constants.DEFAULT_CARD_VIEW_COUNT_PER_PAGE;
-			MagicIAM_JSPagination.init(paginationEventCallback);
+			JWorks_JSPagination.init(paginationEventCallback);
 		}
 	
 	}
@@ -306,9 +306,9 @@ window.MagicIAM_JSCommonListCardView = window.MagicIAM_JSCommonListCardView || {
 		}
 		
 		// pagination
-		MagicIAM_JSPagination.setPage(paginationInfo);
+		JWorks_JSPagination.setPage(paginationInfo);
 
 	}
 
 
-})(window.MagicIAM_JSCommonListCardView);
+})(window.JWorks_JSCommonListCardView);

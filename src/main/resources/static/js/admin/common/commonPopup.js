@@ -1,6 +1,6 @@
 /* ===============================================================================================
 
-Name : MagicIAM_JSCommonPopup.js
+Name : JWorks_JSCommonPopup.js
 
 Description :
 	Popup UI에서 공통으로 사용하는 유틸리티 파일
@@ -11,7 +11,7 @@ Remarks :
 	재배포를 금합니다.
 
 =============================================================================================== */
-window.MagicIAM_JSCommonPopup = window.MagicIAM_JSCommonPopup || {};
+window.JWorks_JSCommonPopup = window.JWorks_JSCommonPopup || {};
 (function(commonPopup) {
 	"use strict";
 
@@ -119,7 +119,7 @@ window.MagicIAM_JSCommonPopup = window.MagicIAM_JSCommonPopup || {};
 
 		// 속성 핸들러 위임
 		if (option.attribute && option.attribute.use) {
-			MagicIAM_JSCommonAttributeHandler.init(context);
+			JWorks_JSCommonAttributeHandler.init(context);
 		}
 	}
 
@@ -150,7 +150,7 @@ window.MagicIAM_JSCommonPopup = window.MagicIAM_JSCommonPopup || {};
 			});
 		}
 
-		MagicIAM_JSCommonUtils.registEventClearableInput({
+		JWorks_JSCommonUtils.registEventClearableInput({
 			$container: context.$container
 		});
 
@@ -287,7 +287,7 @@ window.MagicIAM_JSCommonPopup = window.MagicIAM_JSCommonPopup || {};
 	};
 
 	commonPopup.getValidatedData = function($container) {
-		return MagicIAM_JSCommonAttributeHandler.getValidatedData($container);
+		return JWorks_JSCommonAttributeHandler.getValidatedData($container);
 	}
 
 	// 팝업의 위치는
@@ -340,4 +340,4 @@ window.MagicIAM_JSCommonPopup = window.MagicIAM_JSCommonPopup || {};
 	}
 
 
-})(window.MagicIAM_JSCommonPopup);
+})(window.JWorks_JSCommonPopup);
